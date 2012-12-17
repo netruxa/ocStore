@@ -86,7 +86,7 @@ $_['entry_image_compare']        = 'Compare Image Size:';
 $_['entry_image_wishlist']       = 'Wish List Image Size:';
 $_['entry_image_cart']           = 'Cart Image Size:';
 $_['entry_ftp_host']               = 'FTP Host:';
-$_['entry_ftp_port']               = 'FTP Post:';
+$_['entry_ftp_port']               = 'FTP Port:';
 $_['entry_ftp_username']           = 'FTP Username:';
 $_['entry_ftp_password']           = 'FTP Password:';
 $_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';
@@ -101,7 +101,7 @@ $_['entry_smtp_timeout']         = 'SMTP Timeout:';
 $_['entry_account_mail']         = 'New Account Alert Mail:<br /><span class="help">Send a email to the store owner when a new account is registered.</span>';
 $_['entry_alert_mail']           = 'New Order Alert Mail:<br /><span class="help">Send a email to the store owner when a new order is created.</span>';
 $_['entry_alert_emails']         = 'Additional Alert E-Mails:<br /><span class="help">Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated)</span>';
-$_['entry_fraud_detection']      = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a onclick="window.open(\'http://www.maxmind.com/?rId=opencart\');"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
+$_['entry_fraud_detection']        = 'Use MaxMind Fraud Detection System:<br /><span class="help">MaxMind is a fraud detections service. If you don\'t have a license key you can <a href="http://www.maxmind.com/?rId=opencart" target="_blank"><u>sign up here</u></a>. Once you have obtained a key copy and paste it into the field below.</span>';
 $_['entry_fraud_key']            = 'MaxMind License Key:</span>';
 $_['entry_fraud_score']          = 'MaxMind Risk Score:<br /><span class="help">The higher the score the more likly the order is fraudulent. Set a score between 0 - 100.</span>';
 $_['entry_fraud_status']         = 'MaxMind Fraud Order Status:<br /><span class="help">Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.</span>';
@@ -110,23 +110,13 @@ $_['entry_shared']                 = 'Use Shared Sessions:<br /><span class="hel
 $_['entry_robots']                 = 'Robots:<br /><span class="help">A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.</span>';
 $_['entry_seo_url']              = 'Use SEO URL\'s:<br /><span class="help">To use SEO URL\'s apache module mod-rewrite must be installed and you need to rename the htaccess.txt to .htaccess.</span>';
 $_['entry_maintenance']          = 'Maintenance Mode:<br /><span class="help">Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.</span>';
+$_['entry_password']               = 'Allow Forgotten Password:<br /><span class="help">Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.</span>';
 $_['entry_encryption']           = 'Encryption Key:<br /><span class="help">Please provide a secret key that will be used to encrypt private information when processing orders.</span>';
 $_['entry_compression']          = 'Output Compression Level:<br /><span class="help">GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9</span>';
 $_['entry_error_display']        = 'Display Errors:';
 $_['entry_error_log']            = 'Log Errors:';
 $_['entry_error_filename']       = 'Error Log Filename:';
-$_['entry_google_analytics']     = 'Google Analytics Code:<br /><span class="help">Login to your <a onclick="window.open(\'http://www.google.com/analytics/\');"><u>Google Analytics</u></a> account and after creating your web site profile copy and paste the analytics code into this field.</span>';
-$_['entry_sms_gatename']         = 'SMS гейт:<br/><span class="help">Сервис для отправки SMS<br/> Например <a target="_blank" href="http://avisosms.ru?refer=3502">avisosms</a></span>';
-$_['entry_sms_to']               = 'Телефон администратора:<br/><span class="help">Формат: 7926xxxxxxx</span>';
-$_['entry_sms_from']             = 'Псевдоним отправителя:<br/><span class="help">Например: Domenam.ru</span>';
-$_['entry_sms_message']          = 'Текст сообщения:<br/><span class="help">Можно использовать теги:<br/>{ID} - номер заказа<br/>{DATE},{TIME} - дата и время формирования заказа<br/>{SUM} - сумма заказа</span>';
-$_['entry_sms_gate_username']    = 'Логин на SMS гейт:';
-$_['entry_sms_gate_password']    = 'Пароль на SMS гейт:';
-$_['entry_sms_alert']            = 'Включить SMS уведомления:';
-$_['entry_sms_copy']             = 'Дополнительные номера:<br/><span class="help">Дополнительные номера телефонов получателей SMS</span>';
-$_['entry_seo_url_type']         = 'Тип ЧПУ:';
-$_['entry_seo_url_include_path'] = 'ЧПУ товаров с категориями:<span class="help">/category/subcategory/product<br />(только для SeoPro)</span>';
-$_['entry_seo_url_postfix']      = 'Окончание ЧПУ:<span class="help">Например .html<br />(только для SeoPro)</span>';
+$_['entry_google_analytics']       = 'Google Analytics Code:<br /><span class="help">Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your web site profile copy and paste the analytics code into this field.</span>';
 
 // Error
 $_['error_warning']              = 'Warning: Please check the form carefully for errors!';
@@ -156,4 +146,18 @@ $_['error_ftp_username']           = 'FTP Username required!';
 $_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']       = 'Error Log Filename required!';
 $_['error_encryption']             = 'Encryption must be between 3 and 32 characters!';
+
+// SMS
+$_['entry_sms_gatename']         = 'SMS гейт:<br/><span class="help">Сервис для отправки SMS<br/> Например <a target="_blank" href="http://avisosms.ru?refer=3502">avisosms</a></span>';
+$_['entry_sms_to']               = 'Телефон администратора:<br/><span class="help">Формат: 7926xxxxxxx</span>';
+$_['entry_sms_from']             = 'Псевдоним отправителя:<br/><span class="help">Например: Domenam.ru</span>';
+$_['entry_sms_message']          = 'Текст сообщения:<br/><span class="help">Можно использовать теги:<br/>{ID} - номер заказа<br/>{DATE},{TIME} - дата и время формирования заказа<br/>{SUM} - сумма заказа</span>';
+$_['entry_sms_gate_username']    = 'Логин на SMS гейт:';
+$_['entry_sms_gate_password']    = 'Пароль на SMS гейт:';
+$_['entry_sms_alert']            = 'Включить SMS уведомления:';
+$_['entry_sms_copy']             = 'Дополнительные номера:<br/><span class="help">Дополнительные номера телефонов получателей SMS</span>';
+$_['entry_seo_url_type']         = 'Тип ЧПУ:';
+$_['entry_seo_url_include_path'] = 'ЧПУ товаров с категориями:<span class="help">/category/subcategory/product<br />(только для SeoPro)</span>';
+$_['entry_seo_url_postfix']      = 'Окончание ЧПУ:<span class="help">Например .html<br />(только для SeoPro)</span>';
+
 ?>

@@ -83,7 +83,11 @@ class ControllerCommonLogin extends Controller {
 			$this->data['redirect'] = '';
 		}
 
-		$this->data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+		if ($this->config->get('config_password')) {
+			$this->data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+		} else {
+			$this->data['forgotten'] = '';
+		}
 
 		$this->template = 'common/login.tpl';
 		$this->children = array(
@@ -94,7 +98,7 @@ class ControllerCommonLogin extends Controller {
 		$this->response->setOutput($this->render());
   	}
 
-	private function validate() {
+	protected function validate() {
 		if (isset($this->request->post['username']) && isset($this->request->post['password']) && !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}

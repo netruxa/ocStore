@@ -10,7 +10,7 @@ class ControllerStep3 extends Controller {
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
-			$output .= 'define("HTTP_SERVER", "' . HTTP_OPENCART . '");' . "\n";
+			$output .= 'define("HTTP_SERVER", "' . HTTP_OPENCART . '");' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
 			$output .= 'define("HTTPS_SERVER", "' . HTTP_OPENCART . '");' . "\n\n";
@@ -109,6 +109,12 @@ class ControllerStep3 extends Controller {
 			$this->data['error_db_name'] = '';
 		}
 
+		if (isset($this->error['db_prefix'])) {
+			$this->data['error_db_prefix'] = $this->error['db_prefix'];
+		} else {
+			$this->data['error_db_prefix'] = '';
+		}
+
 		if (isset($this->error['username'])) {
 			$this->data['error_username'] = $this->error['username'];
 		} else {
@@ -162,7 +168,7 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_prefix'])) {
 			$this->data['db_prefix'] = html_entity_decode($this->request->post['db_prefix']);
 		} else {
-			$this->data['db_prefix'] = '';
+			$this->data['db_prefix'] = 'oc_';
 		}
 
 		if (isset($this->request->post['username'])) {
@@ -211,6 +217,10 @@ class ControllerStep3 extends Controller {
 
 		if (!$this->request->post['db_name']) {
 			$this->error['db_name'] = 'Database Name required!';
+		}
+
+		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
+			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 
 		if ($this->request->post['db_driver'] == 'mysql') {

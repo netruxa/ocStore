@@ -141,7 +141,7 @@ class ControllerProductSpecial extends Controller {
 				'tax'         => $tax,
 				'rating'      => $result['rating'],
 				'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-				'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
+				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
 			);
 		}
 
@@ -221,35 +221,17 @@ class ControllerProductSpecial extends Controller {
 
 		$this->data['limits'] = array();
 
-		$this->data['limits'][] = array(
-			'text'  => $this->config->get('config_catalog_limit'),
-			'value' => $this->config->get('config_catalog_limit'),
-			'href'  => $this->url->link('product/special', $url . '&limit=' . $this->config->get('config_catalog_limit'))
-		);
+		$limits = array_unique(array($this->config->get('config_catalog_limit'), 25, 50, 75, 100));
 
-		$this->data['limits'][] = array(
-			'text'  => 25,
-			'value' => 25,
-			'href'  => $this->url->link('product/special', $url . '&limit=25')
-		);
+		sort($limits);
 
-		$this->data['limits'][] = array(
-			'text'  => 50,
-			'value' => 50,
-			'href'  => $this->url->link('product/special', $url . '&limit=50')
-		);
-
-		$this->data['limits'][] = array(
-			'text'  => 75,
-			'value' => 75,
-			'href'  => $this->url->link('product/special', $url . '&limit=75')
-		);
-
-		$this->data['limits'][] = array(
-			'text'  => 100,
-			'value' => 100,
-			'href'  => $this->url->link('product/special', $url . '&limit=100')
-		);
+		foreach($limits as $limit){
+			$this->data['limits'][] = array(
+				'text'  => $limit,
+				'value' => $limit,
+				'href'  => $this->url->link('product/special', $url . '&limit=' . $limit)
+			);
+		}
 
 		$url = '';
 

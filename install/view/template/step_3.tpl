@@ -54,7 +54,11 @@
 	</tr>
 	<tr>
 		<td><span class="required">&nbsp;</span>Префикс БД:</td>
-		<td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" /></td>
+          <td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" />
+            <br />
+            <?php if ($error_db_prefix) { ?>
+            <span class="required"><?php echo $error_db_prefix; ?></span>
+            <?php } ?></td>
 	</tr>
 	</table>
   	</fieldset>

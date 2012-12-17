@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/category.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a></div>
@@ -60,16 +60,8 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_parent; ?></td>
-              <td><select name="parent_id">
-                  <option value="0"><?php echo $text_none; ?></option>
-                  <?php foreach ($categories as $category) { ?>
-                  <?php if ($category['category_id'] == $parent_id) { ?>
-                  <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
+              <td><input type="text" name="path" value="<?php echo $path; ?>" size="100" />
+                <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_store; ?></td>
@@ -105,8 +97,9 @@
             <tr>
               <td><?php echo $entry_image; ?></td>
               <td valign="top"><div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" />
-                <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                <br /><a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
+                  <br />
+                  <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
             </tr>
             <tr>
               <td><?php echo $entry_top; ?></td>
@@ -196,6 +189,39 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'path\']').autocomplete({
+	delay: 500,
+	source: function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			dataType: 'json',
+			success: function(json) {
+				json.unshift({
+					'category_id':  0,
+					'name':  '<?php echo $text_none; ?>'
+				});
+
+				response($.map(json, function(item) {
+					return {
+						label: item.name,
+						value: item.category_id
+					}
+				}));
+			}
+		});
+	},
+	select: function(event, ui) {
+		$('input[name=\'path\']').val(ui.item.label);
+		$('input[name=\'parent_id\']').val(ui.item.value);
+
+		return false;
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
+});
 //--></script>
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {

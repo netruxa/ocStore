@@ -182,7 +182,7 @@ class ControllerSaleOrder extends Controller {
     	$this->getList();
   	}
 
-  	private function getList() {
+  	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
 		} else {
@@ -1163,7 +1163,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->render());
   	}
 
-  	private function validateForm() {
+  	protected function validateForm() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -1212,7 +1212,7 @@ class ControllerSaleOrder extends Controller {
 			// VAT Validation
 			$this->load->helper('vat');
 
-			if ($this->config->get('config_vat') && $this->request->post['payment_tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['payment_tax_id']) != 'invalid')) {
+			if ($this->config->get('config_vat') && $this->request->post['payment_tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['payment_tax_id']) == 'invalid')) {
 				$this->error['payment_tax_id'] = $this->language->get('error_vat');
 			}
 		}
@@ -1221,7 +1221,7 @@ class ControllerSaleOrder extends Controller {
       		$this->error['payment_country'] = $this->language->get('error_country');
     	}
 
-    	if ($this->request->post['payment_zone_id'] == '') {
+    	if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
       		$this->error['payment_zone'] = $this->language->get('error_zone');
     	}
 
@@ -1277,7 +1277,7 @@ class ControllerSaleOrder extends Controller {
 				$this->error['shipping_country'] = $this->language->get('error_country');
 			}
 
-			if ($this->request->post['shipping_zone_id'] == '') {
+			if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 				$this->error['shipping_zone'] = $this->language->get('error_zone');
 			}
 
@@ -1297,7 +1297,7 @@ class ControllerSaleOrder extends Controller {
 		}
   	}
 
-   	private function validateDelete() {
+   	protected function validateDelete() {
     	if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}
@@ -1469,7 +1469,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['tab_payment'] = $this->language->get('tab_payment');
 			$this->data['tab_shipping'] = $this->language->get('tab_shipping');
 			$this->data['tab_product'] = $this->language->get('tab_product');
-			$this->data['tab_order_history'] = $this->language->get('tab_order_history');
+			$this->data['tab_history'] = $this->language->get('tab_history');
 			$this->data['tab_fraud'] = $this->language->get('tab_fraud');
 
 			$this->data['token'] = $this->session->data['token'];

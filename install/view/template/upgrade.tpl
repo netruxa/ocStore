@@ -20,9 +20,11 @@
 		<li>Перейдите в разделе Система->Настройки к редактированию настроек магазина. Проверьте все значения настроек и нажмите кнопку Сохранить даже если ничего не меняли.</li>
 		<li>Перейдите в Публичную часть и дважды нажмите Ctrl+F5 для обновления кешированных CSS стилей.</li>
 	  </ol>
-    <div class="right">
-      <input type="submit" value="Продолжить" class="button" />
-    </div>
+    <div class="buttons">
+	  <div class="right">
+        <input type="submit" value="Продолжить" class="button" />
+      </div>
+	</div>
     </form>
 </div>
 <?php echo $footer; ?>

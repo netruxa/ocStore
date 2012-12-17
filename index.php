@@ -238,17 +238,17 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 // Front Controller
 $controller = new Front($registry);
 
-// Maintenance Mode
-$controller->addPreAction(new Action('common/maintenance'));
-
-// SSL
-$controller->addPreAction(new Action('common/shared'));
-
 // SEO URL's
 if (!$seo_type = $config->get('config_seo_url_type')) {
 	$seo_type = 'seo_url';
 }
 $controller->addPreAction(new Action('common/' . $seo_type));
+
+// Shared Cookies
+$controller->addPreAction(new Action('common/shared'));
+
+// Maintenance Mode
+$controller->addPreAction(new Action('common/maintenance'));
 
 // Router
 if (isset($request->get['route'])) {

@@ -40,6 +40,7 @@ class ControllerCheckoutManual extends Controller {
 
 				if ($customer_info) {
 					$this->customer->login($customer_info['email'], '', true);
+					$this->cart->clear();
 				} else {
 					$json['error']['customer'] = $this->language->get('error_customer');
 				}
@@ -105,6 +106,7 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 
+			// Stock
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 				$json['error']['product']['stock'] = $this->language->get('error_stock');
 			}
@@ -167,6 +169,7 @@ class ControllerCheckoutManual extends Controller {
 					'option'     => $option_data,
 					'download'   => $download_data,
 					'quantity'   => $product['quantity'],
+					'stock'      => $product['stock'],
 					'price'      => $product['price'],
 					'total'      => $product['total'],
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
@@ -288,7 +291,7 @@ class ControllerCheckoutManual extends Controller {
 					$json['error']['shipping']['country'] = $this->language->get('error_country');
 				}
 
-				if ($this->request->post['shipping_zone_id'] == '') {
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
 					$json['error']['shipping']['zone'] = $this->language->get('error_zone');
 				}
 
@@ -471,7 +474,7 @@ class ControllerCheckoutManual extends Controller {
 				$json['error']['payment']['country'] = $this->language->get('error_country');
 			}
 
-			if ($this->request->post['payment_zone_id'] == '') {
+			if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
 				$json['error']['payment']['zone'] = $this->language->get('error_zone');
 			}
 
