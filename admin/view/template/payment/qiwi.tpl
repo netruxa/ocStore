@@ -1,4 +1,10 @@
 <?php echo $header; ?>
+<div id="content">
+  <div class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <?php } ?>
+  </div>
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
@@ -6,12 +12,28 @@
   <div class="left"></div>
   <div class="right"></div>
   <div class="heading">
-    <h1 style="background-image: url('view/image/payment.png');"><?php echo $heading_title; ?></h1>
+    <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
     <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location='<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
   </div>
   <div class="content">
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
       <table class="form">
+        <tr>
+          <td><?php echo $entry_rub_en; ?></td>
+          <td><?php if($flag_rub) { ?> <span style="color: green;"><?php echo $text_enabled; ?></span> <?php } else {?> <span style="color: red;"><?php echo $text_disabled; ?></span><?php }?></td>
+        </tr>
+
+<?php if(!$flag_rub) { ?>
+      </table>
+    </form>
+  </div>
+</div>
+<?php echo $footer; ?>
+<?php return; ?>
+<?php } ?>
+
+
+
         <tr>
           <td><span class="required">*</span> <?php echo $entry_shop_id; ?></td>
           <td><input type="text" name="qiwi_shop_id" value="<?php echo $qiwi_shop_id; ?>" />
@@ -28,15 +50,15 @@
         </tr>
         <tr>
           <td><?php echo $entry_result_url; ?></td>
-          <td><?php echo $webmoney_result_url; ?></td>
+          <td><?php echo $qiwi_result_url; ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_success_url; ?></td>
-          <td><?php echo $webmoney_success_url; ?></td>
+          <td><?php echo $qiwi_success_url; ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_fail_url; ?></td>
-          <td><?php echo $webmoney_fail_url; ?></td>
+          <td><?php echo $qiwi_fail_url; ?></td>
         </tr>
         <tr>
           <td><?php echo $entry_order_status; ?></td>
@@ -114,8 +136,20 @@
           <td><?php echo $entry_soap_lib; ?></td>
           <td><?php if($flag_soap) { ?> <span style="color: green;"><?php echo $text_enabled; ?></span> <?php } else {?> <span style="color: red;"><?php echo $text_disabled; ?></span><?php }?></td>
         </tr>
+        <tr>
+          <td><?php echo $entry_markup; ?></td>
+          <td><input type="text" name="qiwi_markup" value="<?php echo $qiwi_markup; ?>" size="1" /></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_donate_me; ?></td>
+        <td><strong><a href="http://myopencart.ru/">http://myopencart.ru/</a><strong></td>
+        </tr>
       </table>
     </form>
+
+<br>
+		<div style="text-align:center; color:#555555;">QIWI v<?php echo $qiwi_version; ?></div>
+
   </div>
 </div>
 <?php echo $footer; ?>

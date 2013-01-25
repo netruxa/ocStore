@@ -4,8 +4,9 @@ class ControllerPaymentQiwi extends Controller {
 
 	public function index() {
 		$this->load->language('payment/qiwi');
+		$this->data['qiwi_version'] = '1.6';
 
-		$this->document->title = $this->language->get('heading_title');
+	$this->document->setTitle = $this->language->get('heading_title');
 
 		$this->load->model('setting/setting');
 
@@ -22,10 +23,13 @@ class ControllerPaymentQiwi extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 
-
+            $this->data['entry_donate_me'] = $this->language->get('entry_donate_me');
 		$this->data['entry_shop_id'] = $this->language->get('entry_shop_id');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_soap_lib'] = $this->language->get('entry_soap_lib');
+		$this->data['entry_rub_en'] = $this->language->get('entry_rub_en');
+
+		$this->data['entry_markup'] = $this->language->get('entry_markup');
 
 
 		$this->data['entry_result_url'] = $this->language->get('entry_result_url');
@@ -73,23 +77,23 @@ class ControllerPaymentQiwi extends Controller {
 			$this->data['error_lifetime'] = '';
 		}
 
-		$this->document->breadcrumbs = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_home'),
-      		'separator' => FALSE
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 
-   		$this->document->breadcrumbs[] = array(
-       		'href'      => HTTPS_SERVER . 'index.php?route=payment/qiwi&token=' . $this->session->data['token'],
+   		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/qiwi', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => ' :: '
    		);
 
@@ -112,9 +116,9 @@ class ControllerPaymentQiwi extends Controller {
 		}
 
 		// URL
-		$this->data['webmoney_result_url'] 		= HTTP_CATALOG . 'index.php?route=payment/qiwi/callback';
-		$this->data['webmoney_success_url'] 	= HTTP_CATALOG . 'index.php?route=payment/qiwi/success';
-		$this->data['webmoney_fail_url'] 		= HTTP_CATALOG . 'index.php?route=payment/qiwi/fail';
+		$this->data['qiwi_result_url'] 	= HTTP_CATALOG . 'index.php?route=payment/qiwi/callback';
+		$this->data['qiwi_success_url'] = HTTP_CATALOG . 'index.php?route=payment/qiwi/success';
+		$this->data['qiwi_fail_url'] 		= HTTP_CATALOG . 'index.php?route=payment/qiwi/fail';
 
 
 		if (isset($this->request->post['qiwi_order_status_id'])) {
@@ -142,6 +146,16 @@ class ControllerPaymentQiwi extends Controller {
 		} else {
 			$this->data['qiwi_lifetime'] = 24;
 		}
+
+
+		if (isset($this->request->post['qiwi_markup'])) {
+			$this->data['qiwi_markup'] = $this->request->post['qiwi_markup'];
+		} elseif( $this->config->get('qiwi_markup') ) {
+			$this->data['qiwi_markup'] = $this->config->get('qiwi_markup');
+		} else {
+			$this->data['qiwi_markup'] = 0.0;
+		}
+
 
 		// Проверка на наличие SOAP сервера
 		if( class_exists('SoapServer') ) {
@@ -175,6 +189,22 @@ class ControllerPaymentQiwi extends Controller {
 		} else {
 			$this->data['qiwi_sort_order'] = $this->config->get('qiwi_sort_order');
 		}
+
+
+
+		$this->load->model('localisation/currency');
+
+		$results = $this->model_localisation_currency->getCurrencies();
+		$this->data['flag_rub'] = 0;
+
+		foreach ($results as $result) {
+			if ($result['code'] == 'RUB') {
+				$this->data['flag_rub'] = 1;
+
+			}
+		}
+
+
 
 		$this->template = 'payment/qiwi.tpl';
 		$this->children = array(

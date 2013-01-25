@@ -10,9 +10,9 @@ $_['text_qiwi']             = '<img height="25" src="view/image/payment/qiwi.jpe
 // Entry
 $_['entry_shop_id']         		= 'Номер магазина:';
 $_['entry_password']        		= 'Пароль:';
-$_['entry_result_url']      		= 'Result URL:';
-$_['entry_success_url']     		= 'Success URL:';
-$_['entry_fail_url']        		= 'Fail URL :';
+$_['entry_result_url']      		= 'QIWI URL:';
+$_['entry_success_url']     		= 'URL для отправки в случае успешной оплаты счёта:';
+$_['entry_fail_url']        		= 'URL для отправки в случае ошибки:';
 $_['entry_order_status_cancel'] 	= 'Статус заказа при отмене счета';
 $_['entry_order_status_progress']	= 'Статус заказа во время оплаты счета';
 $_['entry_lifetime'] 				= 'Время жизни счета (в часах)';
@@ -21,6 +21,9 @@ $_['entry_geo_zone']        		= 'Географическая зона:';
 $_['entry_status']          		= 'Статус:';
 $_['entry_sort_order']      		= 'Порядок сортировки:';
 $_['entry_soap_lib']				= 'SOAP библиотека (<a target="_blank" href="http://ru.php.net/manual/en/book.soap.php">подробнее</a>):';
+$_['entry_donate_me']   	= 'Благодарить сюда:';
+$_['entry_rub_en']			= 'Наличие валюты RUB:';
+$_['entry_markup']			= 'Наценка(%):';
 
 // Error
 $_['error_permission']      = 'У Вас нет прав для управления этим модулем!';

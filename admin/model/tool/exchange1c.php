@@ -23,11 +23,11 @@ class ModelToolExchange1c extends Model {
 
 		$document = array();
 		$document_counter = 0;
-		
+
 		foreach ($orders as $orders_data) {
-		
+
 			$order = $this->model_sale_order->getOrder($orders_data['order_id']);
-			
+
 			$date = date('Y-m-d', strtotime($order['date_added']));
 			$time = date('H:i:s', strtotime($order['date_added']));
 
@@ -51,7 +51,7 @@ class ModelToolExchange1c extends Model {
 				,'ПолноеНаименование'	=> $order['payment_lastname'] . ' ' . $order['payment_firstname']
 				,'Фамилия'				=> $order['payment_lastname']
 				,'Имя'					=> $order['payment_firstname']
-				
+
 				,'Адрес' 	=> array(
 					'Представление'	=> $order['shipping_address_1'].', '.$order['shipping_city'].', '.$order['shipping_postcode'].', '.$order['shipping_country']
 				)
@@ -179,7 +179,7 @@ class ModelToolExchange1c extends Model {
 						if ($price_types[(string)$price->ИдТипаЦены] == $config_price_type) {
 							$data['price'] = (float)$price->ЦенаЗаЕдиницу;
 						}
-					} 
+					}
 				}
 			}
 
@@ -241,11 +241,11 @@ class ModelToolExchange1c extends Model {
 					if ($discount->ЗначениеУсловия) {
 						$value['quantity'] = (int)$discount->ЗначениеУсловия;
 					}
-					
+
 					unset($value);
 				}
 			}
-		   	
+
 			$data['status'] = 1;
 			$this->updateProduct($data);
 			unset($data);
@@ -258,13 +258,13 @@ class ModelToolExchange1c extends Model {
 	/**
 	 * Парсит товары и категории
 	 */
-	public function parseImport() {		
+	public function parseImport() {
 
 		$importFile = DIR_CACHE . 'exchange1c/import.xml';
 
 		$xml = simplexml_load_file($importFile);
 		$data = array();
-		
+
 		// Группы
 		if($xml->Классификатор->Группы) $this->insertCategory($xml->Классификатор->Группы->Группа);
 
@@ -284,7 +284,7 @@ class ModelToolExchange1c extends Model {
 				$data['sku'] = $data['model'];
 
 				$data['name'] = $product->Наименование?(string)$product->Наименование:'не задано';
-			
+
 				if ($product->Картинка) {
 					$data['image'] =(string)$product->Картинка[0];
 					unset($product->Картинка[0]);
@@ -320,11 +320,11 @@ class ModelToolExchange1c extends Model {
 							}
 
 							switch ($attribute['name']) {
-			
+
 								case 'Производитель':
 									$manufacturer_name = $attribute_value;
 									$query = $this->db->query("SELECT manufacturer_id FROM ". DB_PREFIX ."manufacturer WHERE name='". $manufacturer_name ."'");
-									
+
 									if ($query->num_rows) {
 										$data['manufacturer_id'] = $query->row['manufacturer_id'];
 									}
@@ -335,7 +335,7 @@ class ModelToolExchange1c extends Model {
 											'sort_order' 		 => 0,
 											'manufacturer_store' => array(0 => 0)
 										);
-										
+
 										$data_manufacturer['manufacturer_description'] = array(
 											1 => array(
 												'meta_keyword' 		=> '',
@@ -350,19 +350,19 @@ class ModelToolExchange1c extends Model {
 										$data['manufacturer_id'] = $manufacturer_id;
 									}
 								break;
-								
+
 								case 'oc.seo_h1':
 									$data['seo_h1'] = $attribute_value;
 								break;
-								
+
 								case 'oc.seo_title':
 									$data['seo_title'] = $attribute_value;
 								break;
-								
+
 								case 'oc.sort_order':
 									$data['sort_order'] = $attribute_value;
 								break;
-									
+
 								default:
 									$data['product_attribute'][] = array(
 										'attribute_id' 					=> $attribute['id'],
@@ -372,8 +372,8 @@ class ModelToolExchange1c extends Model {
 											)
 										)
 									);
-									
-										
+
+
 							}
 						}
 					}
@@ -408,7 +408,7 @@ class ModelToolExchange1c extends Model {
 	 * @return 	array
 	 */
 	private function initCategory($category, $parent, $data = array()){
-		
+
 		$result = array(
 			 'status' 		=> isset($data['status']) ? $data['status'] : 1
 			,'top'			=> isset($data['top']) ? $data['top'] : 1
@@ -447,7 +447,7 @@ class ModelToolExchange1c extends Model {
 
 		foreach ($xml as $category){
 
-			if (isset($category->Ид) && isset($category->Наименование) ){ 
+			if (isset($category->Ид) && isset($category->Наименование) ){
 				$id =  (string)$category->Ид;
 
 				$data = array();
@@ -475,8 +475,8 @@ class ModelToolExchange1c extends Model {
 
 		unset($xml);
 	}
-	
-	
+
+
 	/**
 	 * Создает атрибуты из свойств
 	 *
@@ -488,7 +488,7 @@ class ModelToolExchange1c extends Model {
 
 
 		$attribute_group = $this->model_catalog_attribute_group->getAttributeGroup(1);
-		
+
 		if (!$attribute_group) {
 
 			$attribute_group_description[1] = array (
@@ -502,12 +502,12 @@ class ModelToolExchange1c extends Model {
 
 			$this->model_catalog_attribute_group->addAttributeGroup($data);
 		}
-		
+
 		foreach ($xml as $attribute) {
 			$id 	= (string)$attribute->Ид;
 			$name	= (string)$attribute->Наименование;
 			$values = array();
-			
+
 			if ((string)$attribute->ВариантыЗначений) {
 				if ((string)$attribute->ТипЗначений == 'Справочник') {
 					foreach($attribute->ВариантыЗначений->Справочник as $option_value){
@@ -523,9 +523,9 @@ class ModelToolExchange1c extends Model {
 				'attribute_group_id'	=>	1,
 				'sort_order'			=> 	0,
 			);
-			
+
 			$data['attribute_description'][1]['name'] = (string)$name;
-			
+
 			// Если атрибут уже был добавлен, то возвращаем старый id, если атрибута нет, то создаем его и возвращаем его id
 			$current_attribute = $this->db->query('SELECT attribute_id FROM ' . DB_PREFIX . 'attribute_to_1c WHERE 1c_attribute_id = "' . $id . '"');
 			if (!$current_attribute->num_rows) {
@@ -542,9 +542,9 @@ class ModelToolExchange1c extends Model {
 				'name'   => $name,
 				'values' => $values
 			);
-			
-		}	
-		
+
+		}
+
 		unset($xml);
 	}
 
@@ -586,7 +586,7 @@ class ModelToolExchange1c extends Model {
 			$data = array_merge($data, array('product_store' => $this->model_catalog_product->getProductStores($product_id)));
 			$data = array_merge($data, array('product_related' => $this->model_catalog_product->getProductRelated($product_id)));
 			$data = array_merge($data, array('product_attribute' => $this->model_catalog_product->getProductAttributes($product_id)));
-			
+
 			if (VERSION == '1.5.3.1') {
 				$data = array_merge($data, array('product_tag' => $this->model_catalog_product->getProductTags($product_id)));
 			}
@@ -685,7 +685,7 @@ class ModelToolExchange1c extends Model {
 			$result['product_category'] = isset($data['product_category']) ? $data['product_category']: array(0);
 			$result['main_category_id'] = isset($data['main_category_id']) ? $data['main_category_id']: 0;
 		}
-				
+
 		return $result;
 	}
 
@@ -711,7 +711,7 @@ class ModelToolExchange1c extends Model {
 			//$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$query->row['product_id'] . "'");
 			//$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value_description WHERE product_id = '" . (int)$query->row['product_id'] . "'");
 			return $this->updateProduct($product, $product_id);
-		} 	
+		}
 
 		// Заполняем значения продукта
 		$data = $this->initProduct($product);
@@ -754,9 +754,9 @@ class ModelToolExchange1c extends Model {
 		else if ((!empty($product['product_option'])) && ((float)$product_old['price'] == 0)){
 
 			$product['product_option'][0]['product_option_value'][0]['price'] = 0;
-		
+
 		}
-		
+
 		$this->load->model('catalog/product');
 		$product_old = $this->initProduct($product, $product_old);
 
@@ -808,7 +808,7 @@ class ModelToolExchange1c extends Model {
 	public function fillParentsCategories() {
 		$this->db->query('DELETE FROM `' .DB_PREFIX . 'product_to_category` WHERE `main_category` = 0');
 		$query = $this->db->query('SELECT * FROM `' . DB_PREFIX . 'product_to_category` WHERE `main_category` = 1');
-		
+
 		if ($query->num_rows) {
 			foreach ($query->rows as $row) {
 				$parents = $this->findParentsCategories($row['category_id']);
@@ -864,14 +864,14 @@ class ModelToolExchange1c extends Model {
 
 		// Очищает таблицы категорий
 		if ($params['category']) {
-			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category'); 
+			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category');
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category_description');
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category_to_store');
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category_to_layout');
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'category_to_1c');
 			$this->db->query('DELETE FROM ' . DB_PREFIX . 'url_alias WHERE query LIKE "%category_id=%"');
 		}
-			
+
 		// Очищает таблицы от всех производителей
 		if ($params['manufacturer']) {
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'manufacturer');
@@ -879,7 +879,7 @@ class ModelToolExchange1c extends Model {
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'manufacturer_to_store');
 			$this->db->query('DELETE FROM ' . DB_PREFIX . 'url_alias WHERE query LIKE "%manufacturer_id=%"');
 		}
-			
+
 		// Очищает атрибуты
 		if ($params['attribute']) {
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'attribute');
@@ -889,7 +889,7 @@ class ModelToolExchange1c extends Model {
 			$this->db->query('TRUNCATE TABLE ' . DB_PREFIX . 'attribute_group_description');
 		}
 
-        
+
 		// Выставляем кол-во товаров в 0
 		if($params['quantity']) {
 			$this->db->query('UPDATE ' . DB_PREFIX . 'product ' . 'SET quantity = 0');
@@ -914,7 +914,7 @@ class ModelToolExchange1c extends Model {
 							KEY `1c_id` (`1c_id`),
 							FOREIGN KEY (product_id) REFERENCES '. DB_PREFIX .'product(product_id) ON DELETE CASCADE
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8'
-			);			
+			);
 		}
 
 
@@ -930,11 +930,11 @@ class ModelToolExchange1c extends Model {
 							KEY `1c_id` (`1c_category_id`),
 							FOREIGN KEY (category_id) REFERENCES '. DB_PREFIX .'category(category_id) ON DELETE CASCADE
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8'
-			);			
+			);
 		}
 
 		$query = $this->db->query('SHOW TABLES LIKE "' . DB_PREFIX . 'attribute_to_1c"');
-		
+
 		if(!$query->num_rows) {
 			$this->db->query(
 					'CREATE TABLE
@@ -945,7 +945,7 @@ class ModelToolExchange1c extends Model {
 							KEY `1c_id` (`1c_attribute_id`),
 							FOREIGN KEY (attribute_id) REFERENCES '. DB_PREFIX .'attribute(attribute_id) ON DELETE CASCADE
 						) ENGINE=MyISAM DEFAULT CHARSET=utf8'
-			);			
+			);
 		}
 	}
 

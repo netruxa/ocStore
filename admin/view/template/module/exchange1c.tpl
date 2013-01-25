@@ -27,20 +27,20 @@
         <a href="#tab-manual"><?php echo $text_tab_manual; ?></a>
       </div>
 
-    
+
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        
+
         <div id="tab-general">
           <table class="form">
             <tr>
               <td><?php echo $entry_username; ?></td>
               <td><input name="exchange1c_username" type="text" value="<?php echo $exchange1c_username; ?>" /></td>
-            </tr>        
+            </tr>
             <tr>
               <td><?php echo $entry_password; ?></td>
               <td><input name="exchange1c_password" type="password" value="<?php echo $exchange1c_password; ?>" /></td>
             </tr>
-            
+
             <tr>
               <td><?php echo $entry_status; ?></td>
               <td><select name="exchange1c_status">
@@ -62,7 +62,7 @@
             </tr>
           </table>
         </div>
-        
+
         <div id="tab-product">
           <table class="form">
 
@@ -86,7 +86,7 @@
                 <input type="checkbox" value="1" id="exchange1c_flush_category" name="exchange1c_flush_category" <?php echo ($exchange1c_flush_category == 1)? 'checked' : ''; ?>>
               </td>
             </tr>
-            
+
             <tr>
               <td><label for="exchange1c_flush_manufacturer"><?php echo $entry_flush_manufacturer; ?></label></td>
               <td>
@@ -100,7 +100,7 @@
                 <input type="checkbox" value="1" id="exchange1c_flush_attribute" name="exchange1c_flush_attribute" <?php echo ($exchange1c_flush_attribute == 1)? 'checked' : ''; ?>>
               </td>
             </tr>
-    
+
             <tr>
               <td><label for="exchange1c_flush_quantity"><?php echo $entry_flush_quantity; ?></label></td>
               <td>
@@ -126,7 +126,7 @@
 
         <div id="tab-order">
           <table class="form">
-            
+
             <tr>
               <td><?php echo $entry_order_status; ?></td>
               <td>
@@ -175,7 +175,7 @@
 
 
     </div>
-    
+
     <div style="text-align:center; opacity: .5">
       <p><?php echo $version; ?> | <a href="http://zenwalker.ru/lab/opencart-exchange1c"><?php echo $text_homepage; ?></a></p>
     </div>
@@ -183,10 +183,10 @@
 </div>
 
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
+$('#tabs a').tabs();
 //--></script>
 
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script>
 <script type="text/javascript"><!--
 new AjaxUpload('#button-upload', {
   action: 'index.php?route=module/exchange1c/manualImport&token=<?php echo $token; ?>',
@@ -200,19 +200,19 @@ new AjaxUpload('#button-upload', {
   onComplete: function(file, json) {
     $('#button-upload').attr('disabled', false);
     $('.loading').remove();
-    
+
     if (json['success']) {
       alert(json['success']);
     }
-    
+
     if (json['error']) {
       alert(json['error']);
     }
-    
-    
+
+
   }
 });
-//--></script> 
+//--></script>
 
 
 <?php echo $footer; ?>

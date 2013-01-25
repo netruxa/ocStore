@@ -153,10 +153,10 @@ final class VQMod {
 
 	/**
 	 * VQMod::dirCheck()
-	 * 
+	 *
 	 * @param string $path
 	 * @return null
-	 * @description Creates $path folder if it doesn't exist 
+	 * @description Creates $path folder if it doesn't exist
 	 */
 	public function dirCheck($path) {
 		if(!is_dir($path)) {
@@ -280,7 +280,7 @@ final class VQMod {
 
 	/**
 	 * VQMod::_realpath()
-	 * 
+	 *
 	 * @param string $file
 	 * @return string
 	 * @description Returns real path of any path, adding directory slashes if necessary
@@ -523,7 +523,7 @@ class VQModObject {
 						}
 						break;
 					}
-					
+
 					if($mod['search']->regex == 'true') {
 						$pos = @preg_match($mod['search']->getContent(), $line);
 						if($pos === false) {

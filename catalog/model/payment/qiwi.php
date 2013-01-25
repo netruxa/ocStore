@@ -17,13 +17,14 @@ class ModelPaymentQiwi extends Model {
 			$status = FALSE;
 		}
 
+
 		$method_data = array();
 
 		if ($status) {
       		$method_data = array(
-        		'id'         => 'qiwi',
+        		'code'       => 'qiwi',
         		'title'      => $this->language->get('text_title'),
-				'sort_order' => $this->config->get('qiwi_sort_order')
+			'sort_order' => $this->config->get('qiwi_sort_order')
       		);
     	}
 

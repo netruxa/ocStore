@@ -12,36 +12,46 @@ class ControllerPaymentQiwi extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 
-		// TETS
 		$this->load->language('payment/qiwi');
 		$this->data['sub_text_info'] = $this->language->get('sub_text_info');
 		$this->data['sub_text_info_phone'] = $this->language->get('sub_text_info_phone');
 
+		$this->data['qiwi_limit'] = $this->language->get('qiwi_limit');
+		$this->data['button_back'] = $this->language->get('button_back');
+
+            $this->data['description'] = $this->config->get('config_store') . ' ' . $this->language->get('order_id') . $order_info['order_id'];
 
 		// Переменные
 		$this->data['from'] = $this->config->get('qiwi_shop_id');
 		$this->data['txn_id'] = $this->session->data['order_id'];
-		$this->data['com'] = html_entity_decode($this->config->get('config_store'), ENT_QUOTES, 'UTF-8');
-		$this->data['summ'] = $this->currency->format($order_info['total'], $order_info['currency'], $order_info['value'], FALSE);
+
+		$rur_code = 'RUB';
+		$rur_order_total = $this->currency->convert($order_info['total'], $order_info['currency_code'], $rur_code);
+		$this->data['summ'] = $this->currency->format($rur_order_total, $rur_code, $order_info['currency_value'], FALSE);
+		$this->data['summ'] = round((float)$this->data['summ'] + (float)$this->data['summ']/100*(float)$this->config->get('qiwi_markup'), 2);
+
 		$this->data['check_agt'] = false;
-		$this->data['lifetime'] = (int)$this->config->get('qiwi_lifetime');
+		$this->data['lifetime'] = $this->config->get('qiwi_lifetime');
 
-
+		$this->data['phone'] = preg_replace("/\D+/", "", $order_info['telephone']);
+		if (strlen ($this->data['phone']) > 10) $this->data['phone'] = substr($this->data['phone'], -10);
 
 		$this->data['return'] = HTTP_SERVER . 'index.php?route=checkout/success';
 
-
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['cancel_return'] = HTTP_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['cancel_return'] = HTTP_SERVER . 'index.php?route=checkout/guest_step_2';
+		$products = $this->cart->getProducts();
+		$_prods = "   Заказ: ";
+		foreach ($products as $product)
+		{
+			$_prods = $_prods . $product['name'] . " - " . $product['quantity'] . " шт ";
 		}
 
-		if ($this->request->get['route'] != 'checkout/guest_step_3') {
-			$this->data['back'] = HTTP_SERVER . 'index.php?route=checkout/payment';
-		} else {
-			$this->data['back'] = HTTP_SERVER . 'index.php?route=checkout/guest_step_2';
-		}
+
+		$_prods = $this->data['description'];// . $_prods;
+		if (mb_strlen($_prods,'UTF-8')>255) $_prods = mb_substr($_prods, 0, 252, 'UTF-8').'...';
+
+		$this->data['com'] = html_entity_decode($_prods, ENT_QUOTES, 'UTF-8');
+
+		$this->data['markup'] = $this->language->get('markup').$this->data['summ'].$this->language->get('qiwi_rubls');
 
 		$this->id = 'payment';
 
@@ -107,13 +117,11 @@ class qiwiSoap extends model {
 
 	public function updateBill($param) {
 
-/*
-		$k = var_export($param, true);
-		$this->log->write('PHP Fatal Error:  ' . $k . ' in qiwi');
-*/
 
 		// Проверка на ID магазина
 		if($param->login != $this->config->get('qiwi_shop_id')) {
+			$this->log->write('error id');
+
 			$param->updateBillResult = 150;
 			return $param;
 		}
@@ -123,6 +131,8 @@ class qiwiSoap extends model {
 		$hash = strtoupper( md5( $order_id . strtoupper( md5($this->config->get('qiwi_password')))));
 		// Проверка на пароль
 		if($param->password != $hash) {
+			$this->log->write('error hash');
+
 			$param->updateBillResult = 150;
 			return $param;
 		}
@@ -131,6 +141,8 @@ class qiwiSoap extends model {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		if ( ! $order_info) {
+			$this->log->write('error order');
+
 			$param->updateBillResult = 210;
 			return $param;
 		}
@@ -140,7 +152,7 @@ class qiwiSoap extends model {
 		// Изменяем статус заказа
 
 		// Стутс проведения счета.
-		if( $param->status = 60 ) {
+		if( $param->status == 60 ) {
 
 			if( $order_info['order_status_id'] == 0) {
 				$this->model_checkout_order->confirm($order_id, $this->config->get('qiwi_order_status_id'), 'QIWI');

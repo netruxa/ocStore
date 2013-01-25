@@ -4,7 +4,7 @@
  * Copyright (c) 2009 Eduardo Lundgren (eduardolundgren@gmail.com)
  * and Richard D. Worth (rdworth@gmail.com)
  *
- * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
  */
@@ -111,8 +111,8 @@ $.extend($.simulate.prototype, {
 	},
 
 	drag: function(el) {
-		var self = this, center = this.findCenter(this.target), 
-			options = this.options,	x = Math.floor(center.x), y = Math.floor(center.y), 
+		var self = this, center = this.findCenter(this.target),
+			options = this.options,	x = Math.floor(center.x), y = Math.floor(center.y),
 			dx = options.dx || 0, dy = options.dy || 0, target = this.target;
 		var coord = { clientX: x, clientY: y };
 		this.simulateEvent(target, "mousedown", coord);

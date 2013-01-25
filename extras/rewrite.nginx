@@ -31,9 +31,9 @@ location @rewrite_custom {
 }
 
 location ~ \.(tpl|ini|log) {
-        return 403;
+        return 404;
 }
 
-location /extras {
-	return 403;
+location ~* ^/(extras|vqmod|vqgen) {
+	return 404;
 }
