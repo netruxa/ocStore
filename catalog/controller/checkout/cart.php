@@ -80,6 +80,8 @@ class ControllerCheckoutCart extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
       	$this->data['breadcrumbs'] = array();
 
@@ -382,6 +384,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			$this->children = array(
+				'payment/google_checkout',
 				'common/column_left',
 				'common/column_right',
 				'common/content_bottom',
@@ -536,10 +539,6 @@ class ControllerCheckoutCart extends Controller {
 					$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 				}
 			}
-
-			//if ($product_info['minimum'] > $this->request->post['quantity']) {
-			//	$json['error']['option'] = sprintf($this->language->get('error_minimum'), $product_info['name']);
-			//}
 
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option);

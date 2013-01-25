@@ -4,6 +4,10 @@
 by dj-avtosh a.k.a. Эльхан Исаев
 **/
 
+@error_reporting ( E_ALL ^ E_WARNING ^ E_NOTICE );
+@ini_set ( 'display_errors', true );
+@ini_set ( 'html_errors', false );
+@ini_set ( 'error_reporting', E_ALL ^ E_WARNING ^ E_NOTICE );
 header ("Content-Type: text/html; charset=utf-8");
 
 if(isset($_REQUEST['city_from']) && !empty($_REQUEST['city_from'])) $city_from = $_REQUEST['city_from']; else $error .= '<li> Выберите город отправления';

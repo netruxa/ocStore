@@ -100,6 +100,7 @@ class ControllerProductCategory extends Controller {
 
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
+			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 			$this->data['seo_h1'] = $category_info['seo_h1'];
 
@@ -187,12 +188,11 @@ class ControllerProductCategory extends Controller {
 					'filter_sub_category' => true
 				);
 
-				$product_total = $this->model_catalog_product->getTotalProducts($data);
-
 				$this->data['categories'][] = array(
-					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
+
 			}
 
 			$this->data['products'] = array();

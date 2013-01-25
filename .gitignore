@@ -3,19 +3,48 @@
 !index.html
 
 #Commonly modified files
-config.php
-admin/config.php
-download
-backup
-system/cache
-system/logs
-vq/
-vqgen/
-vqmod/vqmod.log
-vqmod/vqcache
-catalog/view/theme/*
-!catalog/view/theme/default
+/config.php
+/admin/config.php
+
+# Default user's php.ini name, if enabled in global php.ini.
+# Our /php.ini can be copied or symlinked here, if you're using NginX+PHP-FPM.
 .user.ini
-image/cache
-image/data/*
-!image/data/demo
+
+# Apache's .htaccess. Our .htaccess.txt can be copied or symlinked here.
+.htaccess
+
+# dir, that can be used for backups and vqmod (if user will enable it).
+backup
+/vqgen/
+/vqmod/vqmod.log
+/vqmod/vqcache
+
+# Themes
+/catalog/view/theme/*
+!/catalog/view/theme/default
+
+/image/data/*
+!/image/data/demo
+
+# System Cache Files
+/system/cache/*
+!/system/cache/index.html
+
+# Image File
+!/image/no_image.jpg
+
+# Image Cache Files
+/image/cache/*
+!/image/cache/index.html
+
+# Templates Files
+/image/templates/*
+!/image/templates/default.jpg
+
+# Download Files
+/download/*
+!/download/index.html
+
+# Log Files
+/system/logs/*
+!/system/logs/index.html

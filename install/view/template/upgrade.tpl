@@ -11,7 +11,8 @@
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-      <p><b>Внимательно прочтите и выполните следующие действия!</b></p>
+      <fieldset>
+        <p><b>Внимательно прочтите и выполните следующие действия!</b></p>
 	  <ol>
 	    <li>О любых ошибках и проблемах при обновлении сообщите на форуме</li>
 		<li>После обновления, удалите все куки в своем браузере, чтобы избежать ошибок с токенами.</li>
@@ -20,11 +21,12 @@
 		<li>Перейдите в разделе Система->Настройки к редактированию настроек магазина. Проверьте все значения настроек и нажмите кнопку Сохранить даже если ничего не меняли.</li>
 		<li>Перейдите в Публичную часть и дважды нажмите Ctrl+F5 для обновления кешированных CSS стилей.</li>
 	  </ol>
-    <div class="buttons">
+      </fieldset>
+      <div class="buttons">
 	  <div class="right">
-        <input type="submit" value="Продолжить" class="button" />
+            <input type="submit" value="Продолжить" class="button" />
+          </div>
       </div>
-	</div>
     </form>
 </div>
 <?php echo $footer; ?>

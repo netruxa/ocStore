@@ -160,7 +160,7 @@ $('#button-search').bind('click', function() {
 	var filter_description = $('#content input[name=\'description\']:checked').attr('value');
 
 	if (filter_description) {
-		url += '&filter_description=true';
+		url += '&description=true';
 	}
 
 	location = url;
@@ -201,7 +201,6 @@ function display(view) {
 			}
 
 			html += '</div>';
-
 
 			$(element).html(html);
 		});

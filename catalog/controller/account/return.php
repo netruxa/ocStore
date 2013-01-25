@@ -12,6 +12,8 @@ class ControllerAccountReturn extends Controller {
     	$this->language->load('account/return');
 
     	$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
       	$this->data['breadcrumbs'] = array();
 
@@ -106,7 +108,7 @@ class ControllerAccountReturn extends Controller {
 	}
 
 	public function info() {
-		$this->load->language('account/return');
+		$this->language->load('account/return');
 
 		if (isset($this->request->get['return_id'])) {
 			$return_id = $this->request->get['return_id'];

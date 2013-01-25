@@ -1,9 +1,11 @@
 <?php
 // Version
-define('VERSION', '1.5.5');
+define('VERSION', '1.5.5.1');
 
 // Configuration
-require_once('config.php');
+if (file_exists('config.php')) {
+	require_once('config.php');
+}
 
 // Install
 if (!defined('DIR_APPLICATION')) {

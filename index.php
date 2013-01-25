@@ -1,9 +1,11 @@
 <?php
 // Version
-define('VERSION', '1.5.5');
+define('VERSION', '1.5.5.1');
 
 // Configuration
-require_once('config.php');
+if (file_exists('config.php')) {
+	require_once('config.php');
+}
 
 // Install
 if (!defined('DIR_APPLICATION')) {
@@ -142,13 +144,7 @@ $cache = new Cache();
 $registry->set('cache', $cache);
 
 // Session
-if (isset($request->get['session_id'])) {
-	$session_id = $request->get['session_id'];
-} else {
-	$session_id = '';
-}
-
-$session = new Session($session_id);
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection
@@ -162,7 +158,7 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) {
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 
 	foreach ($browser_languages as $browser_language) {
@@ -243,9 +239,6 @@ if (!$seo_type = $config->get('config_seo_url_type')) {
 	$seo_type = 'seo_url';
 }
 $controller->addPreAction(new Action('common/' . $seo_type));
-
-// Shared Cookies
-$controller->addPreAction(new Action('common/shared'));
 
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));

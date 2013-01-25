@@ -16,16 +16,16 @@ class ModelInstall extends Model {
 			$this->flushDatabase($connection);
 		}
 		if ($lines) {
-			$query = '';
+			$sql = '';
 			foreach($lines as $line) {
 				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-					$query .= $line;
+					$sql .= $line;
 					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
-						$db->query($query);
-						$query = '';
+						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
+						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
+						$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
+						$db->query($sql);
+						$sql = '';
 					}
 				}
 			}
@@ -53,12 +53,12 @@ class ModelInstall extends Model {
 
 		$file = DIR_APPLICATION . 'opencart.pg.sql';
 		if ($sql = file($file)) {
-			$query = '';
+			$sql = '';
 			$isfunc = 0;
 			foreach($sql as $line) {
 				$tsl = trim($line);
 				if (($sql != '') && (substr($tsl, 0, 2) != "--") && (substr($tsl, 0, 1) != '#')) {
-					$query .= $line;
+					$sql .= $line;
 					if (preg_match('/^CREATE .*FUNCTION /', $line))
 					{
 						$isfunc = 1;
@@ -66,14 +66,14 @@ class ModelInstall extends Model {
 					if (preg_match('/;\s*$/', $line)) {
 						if (($isfunc == 0) || preg_match('/\$\$ LANGUAGE sql;$/', $line))
 						{
-							$query = str_replace("DROP TABLE IF EXISTS \"oc_", "DROP TABLE IF EXISTS \"" . $data['db_prefix'], $query);
-							$query = str_replace("CREATE TABLE \"oc_", "CREATE TABLE \"" . $data['db_prefix'], $query);
-							$query = str_replace("INSERT INTO \"oc_", "INSERT INTO \"" . $data['db_prefix'], $query);
-							$result = pg_query($connection, $query);
+							$sql = str_replace("DROP TABLE IF EXISTS \"oc_", "DROP TABLE IF EXISTS \"" . $data['db_prefix'], $sql);
+							$sql = str_replace("CREATE TABLE \"oc_", "CREATE TABLE \"" . $data['db_prefix'], $sql);
+							$sql = str_replace("INSERT INTO \"oc_", "INSERT INTO \"" . $data['db_prefix'], $sql);
+							$result = pg_query($connection, $sql);
 							if (!$result) {
 								die(pg_last_error());
 							}
-							$query = '';
+							$sql = '';
 							$isfunc = 0;
 						};
 					}

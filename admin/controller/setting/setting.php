@@ -3,7 +3,7 @@ class ControllerSettingSetting extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('setting/setting');
+		$this->language->load('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -69,7 +69,6 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
-		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -130,6 +129,8 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_secure'] = $this->language->get('entry_secure');
 		$this->data['entry_shared'] = $this->language->get('entry_shared');
 		$this->data['entry_robots'] = $this->language->get('entry_robots');
+		$this->data['entry_file_extension_allowed'] = $this->language->get('entry_file_extension_allowed');
+		$this->data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
@@ -531,12 +532,6 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_download'] = $this->request->post['config_download'];
 		} else {
 			$this->data['config_download'] = $this->config->get('config_download');
-		}
-
-		if (isset($this->request->post['config_upload_allowed'])) {
-			$this->data['config_upload_allowed'] = $this->request->post['config_upload_allowed'];
-		} else {
-			$this->data['config_upload_allowed'] = $this->config->get('config_upload_allowed');
 		}
 
 		if (isset($this->request->post['config_voucher_min'])) {
@@ -1033,6 +1028,18 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_seo_url_postfix'] = $this->request->post['config_seo_url_postfix'];
 		} else {
 			$this->data['config_seo_url_postfix'] = $this->config->get('config_seo_url_postfix');
+		}
+
+		if (isset($this->request->post['config_file_extension_allowed'])) {
+			$this->data['config_file_extension_allowed'] = $this->request->post['config_file_extension_allowed'];
+		} else {
+			$this->data['config_file_extension_allowed'] = $this->config->get('config_file_extension_allowed');
+		}
+
+		if (isset($this->request->post['config_file_mime_allowed'])) {
+			$this->data['config_file_mime_allowed'] = $this->request->post['config_file_mime_allowed'];
+		} else {
+			$this->data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
 		}
 
 		if (isset($this->request->post['config_maintenance'])) {

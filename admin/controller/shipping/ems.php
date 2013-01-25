@@ -16,7 +16,7 @@ class ControllerShippingEms extends Controller {
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token']);
 		}
 
-		//Ð¯Ð·Ñ‹ÐºÐ¾Ð²Ñ‹Ðµ Ð¾Ð±Ð¾Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
+		//ßçûêîâûå îáîçíà÷åíèÿ
 		$this->data['heading_title'] 	= 	$this->language->get('heading_title');
 		$this->data['text_enabled'] 	= 	$this->language->get('text_enabled');
 		$this->data['text_disabled'] 	= 	$this->language->get('text_disabled');
@@ -31,7 +31,7 @@ class ControllerShippingEms extends Controller {
 		$this->data['tab_general'] 		= 	$this->language->get('tab_general');
 		$this->data['entry_vid'] 		= 	$this->language->get('entry_vid');
 		$this->data['entry_vid_out'] 	= 	$this->language->get('entry_vid_out');
-		//Ð¯Ð·Ñ‹ÐºÐ¾Ð²Ñ‹Ðµ Ð¾Ð±Ð¾Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
+		//ßçûêîâûå îáîçíà÷åíèÿ
 
  		if (isset($this->error['warning']))
 			$this->data['error_warning'] = $this->error['warning'];
@@ -133,6 +133,12 @@ else $this->data['locations'] = array();
 
 		if (isset($this->request->post['ems_dopl_ves'])) $this->data['ems_dopl_ves'] = $this->request->post['ems_dopl_ves'];
 		else $this->data['ems_dopl_ves'] = $this->config->get('ems_dopl_ves');
+
+		if (isset($this->request->post['ems_desc'])) $this->data['ems_desc'] = $this->request->post['ems_desc'];
+		else $this->data['ems_desc'] = $this->config->get('ems_desc');
+
+		if (isset($this->request->post['ems_description'])) $this->data['ems_description'] = $this->request->post['ems_description'];
+		else $this->data['ems_description'] = $this->config->get('ems_description');
 
 		$this->load->model('localisation/geo_zone');
 

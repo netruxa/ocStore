@@ -262,10 +262,6 @@
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
-            <tr>
-              <td><?php echo $entry_upload_allowed; ?></td>
-              <td><textarea name="config_upload_allowed" cols="40" rows="5"><?php echo $config_upload_allowed; ?></textarea></td>
-            </tr>
           </table>
           <h2><?php echo $text_voucher; ?></h2>
           <table class="form">
@@ -1003,6 +999,14 @@
               <td><input type="text" name="config_seo_url_postfix" value="<?php echo $config_seo_url_postfix; ?>" size="3" /></td>
             </tr>
             <tr>
+              <td><?php echo $entry_file_extension_allowed; ?></td>
+              <td><textarea name="config_file_extension_allowed" cols="40" rows="5"><?php echo $config_file_extension_allowed; ?></textarea></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_file_mime_allowed; ?></td>
+              <td><textarea name="config_file_mime_allowed" cols="60" rows="5"><?php echo $config_file_mime_allowed; ?></textarea></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_maintenance; ?></td>
               <td><?php if ($config_maintenance) { ?>
                 <input type="radio" name="config_maintenance" value="1" checked="checked" />
@@ -1095,7 +1099,7 @@ $('select[name=\'config_country_id\']').bind('change', function() {
 		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
 		},
 		complete: function() {
 			$('.wait').remove();

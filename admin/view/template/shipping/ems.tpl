@@ -1,11 +1,11 @@
 <?php echo $header; ?>
 
-
 <style type="text/css">
 .ems_calc {color: #000; background-color: #fff; border: 1px dotted #bebebe; text-align: left; padding: 5px;}
 hr {border: 0px; border-bottom: 1px dotted #999; }
 </style>
 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script language="javascript" type="text/javascript">
 <!--
 function test_calc()
@@ -25,6 +25,34 @@ function test_calc()
 //-->
 </script>
 
+<script type="text/javascript">
+//Вставка BB тегов
+function text_add(idd, str1)
+{
+obj = document.getElementById(idd);
+ obj.focus();
+
+ //IE
+ if(document.selection) { var s = document.selection.createRange(); if(s.text) { s.text = str1; s.select(); } else { s.text = str1 + s.text; s.select();} return true; }
+
+ // Opera, FireFox
+ else if (typeof(obj.selectionStart) == "number")
+ {
+   var start = obj.selectionStart;
+   tmp=obj.value.substr(start);
+   obj.value = obj.value.substr(0, start) + str1;
+   tmpsel = obj.value.length - str1.length;
+   tmpscroll=obj.scrollHeight;
+   cnt = obj.value.split(/[\r\n]/g).length;
+   obj.value+=tmp;
+   obj.selectionStart = obj.selectionEnd = tmpsel;
+   if(cnt>obj.rows)obj.scrollTop = tmpscroll;
+ return true;
+ }
+ return false;
+}
+</script>
+
 
 <div id="content">
 
@@ -33,7 +61,7 @@ function test_calc()
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?>, <font color=red>версия 5.5a</font> (разработчик: Эльхан Исаев)</h1>
 
       <div class="buttons">
 	<a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a>
@@ -48,10 +76,11 @@ function test_calc()
       <div class="vtabs">
 	<a href="#ems_1">Основное</a>
 	<a href="#ems_2">Дополнительно</a>
-	<a href="#ems_3">Шаблоны</a>
-	<a href="#ems_4">Калькулятор</a>
-	<a href="#ems_5">О модуле</a>
-	<a href="#ems_6">Благодарности и тестеры</a>
+	<a href="#ems_3">Описание</a>
+	<a href="#ems_4">Шаблоны</a>
+	<a href="#ems_5">Калькулятор</a>
+	<a href="#ems_6">О модуле</a>
+	<a href="#ems_7">Благодарности и тестеры</a>
       </div>
 
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -59,6 +88,27 @@ function test_calc()
 
 <div id="ems_1" class="vtabs-content">
 <table class="form">
+
+<tr>
+<td class="center" colspan="8">
+<div class="ems_calc">
+<b><font color=darkgreen>Проверка системы:</font></b><br />
+<p>
+<?php
+if  (!in_array  ('curl', get_loaded_extensions()))
+echo '1. <b>Библиотека cURL:</b> <font color=red>не подключена и не доступна</font><br>'; else echo '1. <b>Библиотека cURL:</b> <font color=green>включена и доступна</font><br>';
+if  (!in_array  ('json', get_loaded_extensions()))
+echo '2. <b>Библиотека JSON:</b> <font color=red>не подключена и не доступна</font><br>'; else echo '2. <b>Библиотека JSON:</b> <font color=green>включена и доступна</font><br>';
+if  (!in_array  ('mbstring', get_loaded_extensions()))
+echo '3. <b>Библиотека MBSTRING:</b> <font color=red>не подключена и не доступна</font><br>'; else echo '3. <b>Библиотека MBSTRING:</b> <font color=green>включена и доступна</font><br>';
+if  (!in_array  ('iconv', get_loaded_extensions()))
+echo '4. <b>Библиотека ICONV:</b> <font color=red>не подключена и не доступна</font><br>'; else echo '4. <b>Библиотека ICONV:</b> <font color=green>включена и доступна</font><br>';
+
+?>
+</p>
+</div>
+</td>
+</tr>
 
 	<tr>
 	<td>Название метода:</td> <td><input type="text" name="ems_mname" value="<?php echo $ems_mname; ?>"></td>
@@ -97,12 +147,12 @@ function test_calc()
 <tr>
 <td><?php echo 'Пункт отправления'; ?></td>
 <td>
-			<? if ($locations) { ?>
+			<?php if ($locations) { ?>
 				<select name="ems_city_from">
 					<option value="0"><?php echo 'Не выбрано:'; ?></option>
-					<? foreach($locations AS $location) { ?>
-						<option value="<? echo $location['value']; ?>" <? if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
-<?
+					<?php foreach($locations AS $location) { ?>
+						<option value="<?php echo $location['value']; ?>" <?php if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
+<?php
 
 
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
@@ -110,12 +160,12 @@ $rez = str_replace(array('Район', 'Край', 'Область', 'Автон
 echo $rez;
 ?>
 </option>
-					<? } ?>
+					<?php } ?>
 				</select>
-			<? } else { ?>
-				<? echo 'Нет соединения с EMS'; ?>
-				<input type="hidden" name="ems_city_from" value="<? echo $ems_city_from; ?>" />
-			<? } ?>
+			<?php } else { ?>
+				<?php echo 'Нет соединения с EMS'; ?>
+				<input type="hidden" name="ems_city_from" value="<?php echo $ems_city_from; ?>" />
+			<?php } ?>
 </td>
 </tr>
 
@@ -169,18 +219,90 @@ echo $rez;
 </div>
 
 
+
 <div id="ems_3" class="vtabs-content">
 <table class="form">
 
+
+<tr>
+<td class="center" colspan="8">
+<b><font color=green>Это будет отображено только под методом EMS (в способах доставки):</font><b>
+</td>
+</tr>
+
         <tr>
-	<td class="center" colspan="8"><?php echo $entry_vid.'<small><br>*для правильной работы модуля используйте выражения дней только из этих видов: "дня, дней, дн." </small>'; ?><br>
-	<textarea name="ems_vid" cols="130" rows="3"><?php echo $ems_vid; ?></textarea>
+          <td>Выводить описание о EMS?</td>
+          <td><select name="ems_desc">
+              <?php if ($ems_desc) { ?>
+              <option value="1" selected="selected">Да</option>
+              <option value="0">Нет</option>
+              <?php } else { ?>
+              <option value="1">Да</option>
+              <option value="0" selected="selected">Нет</option>
+              <?php } ?>
+            </select></td>
+        </tr>
+
+
+
+
+        <tr>
+	<td class="center" colspan="8">Текст описания о EMS:*<br><small>*выведется при включении опции выше, если текста тут не будет, выведется дефолтный текст EMS (как на оф.сайте.)  </small><br>
+	<textarea name="ems_description" id="ems_description"><?php echo $ems_description; ?></textarea>
+	</td>
+        </tr>
+
+<script type="text/javascript">
+var ckeditor = CKEDITOR.replace('ems_description');
+</script>
+
+
+</table>
+</div>
+
+<div id="ems_4" class="vtabs-content">
+<table class="form">
+
+<tr>
+<td class="center" colspan="8">
+<br /><b><font color=red>Внимание! Следующие шаблоны будут фиксироваться и в  чеке:</font><b>
+</td>
+</tr>
+
+
+        <tr>
+	<td class="center" colspan="8">
+<font color=green>Шаблон чека и отображения в способах доставки (внутренний)*</font>
+<br />
+<div class="ems_calc">
+Вставить шаблон:
+<br />
+<input type="button" onclick="text_add('ems_vid','%from%')" value="откуда отпр.">
+<input type="button" onclick="text_add('ems_vid','%to%')" value="куда отпр.">
+<input type="button" onclick="text_add('ems_vid','%ves%')" value="вес">
+<input type="button" onclick="text_add('ems_vid','%mind%')" value="мин. кол-во дн.">
+<input type="button" onclick="text_add('ems_vid','%maxd%')" value="макс. кол-во дн.">
+</div>
+<small><b>*для правильной работы модуля используйте выражения дней только из этих видов: "дня, дней, дн."</b> </small>
+<br />
+<textarea id="ems_vid" name="ems_vid" cols="130" rows="3"><?php echo $ems_vid; ?></textarea>
 	</td>
         </tr>
 
         <tr>
-	<td class="center" colspan="8"><?php echo $entry_vid_out; ?><br>
-	<textarea name="ems_vid_out" cols="130" rows="3"><?php echo $ems_vid; ?></textarea>
+	<td class="center" colspan="8">
+<font color=purple>Шаблон чека и отображения в способах доставки (международный)</font>
+<br />
+<div class="ems_calc">
+Вставить шаблон: <br />
+<input type="button" onclick="text_add('ems_vid_out','%from%')" value="страна, откуда отпр.">
+<input type="button" onclick="text_add('ems_vid_out','%to%')" value="страна, куда отпр.">
+<input type="button" onclick="text_add('ems_vid_out','%from_city%')" value="город, откуда отпр.">
+<input type="button" onclick="text_add('ems_vid_out','%to_city%')" value="город, куда отпр.">
+<input type="button" onclick="text_add('ems_vid_out','%ves%')" value="вес">
+</div>
+<br />
+	<textarea id="ems_vid_out" name="ems_vid_out" cols="130" rows="3"><?php echo $ems_vid; ?></textarea>
 	</td>
         </tr>
 
@@ -189,7 +311,7 @@ echo $rez;
 </form>
 
 
-<div id="ems_4" class="vtabs-content">
+<div id="ems_5" class="vtabs-content">
 <table width="100%" class="ems_calc">
 <tr>
 
@@ -197,22 +319,22 @@ echo $rez;
 
 <td>
 <form method=POST id="test_calc-form" name="test_calc-form" action="">
-<? if ($locations) { ?>
+<?php if ($locations) { ?>
 <br><br><br><select name="city_from">
 <option value="0"><?php echo 'Не выбрано:'; ?></option>
-<? foreach($locations AS $location) { ?>
-<option value="<? echo $location['value']; ?>" <? if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
-<?
+<?php foreach($locations AS $location) { ?>
+<option value="<?php echo $location['value']; ?>" <?php if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
+<?php
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
 $rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);
 echo $rez;
 ?>
 </option>
-<? } ?>
+<?php } ?>
 </select>
-<? } else { ?>
+<?php } else { ?>
 <input type="hidden" name="city_from" value="" />
-<? } ?>
+<?php } ?>
 </td>
 </tr>
 
@@ -220,22 +342,22 @@ echo $rez;
 <td>  Пункт доставки: </td>
 
 <td>
-<? if ($locations) { ?>
+<?php if ($locations) { ?>
 <select name="city_to">
 <option value="0"><?php echo 'Не выбрано:'; ?></option>
-<? foreach($locations AS $location) { ?>
-<option value="<? echo $location['value']; ?>" <? if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
-<?
+<?php foreach($locations AS $location) { ?>
+<option value="<?php echo $location['value']; ?>" <?php if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
+<?php
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
 $rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);
 echo $rez;
 ?>
 </option>
-<? } ?>
+<?php } ?>
 </select>
-<? } else { ?>
+<?php } else { ?>
 <input type="hidden" name="city_to" value="" />
-<? } ?>
+<?php } ?>
 </td>
 </tr>
 
@@ -280,15 +402,16 @@ $(function(){
 </div>
 
 
-<div id="ems_5" class="vtabs-content">
+<div id="ems_6" class="vtabs-content">
 <table class="form">
 
         <tr>
         <td class="center" colspan="8">
 	Модуль: <b>EMS Почта России</b> <br>
-	Версия: <b><font color=red>5.3</font></b> <br>
-	Автор и разработчик: Эльхан Исаев a.k.a. dj-avtosh<br>
-	<strong><a target="_blank" href="https://github.com/ocStore">Russian Project to optimize OpenCart for Russian realities and for rewriting some features</a></strong>
+	Версия: <b><font color=red>5.5a</font></b> <br>
+	Автор и разработчик: Эльхан Исаев a.k.a. dj-avtosh (дополнения и исправления от SFR)<br>
+	ГитХаб: <strong><a target="_blank" href="https://github.com/ocStore">Russian Project to optimize OpenCart for Russian realities and for rewriting some features</a></strong>
+	<br />Поддержка: <strong><a target="_blank" href="http://opencartforum.ru/topic/8624-">Обсуждения и новые версии на opencartforum.ru</a></strong>
 
 	<br>
 	<br><b>Что умеет модуль:</b> <br>
@@ -305,8 +428,14 @@ $(function(){
 	4. Шаблоны способов доставки <br>
 	- на внутренний <br>
 	- на международний <br>
-	5. Online-калькулятор EMS
+	5. Online-калькулятор EMS<br>
 	- рассчет с объявленной ценностью и без<br>
+	6. Мультивалютность<br>
+	- конфертация в выбранные валюты<br>
+	7. Описание метода<br>
+	- возможность описания метода EMS (во всех деталях)<br>
+	8. Проверка системы<br>
+	- проверка нужных подключенных модулей<br>
 	<br>
 	<br>
 
@@ -316,7 +445,7 @@ $(function(){
 </table>
 </div>
 
-<div id="ems_6" class="vtabs-content">
+<div id="ems_7" class="vtabs-content">
 <table class="form">
 
 <b><i>Благодарю за тестирование и идеи:</i></b> shoma, mva, gemchug74, Alexey1, netalert.
@@ -335,7 +464,9 @@ $(function(){
 	*дополнения от 01.05.12,
 	*дополнения от 11.05.12,
 	*дополнения от 14.05.12,
-	*дополнения от 21.06.12
+	*дополнения от 21.06.12,
+	*дополнения от 29.07.12,
+	*дополнения от 30.07.12
 	</small>
 
 	</td>

@@ -496,7 +496,6 @@ table.list thead td a, .list thead td {
 	font-weight: bold;
 }
 table.list tbody td {
-	vertical-align: top;
 	padding: 0px 5px;
 }
 table.list .left {
@@ -517,7 +516,6 @@ table.radio {
 }
 table.radio td {
 	padding: 5px;
-	vertical-align: top;
 }
 table.radio td label {
 	display: block;

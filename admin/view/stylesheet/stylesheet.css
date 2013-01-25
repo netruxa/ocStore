@@ -121,15 +121,16 @@ label {
 	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -27px 0 0 157px;
+	margin: -29px 0 0 161px;
 }
 #menu > ul li li a {
 	padding: 5px;
+	margin: 1px;
 	color: #FFFFFF;
-	width: 145px;
+	width: 147px;
 }
 #menu > ul li li > a:hover {
-	padding: 4px;
+	margin: 0px;
 	border: 1px solid #BD4C14;
 	background-color: #391706;
 }
@@ -321,6 +322,9 @@ a.button, .list a.button {
 	padding: 0px 5px;
 	background: #FFFFFF;
 }
+.list tbody tr:hover td {
+	background-color: #FFFFCB;
+}
 .list .left {
 	text-align: left;
 	padding: 7px;
@@ -341,7 +345,7 @@ a.button, .list a.button {
 	padding-right: 15px;
 	background: url('../image/desc.png') right center no-repeat;
 }
-.list tr.filter td {
+.list tr.filter td, .list tr:hover.filter td {
 	padding: 5px;
 	background: #E7EFEF;
 }

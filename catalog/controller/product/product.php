@@ -230,6 +230,9 @@ class ControllerProductProduct extends Controller {
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
+			$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
+			$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
 			$this->data['seo_h1'] = $product_info['seo_h1'];
 
@@ -272,7 +275,7 @@ class ControllerProductProduct extends Controller {
 
 			$this->data['tab_description'] = $this->language->get('tab_description');
 			$this->data['tab_attribute'] = $this->language->get('tab_attribute');
-			$this->data['tab_review'] = sprintf($this->language->get('tab_review'), $this->model_catalog_review->getTotalReviewsByProductId($this->request->get['product_id']));
+			$this->data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
 			$this->data['tab_related'] = $this->language->get('tab_related');
 
 			$this->data['product_id'] = $this->request->get['product_id'];
@@ -438,7 +441,7 @@ class ControllerProductProduct extends Controller {
 					'special' 	=> $special,
 					'rating'	=> $rating,
 					'reviews'	=> sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'    	=> $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
 
@@ -663,9 +666,10 @@ class ControllerProductProduct extends Controller {
         		$json['error'] = $this->language->get('error_filename');
 	  		}
 
+			// Allowed file extension types
 			$allowed = array();
 
-			$filetypes = explode(',', $this->config->get('config_upload_allowed'));
+			$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
 
 			foreach ($filetypes as $filetype) {
 				$allowed[] = trim($filetype);
@@ -674,6 +678,19 @@ class ControllerProductProduct extends Controller {
 			if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
        		}
+
+			// Allowed file mime types
+		    $allowed = array();
+
+			$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+
+			foreach ($filetypes as $filetype) {
+				$allowed[] = trim($filetype);
+			}
+
+			if (!in_array($this->request->files['file']['type'], $allowed)) {
+				$json['error'] = $this->language->get('error_filetype');
+			}
 
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

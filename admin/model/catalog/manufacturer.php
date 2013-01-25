@@ -24,6 +24,9 @@ class ModelCatalogManufacturer extends Model {
 		}
 
 		$this->cache->delete('manufacturer');
+// Exchange1C Anti-vQmod
+		return $manufacturer_id;
+// Exchange1C Anti-vQmod
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {
@@ -75,7 +78,7 @@ class ModelCatalogManufacturer extends Model {
 			$sql = "SELECT * FROM " . DB_PREFIX . "manufacturer";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " WHERE LCASE(name) LIKE '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "%'";
+			$sql .= " WHERE name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
 			$sort_data = array(

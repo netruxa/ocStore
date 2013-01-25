@@ -17,7 +17,8 @@ class ControllerCommonHeader extends Controller {
 		$this->data['lang'] = $this->language->get('code');
 		$this->data['direction'] = $this->language->get('direction');
 
-		$this->load->language('common/header');
+		$this->language->load('common/header');
+		$this->language->load('module/exchange1c');
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -36,7 +37,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_customer'] = $this->language->get('text_customer');
 		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
 		$this->data['text_customer_field'] = $this->language->get('text_customer_field');
-		$this->data['text_customer_blacklist'] = $this->language->get('text_customer_blacklist');
+		$this->data['text_customer_ban_ip'] = $this->language->get('text_customer_ban_ip');
 		$this->data['text_custom_field'] = $this->language->get('text_custom_field');
 		$this->data['text_sale'] = $this->language->get('text_sale');
 		$this->data['text_design'] = $this->language->get('text_design');
@@ -45,6 +46,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_error_log'] = $this->language->get('text_error_log');
 		$this->data['text_extension'] = $this->language->get('text_extension');
 		$this->data['text_feed'] = $this->language->get('text_feed');
+		$this->data['text_exchange1c'] = $this->language->get('text_exchange1c');
 		$this->data['text_filter'] = $this->language->get('text_filter');
 		$this->data['text_front'] = $this->language->get('text_front');
 		$this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
@@ -125,11 +127,12 @@ class ControllerCommonHeader extends Controller {
 			$this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer_fields'] = $this->url->link('sale/customer_field', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer_group'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL');
-			$this->data['customer_blacklist'] = $this->url->link('sale/customer_blacklist', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['customer_ban_ip'] = $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['custom_field'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['exchange1c'] = $this->url->link('module/exchange1c', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['geo_zone'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');

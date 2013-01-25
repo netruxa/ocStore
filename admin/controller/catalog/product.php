@@ -3,7 +3,7 @@ class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
   	public function index() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogProduct extends Controller {
   	}
 
   	public function insert() {
-		$this->load->language('catalog/product');
+    	$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -69,7 +69,7 @@ class ControllerCatalogProduct extends Controller {
   	}
 
   	public function update() {
-		$this->load->language('catalog/product');
+    	$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -125,7 +125,7 @@ class ControllerCatalogProduct extends Controller {
   	}
 
   	public function delete() {
-		$this->load->language('catalog/product');
+    	$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -179,7 +179,7 @@ class ControllerCatalogProduct extends Controller {
   	}
 
   	public function copy() {
-		$this->load->language('catalog/product');
+    	$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1079,21 +1079,21 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/filter');
 
 		if (isset($this->request->post['product_filter'])) {
-			$product_filters = $this->request->post['product_filter'];
+			$filters = $this->request->post['product_filter'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$product_filters = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+			$filters = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
 		} else {
-			$product_filters = array();
+			$filters = array();
 		}
 
 		$this->data['product_filters'] = array();
 
-		foreach ($product_filters as $product_filter) {
-			$filter_info = $this->model_catalog_filter->getFilter($product_filter['filter_id']);
+		foreach ($filters as $filter_id) {
+			$filter_info = $this->model_catalog_filter->getFilter($filter_id);
 
 			if ($filter_info) {
 				$this->data['product_filters'][] = array(
-					'filter_id' => $product_filter['filter_id'],
+					'filter_id' => $filter_info['filter_id'],
 					'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
 				);
 			}

@@ -5,7 +5,7 @@ class ControllerCatalogCategory extends Controller {
 	private $path = array();
 
 	public function index() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -15,7 +15,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function insert() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -39,7 +39,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function update() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -63,7 +63,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -89,7 +89,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function repair() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -227,6 +227,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_parent'] = $this->language->get('entry_parent');
+		$this->data['entry_filter'] = $this->language->get('entry_filter');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
 		$this->data['entry_image'] = $this->language->get('entry_image');
@@ -311,6 +312,29 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['parent_id'] = $category_info['parent_id'];
 		} else {
 			$this->data['parent_id'] = 0;
+		}
+
+		$this->load->model('catalog/filter');
+
+		if (isset($this->request->post['category_filter'])) {
+			$filters = $this->request->post['category_filter'];
+		} elseif (isset($this->request->get['category_id'])) {
+			$filters = $this->model_catalog_category->getCategoryFilters($this->request->get['category_id']);
+		} else {
+			$filters = array();
+		}
+
+		$this->data['category_filters'] = array();
+
+		foreach ($filters as $filter_id) {
+			$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+			if ($filter_info) {
+				$this->data['category_filters'][] = array(
+					'filter_id' => $filter_info['filter_id'],
+					'name'      => $filter_info['group'] . ' &gt; ' . $filter_info['name']
+				);
+			}
 		}
 
 		$this->load->model('setting/store');

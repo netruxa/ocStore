@@ -22,6 +22,7 @@
 <link type="text/css" href="view/javascript/jquery/ui/themes/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/jquery/tabs.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/superfish/js/superfish.js"></script>
+<script type="text/javascript" src="view/javascript/common.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
@@ -61,7 +62,7 @@ $(document).ready(function(){
   </div>
   <?php if ($logged) { ?>
   <div id="menu">
-    <ul class="left">
+    <ul class="left" style="display: none;">
       <li id="dashboard"><a href="<?php echo $home; ?>" class="top"><?php echo $text_dashboard; ?></a></li>
       <li id="catalog"><a class="top"><?php echo $text_catalog; ?></a>
         <ul>
@@ -88,6 +89,7 @@ $(document).ready(function(){
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
           <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
           <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
+          <li><a href="<?php echo $exchange1c; ?>"><?php echo $text_exchange1c; ?></a></li>
         </ul>
       </li>
       <li id="sale"><a class="top"><?php echo $text_sale; ?></a>
@@ -99,7 +101,7 @@ $(document).ready(function(){
               <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
               <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
               <li><a href="<?php echo $custom_field; ?>"><?php echo $text_custom_field; ?></a></li>
-              <li><a href="<?php echo $customer_blacklist; ?>"><?php echo $text_customer_blacklist; ?></a></li>
+              <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
             </ul>
           </li>
           <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
@@ -199,7 +201,7 @@ $(document).ready(function(){
         </ul>
       </li>
     </ul>
-    <ul class="right">
+    <ul class="right" style="display: none;">
       <li id="store"><a href="<?php echo $store; ?>" target="_blank" class="top"><?php echo $text_front; ?></a>
         <ul>
           <?php foreach ($stores as $stores) { ?>
@@ -209,64 +211,6 @@ $(document).ready(function(){
       </li>
       <li><a class="top" href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
     </ul>
-    <script type="text/javascript"><!--
-$(document).ready(function() {
-	$('#menu > ul').superfish({
-		pathClass	 : 'overideThisToUse',
-		delay		 : 0,
-		animation	 : {height: 'show'},
-		speed		 : 'normal',
-		autoArrows   : false,
-		dropShadows  : false,
-		disableHI	 : false, /* set to true to disable hoverIntent detection */
-		onInit		 : function(){},
-		onBeforeShow : function(){},
-		onShow		 : function(){},
-		onHide		 : function(){}
-	});
-
-	$('#menu > ul').css('display', 'block');
-});
-
-function getURLVar(urlVarName) {
-	var urlHalves = String(document.location).toLowerCase().split('?');
-	var urlVarValue = '';
-
-	if (urlHalves[1]) {
-		var urlVars = urlHalves[1].split('&');
-
-		for (var i = 0; i <= (urlVars.length); i++) {
-			if (urlVars[i]) {
-				var urlVarPair = urlVars[i].split('=');
-
-				if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
-					urlVarValue = urlVarPair[1];
-				}
-			}
-		}
-	}
-
-	return urlVarValue;
-}
-
-$(document).ready(function() {
-	route = getURLVar('route');
-
-	if (!route) {
-		$('#dashboard').addClass('selected');
-	} else {
-		part = route.split('/');
-
-		url = part[0];
-
-		if (part[1]) {
-			url += '/' + part[1];
-		}
-
-		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
-	}
-});
-//--></script>
   </div>
   <?php } ?>
 </div>

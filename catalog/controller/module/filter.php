@@ -42,41 +42,35 @@ class ControllerModuleFilter extends Controller {
 				$this->data['filter_category'] = array();
 			}
 
-			$this->load->model('catalog/filter');
-
 			$this->load->model('catalog/product');
 
 			$this->data['filter_groups'] = array();
 
-			$filter_groups = $this->model_catalog_filter->getFilterGroupsByCategoryId($category_id);
+			$filter_groups = $this->model_catalog_category->getCategoryFilters($category_id);
 
-			foreach ($filter_groups as $filter_group) {
-				$filter_data = array();
+			if ($filter_groups) {
+				foreach ($filter_groups as $filter_group) {
+					$filter_data = array();
 
-				$filters = $this->model_catalog_filter->getFiltersByFilterGroupId($filter_group['filter_group_id']);
+					foreach ($filter_group['filter'] as $filter) {
+						$data = array(
+							'filter_category_id' => $category_id,
+							'filter_filter'      => $filter['filter_id']
+						);
 
-				foreach ($filters as $filter) {
-					$data = array(
-						'filter_category_id' => $category_id,
-						'filter_filter'      => $filter['filter_id']
-					);
+						$filter_data[] = array(
+							'filter_id' => $filter['filter_id'],
+							'name'      => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : '')
+						);
+					}
 
-					$filter_data[] = array(
-						'filter_id' => $filter['filter_id'],
-						'name'      => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : '')
-					);
-				}
-
-				if ($filter_data) {
 					$this->data['filter_groups'][] = array(
 						'filter_group_id' => $filter_group['filter_group_id'],
 						'name'            => $filter_group['name'],
 						'filter'          => $filter_data
 					);
 				}
-			}
 
-			if ($this->data['filter_groups']) {
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/filter.tpl')) {
 					$this->template = $this->config->get('config_template') . '/template/module/filter.tpl';
 				} else {
