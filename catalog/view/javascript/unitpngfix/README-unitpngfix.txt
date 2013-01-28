@@ -7,7 +7,7 @@ Some quick notes to properly use the Unit PNG Fix:
 
 	<!--[if lt IE 7]>
         		<script type="text/javascript" src="unitpngfix.js"></script>
-	<![endif]--> 
+	<![endif]-->
 
 to make sure that it only loads in IE6. Unit PNG Fix will not work in Firefox, Opera, Safari, IE7, etc.
 
@@ -15,6 +15,6 @@ to make sure that it only loads in IE6. Unit PNG Fix will not work in Firefox, O
 
 - unitpngfix.js will change the CSS position attribute of some elements in order to allow them to be clickable/selectable. It will change elements with a background png to position:static (default) and all child nodes within that first element, that do not have a position specified, will get position:relative. It should not affect any absolutely positioned elements anymore.
 
-- unitpngfix.js is written to work with xhtml/css layouts that are written properly. It may not work play with layouts that are not properly built. 
+- unitpngfix.js is written to work with xhtml/css layouts that are written properly. It may not work play with layouts that are not properly built.
 
 - By default, unitpngfix.js will apply to any pngs on the page. If you wish, you can opt in to only those elements you want fixed by adding the class “unitPng” to those elements. This will force unitpngfix.js to only apply the filter attribute to those elements you have designated with the “unitPng” class.

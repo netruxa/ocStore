@@ -255,7 +255,6 @@ class ModelToolExport extends Model {
 		$sql .= "DELETE FROM `".DB_PREFIX."manufacturer_to_store`;\n";
 		$sql .= "DELETE FROM `".DB_PREFIX."url_alias` WHERE `query` LIKE 'product_id=%';\n";
 		$sql .= "DELETE FROM `".DB_PREFIX."product_related`;\n";
-		$sql .= "DELETE FROM `".DB_PREFIX."product_tag` WHERE language_id=$languageId;\n";
 		$sql .= "DELETE FROM `".DB_PREFIX."product_to_layout`;\n";
 		$this->multiquery( $database, $sql );
 
@@ -284,7 +283,6 @@ class ModelToolExport extends Model {
 			$productId = $product['product_id'];
 			$productName = $database->escape($product['name']);
 			$categories = $product['categories'];
-			$mainCategory = $product['main_category'];
 			$quantity = $product['quantity'];
 			$model = $database->escape($product['model']);
 			$manufacturerName = $product['manufacturer'];
@@ -311,37 +309,36 @@ class ModelToolExport extends Model {
 			$width = $product['width'];
 			$height = $product['height'];
 			$keyword = $database->escape($product['seo_keyword']);
-			$seo_title = $database->escape($product['seo_title']);
-			$seo_h1 = $database->escape($product['seo_h1']);
 			$lengthUnit = $product['measurement_unit'];
 			$lengthClassId = (isset($lengthClassIds[$lengthUnit])) ? $lengthClassIds[$lengthUnit] : 0;
 			$sku = $database->escape($product['sku']);
 			$upc = $database->escape($product['upc']);
+			$ean = $database->escape($product['ean']);
+			$jan = $database->escape($product['jan']);
+			$isbn = $database->escape($product['isbn']);
+			$mpn = $database->escape($product['mpn']);
 			$location = $database->escape($product['location']);
 			$storeIds = $product['store_ids'];
 			$layout = $product['layout'];
 			$related = $product['related_ids'];
-			$tags = array();
-			foreach ($product['tags'] as $tag) {
-				$tags[] = $database->escape($tag);
-			}
 			$subtract = $product['subtract'];
 			$subtract = ((strtoupper($subtract)=="TRUE") || (strtoupper($subtract)=="YES") || (strtoupper($subtract)=="ENABLED")) ? 1 : 0;
 			$minimum = $product['minimum'];
 			$meta_keywords = $database->escape($product['meta_keywords']);
+			$tags = $database->escape($product['tags']);
 			$sort_order = $product['sort_order'];
-			$sql  = "INSERT INTO `".DB_PREFIX."product` (`product_id`,`quantity`,`sku`,`upc`,`location`,";
+			$sql  = "INSERT INTO `".DB_PREFIX."product` (`product_id`,`quantity`,`sku`,`upc`,`ean`,`jan`,`isbn`,`mpn`,`location`,";
 			$sql .= "`stock_status_id`,`model`,`manufacturer_id`,`image`,`shipping`,`price`,`points`,`date_added`,`date_modified`,`date_available`,`weight`,`weight_class_id`,`status`,";
 			$sql .= "`tax_class_id`,`viewed`,`length`,`width`,`height`,`length_class_id`,`sort_order`,`subtract`,`minimum`) VALUES ";
-			$sql .= "($productId,$quantity,'$sku','$upc','$location',";
+			$sql .= "($productId,$quantity,'$sku','$upc','$ean','$jan','$isbn','$mpn','$location',";
 			$sql .= "$stockStatusId,'$model',$manufacturerId,'$imageName',$shipping,$price,$points,";
 			$sql .= ($dateAdded=='NOW()') ? "$dateAdded," : "'$dateAdded',";
 			$sql .= ($dateModified=='NOW()') ? "$dateModified," : "'$dateModified',";
 			$sql .= ($dateAvailable=='NOW()') ? "$dateAvailable," : "'$dateAvailable',";
 			$sql .= "$weight,$weightClassId,$status,";
 			$sql .= "$taxClassId,$viewed,$length,$width,$height,'$lengthClassId','$sort_order','$subtract','$minimum');";
-			$sql2 = "INSERT INTO `".DB_PREFIX."product_description` (`product_id`,`language_id`,`name`,`description`,`meta_description`,`meta_keyword`,`seo_title`,`seo_h1`) VALUES ";
-			$sql2 .= "($productId,$languageId,'$productName','$productDescription','$meta_description','$meta_keywords','$seo_title','$seo_h1');";
+			$sql2 = "INSERT INTO `".DB_PREFIX."product_description` (`product_id`,`language_id`,`name`,`description`,`meta_description`,`meta_keyword`,`tag`) VALUES ";
+			$sql2 .= "($productId,$languageId,'$productName','$productDescription','$meta_description','$meta_keywords','$tags');";
 			$database->query($sql);
 			$database->query($sql2);
 			if (count($categories) > 0) {
@@ -354,12 +351,6 @@ class ModelToolExport extends Model {
 				}
 				$sql .= ";";
 				$database->query($sql);
-			}
-			if(($product['main_category'])>0){
-			$sql3 = "UPDATE  `".DB_PREFIX."product_to_category` SET  `".DB_PREFIX."product_to_category`.`main_category` =  1 WHERE  `".
-				DB_PREFIX."product_to_category`.`product_id` =$productId AND  `".DB_PREFIX.
-				"product_to_category`.`category_id` ={$product['main_category']} LIMIT 1;";
-				$database->query($sql3);
 			}
 			if ($keyword) {
 				$sql4 = "INSERT INTO `".DB_PREFIX."url_alias` (`query`,`keyword`) VALUES ('product_id=$productId','$keyword');";
@@ -405,27 +396,6 @@ class ModelToolExport extends Model {
 				$sql .= ";";
 				$database->query($sql);
 			}
-			if (count($tags) > 0) {
-				$sql = "INSERT INTO `".DB_PREFIX."product_tag` (`product_id`,`tag`,`language_id`) VALUES ";
-				$first = TRUE;
-				$inserted_tags = array();
-				foreach ($tags as $tag) {
-					if ($tag == '') {
-						continue;
-					}
-					if (in_array($tag,$inserted_tags)) {
-						continue;
-					}
-					$sql .= ($first) ? "\n" : ",\n";
-					$first = FALSE;
-					$sql .= "($productId,'".$database->escape($tag)."',$languageId)";
-					$inserted_tags[] = $tag;
-				}
-				$sql .= ";";
-				if (count($inserted_tags)>0) {
-					$database->query($sql);
-				}
-			}
 		}
 
 		// final commit
@@ -466,9 +436,12 @@ class ModelToolExport extends Model {
 			$name = $this->getCell($data,$i,$j++);
 			$name = htmlentities( $name, ENT_QUOTES, $this->detect_encoding($name) );
 			$categories = $this->getCell($data,$i,$j++);
-			$mainCategory = $this->getCell($data,$i,$j++);
 			$sku = $this->getCell($data,$i,$j++,'');
 			$upc = $this->getCell($data,$i,$j++,'');
+			$ean = $this->getCell($data,$i,$j++,'');
+			$jan = $this->getCell($data,$i,$j++,'');
+			$isbn = $this->getCell($data,$i,$j++,'');
+			$mpn = $this->getCell($data,$i,$j++,'');
 			$location = $this->getCell($data,$i,$j++,'');
 			$quantity = $this->getCell($data,$i,$j++,'0');
 			$model = $this->getCell($data,$i,$j++,'   ');
@@ -503,15 +476,12 @@ class ModelToolExport extends Model {
 			$meta_description = htmlentities( $meta_description, ENT_QUOTES, $this->detect_encoding($meta_description) );
 			$meta_keywords = $this->getCell($data,$i,$j++);
 			$meta_keywords = htmlentities( $meta_keywords, ENT_QUOTES, $this->detect_encoding($meta_keywords) );
-			$seo_title = $this->getCell($data,$i,$j++);
-			$seo_title = htmlentities( $seo_title, ENT_QUOTES, $this->detect_encoding($seo_title) );
-			$seo_h1 = $this->getCell($data,$i,$j++);
-			$seo_h1 = htmlentities( $seo_h1, ENT_QUOTES, $this->detect_encoding($seo_h1) );
 			$stockStatusId = $this->getCell($data,$i,$j++,$defaultStockStatusId);
 			$storeIds = $this->getCell($data,$i,$j++);
 			$layout = $this->getCell($data,$i,$j++);
 			$related = $this->getCell($data,$i,$j++);
 			$tags = $this->getCell($data,$i,$j++);
+			$tags = htmlentities( $tags, ENT_QUOTES, $this->detect_encoding($tags) );
 			$sort_order = $this->getCell($data,$i,$j++,'0');
 			$subtract = $this->getCell($data,$i,$j++,'true');
 			$minimum = $this->getCell($data,$i,$j++,'1');
@@ -523,7 +493,6 @@ class ModelToolExport extends Model {
 			if ($product['categories']===FALSE) {
 				$product['categories'] = array();
 			}
-			$product['main_category'] = $mainCategory;
 			$product['quantity'] = $quantity;
 			$product['model'] = $model;
 			$product['manufacturer'] = $manufacturer;
@@ -547,11 +516,13 @@ class ModelToolExport extends Model {
 			$product['width'] = $width;
 			$product['height'] = $height;
 			$product['seo_keyword'] = $keyword;
-			$product['seo_title'] = $seo_title;
-			$product['seo_h1'] = $seo_h1;
 			$product['measurement_unit'] = $measurementUnit;
 			$product['sku'] = $sku;
 			$product['upc'] = $upc;
+			$product['ean'] = $ean;
+			$product['jan'] = $jan;
+			$product['isbn'] = $isbn;
+			$product['mpn'] = $mpn;
 			$product['location'] = $location;
 			$storeIds = trim( $this->clean($storeIds, FALSE) );
 			$product['store_ids'] = ($storeIds=="") ? array() : explode( ",", $storeIds );
@@ -566,13 +537,10 @@ class ModelToolExport extends Model {
 			if ($product['layout']===FALSE) {
 				$product['layout'] = array();
 			}
-			$product['tags'] = ($tags=="") ? array() : explode( ",", $tags );
-			if ($product['tags']===FALSE) {
-				$product['tags'] = array();
-			}
 			$product['subtract'] = $subtract;
 			$product['minimum'] = $minimum;
 			$product['meta_keywords'] = $meta_keywords;
+			$product['tags'] = $tags;
 			$product['sort_order'] = $sort_order;
 			$products[$productId] = $product;
 		}
@@ -616,8 +584,6 @@ class ModelToolExport extends Model {
 			$description = $database->escape($category['description']);
 			$meta_description = $database->escape($category['meta_description']);
 			$meta_keywords = $database->escape($category['meta_keywords']);
-			$seo_title = $database->escape($category['seo_title']);
-			$seo_h1 = $database->escape($category['seo_h1']);
 			$keyword = $database->escape($category['seo_keyword']);
 			$storeIds = $category['store_ids'];
 			$layout = $category['layout'];
@@ -629,8 +595,8 @@ class ModelToolExport extends Model {
 			$sql2 .= ($dateModified=='NOW()') ? "$dateModified," : "'$dateModified',";
 			$sql2 .= " $status);";
 			$database->query( $sql2 );
-			$sql3 = "INSERT INTO `".DB_PREFIX."category_description` (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`, `seo_title`, `seo_h1`) VALUES ";
-			$sql3 .= "( $categoryId, $languageId, '$name', '$description', '$meta_description', '$meta_keywords', '$seo_title', '$seo_h1' );";
+			$sql3 = "INSERT INTO `".DB_PREFIX."category_description` (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) VALUES ";
+			$sql3 .= "( $categoryId, $languageId, '$name', '$description', '$meta_description', '$meta_keywords' );";
 			$database->query( $sql3 );
 			if ($keyword) {
 				$sql5 = "INSERT INTO `".DB_PREFIX."url_alias` (`query`,`keyword`) VALUES ('category_id=$categoryId','$keyword');";
@@ -715,10 +681,6 @@ class ModelToolExport extends Model {
 			$meta_description = htmlentities( $meta_description, ENT_QUOTES, $this->detect_encoding($meta_description) );
 			$meta_keywords = $this->getCell($data,$i,$j++);
 			$meta_keywords = htmlentities( $meta_keywords, ENT_QUOTES, $this->detect_encoding($meta_keywords) );
-			$seo_title = $this->getCell($data,$i,$j++);
-			$seo_title = htmlentities( $seo_title, ENT_QUOTES, $this->detect_encoding($seo_title) );
-			$seo_h1 = $this->getCell($data,$i,$j++);
-			$seo_h1 = htmlentities( $seo_h1, ENT_QUOTES, $this->detect_encoding($seo_h1) );
 			$storeIds = $this->getCell($data,$i,$j++);
 			$layout = $this->getCell($data,$i,$j++,'');
 			$status = $this->getCell($data,$i,$j++,'true');
@@ -736,8 +698,6 @@ class ModelToolExport extends Model {
 			$category['description'] = $description;
 			$category['meta_description'] = $meta_description;
 			$category['meta_keywords'] = $meta_keywords;
-			$category['seo_title'] = $seo_title;
-			$category['seo_h1'] = $seo_h1;
 			$category['seo_keyword'] = $keyword;
 			$storeIds = trim( $this->clean($storeIds, FALSE) );
 			$category['store_ids'] = ($storeIds=="") ? array() : explode( ",", $storeIds );
@@ -762,13 +722,14 @@ class ModelToolExport extends Model {
 
 		// reuse old options and old option_values where possible
 		$optionIds = array();       // indexed by [name][type]
-		$optionValueIds = array();  // indexed by [name][type][value]
+		$optionValueIds = array();  // indexed by [name][type][value][image]
 		$maxOptionSortOrder = 0;
 		$maxOptionId = 0;
 		$maxOptionValueId = 0;
-		$sql  = "SELECT o.*, od.name, ovd.option_value_id, ovd.name AS value FROM `".DB_PREFIX."option` o ";
+		$sql  = "SELECT o.*, od.name, ovd.option_value_id, ovd.name AS value, ov.image FROM `".DB_PREFIX."option` o ";
 		$sql .= "INNER JOIN `".DB_PREFIX."option_description` od ON od.option_id=o.option_id AND od.language_id=$languageId ";
-		$sql .= "LEFT JOIN  `".DB_PREFIX."option_value_description` ovd ON ovd.option_id=o.option_id AND ovd.language_id=$languageId ";
+		$sql .= "LEFT JOIN `".DB_PREFIX."option_value` ov ON ov.option_id=o.option_id ";
+		$sql .= "LEFT JOIN  `".DB_PREFIX."option_value_description` ovd ON ovd.option_value_id=ov.option_value_id AND ovd.language_id=$languageId ";
 		$result = $database->query( $sql );
 		foreach ($result->rows as $row) {
 			$name = $row['name'];
@@ -776,7 +737,9 @@ class ModelToolExport extends Model {
 			$value = $row['value'];
 			$optionId = $row['option_id'];
 			$optionValueId = $row['option_value_id'];
+			$image = $row['image'];
 			$optionSortOrder = $row['sort_order'];
+
 			if ($maxOptionId < $optionId) {
 				$maxOptionId = $optionId;
 			}
@@ -799,7 +762,10 @@ class ModelToolExport extends Model {
 				$optionValueIds[$name][$type] = array();
 			}
 			if (!isset($optionValueIds[$name][$type][$value])) {
-				$optionValueIds[$name][$type][$value] = $optionValueId;
+				$optionValueIds[$name][$type][$value] = array();
+			}
+			if (!isset($optionValueIds[$name][$type][$value][$image])) {
+				$optionValueIds[$name][$type][$value][$image] = $optionValueId;
 			}
 		}
 
@@ -819,6 +785,7 @@ class ModelToolExport extends Model {
 			$name = $option['option'];
 			$type = $option['type'];
 			$value = $option['value'];
+			$image = $option['image'];
 			$required = $option['required'];
 			$required = ((strtoupper($required)=="TRUE") || (strtoupper($required)=="YES") || (strtoupper($required)=="ENABLED")) ? 1 : 0;
 			if (!isset($optionIds[$name])) {
@@ -842,24 +809,25 @@ class ModelToolExport extends Model {
 					$optionValueIds[$name][$type] = array();
 				}
 				if (!isset($optionValueIds[$name][$type][$value])) {
+					$optionValueIds[$name][$type][$value] = array();
+				}
+				if (!isset($optionValueIds[$name][$type][$value][$image])) {
 					$maxOptionValueId += 1;
 					$optionValueId = $maxOptionValueId;
-					$optionValueIds[$name][$type][$value] = $optionValueId;
+					$optionValueIds[$name][$type][$value][$image] = $optionValueId;
 					$sortOrder = ($option['sort_order'] == '') ? 0 : $option['sort_order'];
-					$image = ($option['image'] == '') ? '' : $this->db->escape($option['image']);
 					$optionId = $optionIds[$name][$type];
 					$sql  = "INSERT INTO `".DB_PREFIX."option_value` (`option_value_id`,`option_id`,`image`,`sort_order`) VALUES ";
-					$sql .= "($optionValueId,$optionId,'$image',$sortOrder);";
+					$sql .= "($optionValueId,$optionId,'".$database->escape($image)."',$sortOrder);";
 					$database->query( $sql );
 					$sql  = "INSERT INTO `".DB_PREFIX."option_value_description` (`option_value_id`,`language_id`,`option_id`,`name`) VALUES ";
 					$sql .= "($optionValueId,$langId,$optionId,'".$database->escape($value)."');";
 					$database->query( $sql );
 				} else {
-					$optionValueId = $optionValueIds[$name][$type][$value];
+					$optionValueId = $optionValueIds[$name][$type][$value][$image];
 					$sortOrder = ($option['sort_order'] == '') ? 0 : $option['sort_order'];
-					$image = ($option['image'] == '') ? '' : $this->db->escape($option['image']);
 					$optionId = $optionIds[$name][$type];
-					$sql  = "UPDATE `".DB_PREFIX."option_value` SET `image`='$image', `sort_order`=$sortOrder ";
+					$sql  = "UPDATE `".DB_PREFIX."option_value` SET `image`='".$database->escape($image)."', `sort_order`=$sortOrder ";
 					$sql .= "WHERE `option_value_id`=$optionValueId AND `option_id`=$optionId";
 					$database->query( $sql );
 				}
@@ -895,7 +863,7 @@ class ModelToolExport extends Model {
 				$maxProductOptionValueId += 1;
 				$productOptionValueId = $maxProductOptionValueId;
 				$optionId = $optionIds[$name][$type];
-				$optionValueId = $optionValueIds[$name][$type][$value];
+				$optionValueId = $optionValueIds[$name][$type][$value][$image];
 				$productOptionId = $productOptionIds[$productId][$optionId];
 				$sql  = "INSERT INTO `".DB_PREFIX."product_option_value` (`product_option_value_id`,`product_option_id`,`product_id`,`option_id`,`option_value_id`,`quantity`,`subtract`,`price`,`price_prefix`,`points`,`points_prefix`,`weight`,`weight_prefix`) VALUES ";
 				$sql .= "($productOptionValueId,$productOptionId,$productId,$optionId,$optionValueId,$quantity,$subtract,$price,'$pricePrefix',$points,'$pointsPrefix',$weight,'$weightPrefix');";
@@ -1521,7 +1489,7 @@ class ModelToolExport extends Model {
 	function validateCategories( &$reader )
 	{
 		$expectedCategoryHeading = array
-		( "category_id", "parent_id", "name", "top", "columns", "sort_order", "image_name", "date_added", "date_modified", "language_id", "seo_keyword", "description", "meta_description", "meta_keywords", "seo_title", "seo_h1", "store_ids", "layout", "status\nenabled" );
+		( "category_id", "parent_id", "name", "top", "columns", "sort_order", "image_name", "date_added", "date_modified", "language_id", "seo_keyword", "description", "meta_description", "meta_keywords", "store_ids", "layout", "status\nenabled" );
 		$data =& $reader->getSheet(0);
 		return $this->validateHeading( $data, $expectedCategoryHeading );
 	}
@@ -1530,7 +1498,7 @@ class ModelToolExport extends Model {
 	function validateProducts( &$reader )
 	{
 		$expectedProductHeading = array
-		( "product_id", "name", "categories", "main_categories", "sku", "upc", "location", "quantity", "model", "manufacturer", "image_name", "requires\nshipping", "price", "points", "date_added", "date_modified", "date_available", "weight", "unit", "length", "width", "height", "length\nunit", "status\nenabled", "tax_class_id", "viewed", "language_id", "seo_keyword", "description", "meta_description", "meta_keywords", "seo_title", "seo_h1", "stock_status_id", "store_ids", "layout", "related_ids", "tags", "sort_order", "subtract", "minimum" );
+		( "product_id", "name", "categories", "sku", "upc", "ean", "jan", "isbn", "mpn", "location", "quantity", "model", "manufacturer", "image_name", "requires\nshipping", "price", "points", "date_added", "date_modified", "date_available", "weight", "unit", "length", "width", "height", "length\nunit", "status\nenabled", "tax_class_id", "viewed", "language_id", "seo_keyword", "description", "meta_description", "meta_keywords", "stock_status_id", "store_ids", "layout", "related_ids", "tags", "sort_order", "subtract", "minimum" );
 		$data =& $reader->getSheet(1);
 		return $this->validateHeading( $data, $expectedProductHeading );
 	}
@@ -1645,8 +1613,8 @@ class ModelToolExport extends Model {
 		$database =& $this->db;
 
 		// use a generous enough configuration, the Import can be quite memory hungry (this needs to be improved)
-		ini_set("memory_limit","512M");
-		ini_set("max_execution_time",180);
+		// ini_set("memory_limit","512M");
+		// ini_set("max_execution_time",180);
 		//set_time_limit( 60 );
 
 		// we use the PHPExcel package from http://phpexcel.codeplex.com/
@@ -1759,8 +1727,6 @@ class ModelToolExport extends Model {
 		$worksheet->setColumn($j,$j++,max(strlen('description'),32)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('meta_description'),32)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('meta_keywords'),32)+1);
-		$worksheet->setColumn($j,$j++,max(strlen('seo_title'),32)+1);
-		$worksheet->setColumn($j,$j++,max(strlen('seo_h1'),32)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('store_ids'),16)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('layout'),16)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('status'),5)+1,$textFormat);
@@ -1782,8 +1748,6 @@ class ModelToolExport extends Model {
 		$worksheet->writeString( $i, $j++, 'description', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'meta_description', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'meta_keywords', $boxFormat );
-		$worksheet->writeString( $i, $j++, 'seo_title', $boxFormat );
-		$worksheet->writeString( $i, $j++, 'seo_h1', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'store_ids', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'layout', $boxFormat );
 		$worksheet->writeString( $i, $j++, "status\nenabled", $boxFormat );
@@ -1816,8 +1780,6 @@ class ModelToolExport extends Model {
 			$worksheet->writeString( $i, $j++, html_entity_decode($row['description'],ENT_QUOTES,'UTF-8') );
 			$worksheet->writeString( $i, $j++, html_entity_decode($row['meta_description'],ENT_QUOTES,'UTF-8') );
 			$worksheet->writeString( $i, $j++, html_entity_decode($row['meta_keyword'],ENT_QUOTES,'UTF-8') );
-			$worksheet->writeString( $i, $j++, html_entity_decode($row['seo_title'],ENT_QUOTES,'UTF-8') );
-			$worksheet->writeString( $i, $j++, html_entity_decode($row['seo_h1'],ENT_QUOTES,'UTF-8') );
 			$storeIdList = '';
 			$categoryId = $row['category_id'];
 			if (isset($storeIds[$categoryId])) {
@@ -1837,16 +1799,6 @@ class ModelToolExport extends Model {
 			$i += 1;
 			$j = 0;
 		}
-	}
-
-	function getMainCategoriesForProducts( &$database ) {
-		$mainCategories = array();
-		$sql =  "SELECT * FROM `".DB_PREFIX."product_to_category` WHERE `main_category` = 1";
-		$result = $database->query( $sql );
-		foreach ($result->rows as $row) {
-		$mainCategories[$row['product_id']] = $row;
-		}
-		return $mainCategories;
 	}
 
 
@@ -1894,9 +1846,12 @@ class ModelToolExport extends Model {
 		$worksheet->setColumn($j,$j++,max(strlen('product_id'),4)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('name'),30)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('categories'),12)+1,$textFormat);
-		$worksheet->setColumn($j,$j++,max(strlen('main_categories'),4)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('sku'),10)+1);
-		$worksheet->setColumn($j,$j++,max(strlen('upc'),10)+1);
+		$worksheet->setColumn($j,$j++,max(strlen('upc'),12)+1);
+		$worksheet->setColumn($j,$j++,max(strlen('ean'),14)+1);
+		$worksheet->setColumn($j,$j++,max(strlen('jan'),13)+1);
+		$worksheet->setColumn($j,$j++,max(strlen('isbn'),13)+1);
+		$worksheet->setColumn($j,$j++,max(strlen('mpn'),15)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('location'),10)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('quantity'),4)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('model'),8)+1);
@@ -1922,8 +1877,6 @@ class ModelToolExport extends Model {
 		$worksheet->setColumn($j,$j++,max(strlen('description'),32)+1,$textFormat);
 		$worksheet->setColumn($j,$j++,max(strlen('meta_description'),32)+1,$textFormat);
 		$worksheet->setColumn($j,$j++,max(strlen('meta_keywords'),32)+1,$textFormat);
-		$worksheet->setColumn($j,$j++,max(strlen('seo_title'),32)+1,$textFormat);
-		$worksheet->setColumn($j,$j++,max(strlen('seo_h1'),32)+1,$textFormat);
 		$worksheet->setColumn($j,$j++,max(strlen('stock_status_id'),3)+1);
 		$worksheet->setColumn($j,$j++,max(strlen('store_ids'),16)+1,$textFormat);
 		$worksheet->setColumn($j,$j++,max(strlen('layout'),16)+1,$textFormat);
@@ -1939,9 +1892,12 @@ class ModelToolExport extends Model {
 		$worksheet->writeString( $i, $j++, 'product_id', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'name', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'categories', $boxFormat );
-		$worksheet->writeString( $i, $j++, 'main_categories', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'sku', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'upc', $boxFormat );
+		$worksheet->writeString( $i, $j++, 'ean', $boxFormat );
+		$worksheet->writeString( $i, $j++, 'jan', $boxFormat );
+		$worksheet->writeString( $i, $j++, 'isbn', $boxFormat );
+		$worksheet->writeString( $i, $j++, 'mpn', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'location', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'quantity', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'model', $boxFormat );
@@ -1967,8 +1923,6 @@ class ModelToolExport extends Model {
 		$worksheet->writeString( $i, $j++, 'description', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'meta_description', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'meta_keywords', $boxFormat );
-		$worksheet->writeString( $i, $j++, 'seo_title', $boxFormat );
-		$worksheet->writeString( $i, $j++, 'seo_h1', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'stock_status_id', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'store_ids', $boxFormat );
 		$worksheet->writeString( $i, $j++, 'layout', $boxFormat );
@@ -1984,13 +1938,16 @@ class ModelToolExport extends Model {
 		$j = 0;
 		$storeIds = $this->getStoreIdsForProducts( $database );
 		$layouts = $this->getLayoutsForProducts( $database );
-		$mainCategories = $this->getMainCategoriesForProducts( $database );
 		$query  = "SELECT ";
 		$query .= "  p.product_id,";
 		$query .= "  pd.name,";
 		$query .= "  GROUP_CONCAT( DISTINCT CAST(pc.category_id AS CHAR(11)) SEPARATOR \",\" ) AS categories,";
 		$query .= "  p.sku,";
 		$query .= "  p.upc,";
+		$query .= "  p.ean,";
+		$query .= "  p.jan,";
+		$query .= "  p.isbn,";
+		$query .= "  p.mpn,";
 		$query .= "  p.location,";
 		$query .= "  p.quantity,";
 		$query .= "  p.model,";
@@ -2016,14 +1973,12 @@ class ModelToolExport extends Model {
 		$query .= "  pd.description, ";
 		$query .= "  pd.meta_description, ";
 		$query .= "  pd.meta_keyword, ";
-		$query .= "  pd.seo_title, ";
-		$query .= "  pd.seo_h1, ";
+		$query .= "  pd.tag, ";
 		$query .= "  p.stock_status_id, ";
 		$query .= "  mc.unit AS length_unit, ";
 		$query .= "  p.subtract, ";
 		$query .= "  p.minimum, ";
-		$query .= "  GROUP_CONCAT( DISTINCT CAST(pr.related_id AS CHAR(11)) SEPARATOR \",\" ) AS related, ";
-		$query .= "  GROUP_CONCAT( DISTINCT pt.tag SEPARATOR \",\" ) AS tags ";
+		$query .= "  GROUP_CONCAT( DISTINCT CAST(pr.related_id AS CHAR(11)) SEPARATOR \",\" ) AS related ";
 		$query .= "FROM `".DB_PREFIX."product` p ";
 		$query .= "LEFT JOIN `".DB_PREFIX."product_description` pd ON p.product_id=pd.product_id ";
 		$query .= "  AND pd.language_id=$languageId ";
@@ -2035,8 +1990,6 @@ class ModelToolExport extends Model {
 		$query .= "LEFT JOIN `".DB_PREFIX."length_class_description` mc ON mc.length_class_id=p.length_class_id ";
 		$query .= "  AND mc.language_id=$languageId ";
 		$query .= "LEFT JOIN `".DB_PREFIX."product_related` pr ON pr.product_id=p.product_id ";
-		$query .= "LEFT JOIN `".DB_PREFIX."product_tag` pt ON pt.product_id=p.product_id ";
-		$query .= "  AND pt.language_id=$languageId ";
 		$query .= "GROUP BY p.product_id ";
 		$query .= "ORDER BY p.product_id, pc.category_id; ";
 		$result = $database->query( $query );
@@ -2046,12 +1999,12 @@ class ModelToolExport extends Model {
 			$worksheet->write( $i, $j++, $productId );
 			$worksheet->writeString( $i, $j++, html_entity_decode($row['name'],ENT_QUOTES,'UTF-8') );
 			$worksheet->write( $i, $j++, $row['categories'], $textFormat );
-			if(isset($mainCategories[$productId])){
-			$worksheet->write( $i, $j, $mainCategories[$productId]['category_id'], $textFormat );
-			}
-			$j++;
 			$worksheet->writeString( $i, $j++, $row['sku'] );
 			$worksheet->writeString( $i, $j++, $row['upc'] );
+			$worksheet->writeString( $i, $j++, $row['ean'] );
+			$worksheet->writeString( $i, $j++, $row['jan'] );
+			$worksheet->writeString( $i, $j++, $row['isbn'] );
+			$worksheet->writeString( $i, $j++, $row['mpn'] );
 			$worksheet->writeString( $i, $j++, $row['location'] );
 			$worksheet->write( $i, $j++, $row['quantity'] );
 			$worksheet->writeString( $i, $j++, $row['model'] );
@@ -2077,8 +2030,6 @@ class ModelToolExport extends Model {
 			$worksheet->writeString( $i, $j++, html_entity_decode($row['description'],ENT_QUOTES,'UTF-8'), $textFormat, TRUE );
 			$worksheet->write( $i, $j++, html_entity_decode($row['meta_description'],ENT_QUOTES,'UTF-8'), $textFormat );
 			$worksheet->write( $i, $j++, html_entity_decode($row['meta_keyword'],ENT_QUOTES,'UTF-8'), $textFormat );
-			$worksheet->write( $i, $j++, html_entity_decode($row['seo_title'],ENT_QUOTES,'UTF-8'), $textFormat );
-			$worksheet->write( $i, $j++, html_entity_decode($row['seo_h1'],ENT_QUOTES,'UTF-8'), $textFormat );
 			$worksheet->write( $i, $j++, $row['stock_status_id'] );
 			$storeIdList = '';
 			if (isset($storeIds[$productId])) {
@@ -2095,7 +2046,7 @@ class ModelToolExport extends Model {
 			}
 			$worksheet->write( $i, $j++, $layoutList, $textFormat );
 			$worksheet->write( $i, $j++, $row['related'], $textFormat );
-			$worksheet->write( $i, $j++, $row['tags'], $textFormat );
+			$worksheet->writeString( $i, $j++, ($row['tag']) ? $row['tag'] : '' );
 			$worksheet->write( $i, $j++, $row['sort_order'] );
 			$worksheet->write( $i, $j++, ($row['subtract']==0) ? "false" : "true", $textFormat );
 			$worksheet->write( $i, $j++, $row['minimum'] );

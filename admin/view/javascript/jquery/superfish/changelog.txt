@@ -54,7 +54,7 @@ v1.4.4		7th July 2008. arrows feature added. If option 'autoArrows' is true, aut
 			Manually add arrow mark-up to docs and disable autoArrows (via defaults option) to maintain decent performance (for docs page)
 			Update docs, including zip download, to suit.
 			Fix CSS bug that had the third tier of the navbar-style menu visible when JS not available.
-			
+
 v1.4.5		9 July 2008. decreased code weight
 			added drop shadows for capable browsers - added css and 8-bit alpha transparent png image for shadow
 			remove support for jQuery v<1.2
@@ -66,9 +66,9 @@ v1.4.5		9 July 2008. decreased code weight
 
 v1.4.6		added workaround for IE7 shadows. If animation alters opacity then shadow is hidden during the animation and appears after.
 			This required some JS and a line of CSS, so created shortcut references to lighten code further.
-			
+
 v1.4.7		added back in the visibility toggle that was removed in 1.4.5 as the bug is indeed still exhibited by IE6 & 7
 			tweaked the look of the shadow slightly and use nicer 32bit png as I now find they behave the same as 8bit png with regard to fades in IE7
-			
+
 v1.4.8		fix over-sight: using 32bit png meant that the shadow image did show in IE6. Rather than go back to 8bit, add code to exclude IE6 from getting shadow class.
 			use new folder structure recommended by Matt from TopicTrack, for easier updates.

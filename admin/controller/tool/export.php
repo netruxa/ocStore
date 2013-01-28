@@ -71,8 +71,7 @@ class ControllerToolExport extends Controller {
 	public function download() {
 		if ($this->validate()) {
 
-			// set appropriate memory and timeout limits
-			ini_set("memory_limit","128M");
+			// set appropriate timeout limit
 			set_time_limit( 1800 );
 
 			// send the categories, products and options as a spreadsheet file

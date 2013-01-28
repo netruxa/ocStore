@@ -203,7 +203,7 @@ CHANGELOG:
    multitree language cleanup
    added instance manager & focusInst function - tree_component.inst & tree_component.focusInst()
    fixed get_left, get_right in RTL mode
- v.0.8.2 
+ v.0.8.2
    get_* functions receive a "force" argument that selects the node even if hover_mode is on
    create function enhancement - can pass a node to create in (by anotherhero)
    remove function enhancement - can pass a node to delete (by anotherhero)
@@ -283,7 +283,7 @@ CHANGELOG:
    Opera comaptible
    scroll node into view when node selected
    scroll container while dragging and mouse is near the edge
-   'remove' function 
+   'remove' function
    rules and rule checking reinvented (added inline_rules, max_depth, max_children, valid_children, renameable)
    dots are optional ('toggleDots' function, '.no_dots' classname)
    various optimizations
