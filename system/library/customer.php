@@ -10,7 +10,7 @@ class Customer {
 	private $customer_group_id;
 	private $address_id;
 
-  	public function __construct($registry) {
+	public function __construct($registry) {
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->request = $registry->get('request');
@@ -30,7 +30,7 @@ class Customer {
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->address_id = $customer_query->row['address_id'];
 
-      			$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+				$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 
@@ -40,10 +40,10 @@ class Customer {
 			} else {
 				$this->logout();
 			}
-  		}
+		}
 	}
 
-  	public function login($email, $password, $override = false) {
+	public function login($email, $password, $override = false) {
 		if ($override) {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer where LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND status = '1'");
 		} else {
@@ -91,11 +91,11 @@ class Customer {
 
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
-	  		return true;
-    	} else {
-      		return false;
-    	}
-  	}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public function logout() {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
@@ -111,58 +111,58 @@ class Customer {
 		$this->newsletter = '';
 		$this->customer_group_id = '';
 		$this->address_id = '';
-  	}
+	}
 
-  	public function isLogged() {
-    	return $this->customer_id;
-  	}
+	public function isLogged() {
+		return $this->customer_id;
+	}
 
-  	public function getId() {
-    	return $this->customer_id;
-  	}
+	public function getId() {
+		return $this->customer_id;
+	}
 
-  	public function getFirstName() {
+	public function getFirstName() {
 		return $this->firstname;
-  	}
+	}
 
-  	public function getLastName() {
+	public function getLastName() {
 		return $this->lastname;
-  	}
+	}
 
-  	public function getEmail() {
+	public function getEmail() {
 		return $this->email;
-  	}
+	}
 
-  	public function getTelephone() {
+	public function getTelephone() {
 		return $this->telephone;
-  	}
+	}
 
-  	public function getFax() {
+	public function getFax() {
 		return $this->fax;
-  	}
+	}
 
-  	public function getNewsletter() {
+	public function getNewsletter() {
 		return $this->newsletter;
-  	}
+	}
 
-  	public function getCustomerGroupId() {
+	public function getCustomerGroupId() {
 		return $this->customer_group_id;
-  	}
+	}
 
-  	public function getAddressId() {
+	public function getAddressId() {
 		return $this->address_id;
-  	}
+	}
 
-  	public function getBalance() {
+	public function getBalance() {
 		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 		return $query->row['total'];
-  	}
+	}
 
-  	public function getRewardPoints() {
+	public function getRewardPoints() {
 		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 		return $query->row['total'];
-  	}
+	}
 }
 ?>

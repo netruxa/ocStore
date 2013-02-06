@@ -4,59 +4,59 @@ function utf8_strlen($string) {
 }
 
 function utf8_strpos($string, $needle, $offset = NULL) {
-    if (is_null($offset)) {
-        $data = explode($needle, $string, 2);
+	if (is_null($offset)) {
+		$data = explode($needle, $string, 2);
 
-	   if (count($data) > 1) {
-            return utf8_strlen($data[0]);
-        }
+		if (count($data) > 1) {
+			return utf8_strlen($data[0]);
+		}
 
-        return false;
-    } else {
-        if (!is_int($offset)) {
-            trigger_error('utf8_strpos: Offset must be an integer', E_USER_ERROR);
+		return false;
+	} else {
+		if (!is_int($offset)) {
+			trigger_error('utf8_strpos: Offset must be an integer', E_USER_ERROR);
 
 			return false;
-        }
+		}
 
-        $string = utf8_substr($string, $offset);
+		$string = utf8_substr($string, $offset);
 
-        if (false !== ($position = utf8_strpos($string, $needle))) {
-            return $position + $offset;
-        }
+		if (false !== ($position = utf8_strpos($string, $needle))) {
+			return $position + $offset;
+		}
 
-        return false;
-    }
+		return false;
+	}
 }
 
 function utf8_strrpos($string, $needle, $offset = NULL) {
-    if (is_null($offset)) {
-        $data = explode($needle, $string);
+	if (is_null($offset)) {
+		$data = explode($needle, $string);
 
-        if (count($data) > 1) {
-            array_pop($data);
+		if (count($data) > 1) {
+			array_pop($data);
 
-		    $string = join($needle, $data);
+			$string = join($needle, $data);
 
 			return utf8_strlen($string);
-        }
+		}
 
-	    return false;
-    } else {
-        if (!is_int($offset)) {
-            trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
+		return false;
+	} else {
+		if (!is_int($offset)) {
+		trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
 
-		    return false;
-        }
+		return false;
+		}
 
-        $string = utf8_substr($string, $offset);
+		$string = utf8_substr($string, $offset);
 
-        if (false !== ($position = utf8_strrpos($string, $needle))) {
-            return $position + $offset;
-        }
+		if (false !== ($position = utf8_strrpos($string, $needle))) {
+			return $position + $offset;
+		}
 
-        return false;
-    }
+		return false;
+	}
 }
 
 function utf8_substr($string, $offset, $length = null) {
@@ -157,7 +157,6 @@ function utf8_substr($string, $offset, $length = null) {
 	}
 
 	return $match[1];
-
 }
 
 function utf8_strtolower($string) {
@@ -399,9 +398,9 @@ function utf8_strtolower($string) {
 }
 
 function utf8_strtoupper($string) {
-    static $UTF8_LOWER_TO_UPPER = NULL;
+	static $UTF8_LOWER_TO_UPPER = NULL;
 
-    if (is_null($UTF8_LOWER_TO_UPPER)) {
+	if (is_null($UTF8_LOWER_TO_UPPER)) {
 		$UTF8_LOWER_TO_UPPER = array(
 			0x0061 => 0x0041,
 			0x03C6 => 0x03A6,
@@ -619,21 +618,21 @@ function utf8_strtoupper($string) {
 		);
 	}
 
-    $unicode = utf8_to_unicode($string);
+	$unicode = utf8_to_unicode($string);
 
-    if (!$unicode) {
-        return false;
-    }
+	if (!$unicode) {
+		return false;
+	}
 
-    $count = count($unicode);
+	$count = count($unicode);
 
 	for ($i = 0; $i < $count; $i++){
-        if (isset($UTF8_LOWER_TO_UPPER[$unicode[$i]]) ) {
-            $unicode[$i] = $UTF8_LOWER_TO_UPPER[$unicode[$i]];
-        }
-    }
+		if (isset($UTF8_LOWER_TO_UPPER[$unicode[$i]]) ) {
+			$unicode[$i] = $UTF8_LOWER_TO_UPPER[$unicode[$i]];
+		}
+	}
 
-    return utf8_from_unicode($unicode);
+	return utf8_from_unicode($unicode);
 }
 
 function utf8_to_unicode($str) {

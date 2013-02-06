@@ -6,7 +6,7 @@ class Request {
 	public $files = array();
 	public $server = array();
 
-  	public function __construct() {
+	public function __construct() {
 		$_GET = $this->clean($_GET);
 		$_POST = $this->clean($_POST);
 		$_REQUEST = $this->clean($_REQUEST);
@@ -22,15 +22,15 @@ class Request {
 		$this->server = $_SERVER;
 	}
 
-  	public function clean($data) {
-    	if (is_array($data)) {
-	  		foreach ($data as $key => $value) {
+	public function clean($data) {
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
 				unset($data[$key]);
 
-	    		$data[$this->clean($key)] = $this->clean($value);
-	  		}
+				$data[$this->clean($key)] = $this->clean($value);
+			}
 		} else {
-	  		$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
+			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
 		}
 
 		return $data;

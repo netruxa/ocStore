@@ -8,9 +8,9 @@ class Language {
 		$this->directory = $directory;
 	}
 
-  	public function get($key) {
-   		return (isset($this->data[$key]) ? $this->data[$key] : $key);
-  	}
+	public function get($key) {
+		return (isset($this->data[$key]) ? $this->data[$key] : $key);
+	}
 
 	public function load($filename) {
 		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
@@ -26,6 +26,6 @@ class Language {
 		} else {
 			trigger_error('Error: Could not load language ' . $filename . '!');
 		}
-  	}
+	}
 }
 ?>

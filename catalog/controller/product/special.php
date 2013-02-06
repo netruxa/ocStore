@@ -136,7 +136,7 @@ class ControllerProductSpecial extends Controller {
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
@@ -226,11 +226,11 @@ class ControllerProductSpecial extends Controller {
 
 		sort($limits);
 
-		foreach($limits as $limit){
+		foreach($limits as $limits){
 			$this->data['limits'][] = array(
-				'text'  => $limit,
-				'value' => $limit,
-				'href'  => $this->url->link('product/special', $url . '&limit=' . $limit)
+				'text'  => $limits,
+				'value' => $limits,
+				'href'  => $this->url->link('product/special', $url . '&limit=' . $limits)
 			);
 		}
 

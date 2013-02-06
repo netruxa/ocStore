@@ -4,7 +4,7 @@ class Cart {
 	private $db;
 	private $data = array();
 
-  	public function __construct($registry) {
+	public function __construct($registry) {
 		$this->config = $registry->get('config');
 		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
@@ -13,11 +13,11 @@ class Cart {
 		$this->weight = $registry->get('weight');
 
 		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
-      		$this->session->data['cart'] = array();
-    	}
+			$this->session->data['cart'] = array();
+		}
 	}
 
-  	public function getProducts() {
+	public function getProducts() {
 		if (!$this->data) {
 			foreach ($this->session->data['cart'] as $key => $quantity) {
 				$product = explode(':', $key);
@@ -40,12 +40,12 @@ class Cart {
 
 					$option_data = array();
 
-					foreach ($options as $product_option_id => $option_value) {
+					foreach ($options as $product_option_id => $value) {
 						$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$product_id . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 						if ($option_query->num_rows) {
 							if ($option_query->row['type'] == 'select' || $option_query->row['type'] == 'radio' || $option_query->row['type'] == 'image') {
-								$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$option_value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+								$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 								if ($option_value_query->num_rows) {
 									if ($option_value_query->row['price_prefix'] == '+') {
@@ -72,11 +72,11 @@ class Cart {
 
 									$option_data[] = array(
 										'product_option_id'       => $product_option_id,
-										'product_option_value_id' => $option_value,
+										'product_option_value_id' => $value,
 										'option_id'               => $option_query->row['option_id'],
 										'option_value_id'         => $option_value_query->row['option_value_id'],
 										'name'                    => $option_query->row['name'],
-										'option_value'            => $option_value_query->row['name'],
+										'value'                   => $option_value_query->row['name'],
 										'type'                    => $option_query->row['type'],
 										'quantity'                => $option_value_query->row['quantity'],
 										'subtract'                => $option_value_query->row['subtract'],
@@ -88,8 +88,8 @@ class Cart {
 										'weight_prefix'           => $option_value_query->row['weight_prefix']
 									);
 								}
-							} elseif ($option_query->row['type'] == 'checkbox' && is_array($option_value)) {
-								foreach ($option_value as $product_option_value_id) {
+							} elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
+								foreach ($value as $product_option_value_id) {
 									$option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 									if ($option_value_query->num_rows) {
@@ -121,7 +121,7 @@ class Cart {
 											'option_id'               => $option_query->row['option_id'],
 											'option_value_id'         => $option_value_query->row['option_value_id'],
 											'name'                    => $option_query->row['name'],
-											'option_value'            => $option_value_query->row['name'],
+											'value'                   => $option_value_query->row['name'],
 											'type'                    => $option_query->row['type'],
 											'quantity'                => $option_value_query->row['quantity'],
 											'subtract'                => $option_value_query->row['subtract'],
@@ -141,7 +141,7 @@ class Cart {
 									'option_id'               => $option_query->row['option_id'],
 									'option_value_id'         => '',
 									'name'                    => $option_query->row['name'],
-									'option_value'            => $option_value,
+									'value'                   => $value,
 									'type'                    => $option_query->row['type'],
 									'quantity'                => '',
 									'subtract'                => '',
@@ -249,62 +249,62 @@ class Cart {
 		}
 
 		return $this->data;
-  	}
+	}
 
-  	public function add($product_id, $qty = 1, $option = array()) {
-    	if (!$option) {
-      		$key = (int)$product_id;
-    	} else {
-      		$key = (int)$product_id . ':' . base64_encode(serialize($option));
-    	}
+	public function add($product_id, $qty = 1, $option = array()) {
+		if (!$option) {
+			$key = (int)$product_id;
+		} else {
+			$key = (int)$product_id . ':' . base64_encode(serialize($option));
+		}
 
 		if ((int)$qty && ((int)$qty > 0)) {
-    		if (!isset($this->session->data['cart'][$key])) {
-      			$this->session->data['cart'][$key] = (int)$qty;
-    		} else {
-      			$this->session->data['cart'][$key] += (int)$qty;
-    		}
+			if (!isset($this->session->data['cart'][$key])) {
+				$this->session->data['cart'][$key] = (int)$qty;
+			} else {
+				$this->session->data['cart'][$key] += (int)$qty;
+			}
 		}
-
-		$this->data = array();
-  	}
-
-  	public function update($key, $qty) {
-    	if ((int)$qty && ((int)$qty > 0)) {
-      		$this->session->data['cart'][$key] = (int)$qty;
-    	} else {
-	  		$this->remove($key);
-		}
-
-		$this->data = array();
-  	}
-
-  	public function remove($key) {
-		if (isset($this->session->data['cart'][$key])) {
-     		unset($this->session->data['cart'][$key]);
-  		}
 
 		$this->data = array();
 	}
 
-  	public function clear() {
+	public function update($key, $qty) {
+		if ((int)$qty && ((int)$qty > 0)) {
+			$this->session->data['cart'][$key] = (int)$qty;
+		} else {
+			$this->remove($key);
+		}
+
+		$this->data = array();
+	}
+
+	public function remove($key) {
+		if (isset($this->session->data['cart'][$key])) {
+			unset($this->session->data['cart'][$key]);
+		}
+
+		$this->data = array();
+	}
+
+	public function clear() {
 		$this->session->data['cart'] = array();
 		$this->data = array();
-  	}
+	}
 
-  	public function getWeight() {
+	public function getWeight() {
 		$weight = 0;
 
-    	foreach ($this->getProducts() as $product) {
+		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
-      			$weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->config->get('config_weight_class_id'));
+				$weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->config->get('config_weight_class_id'));
 			}
 		}
 
 		return $weight;
 	}
 
-  	public function getSubTotal() {
+	public function getSubTotal() {
 		$total = 0;
 
 		foreach ($this->getProducts() as $product) {
@@ -312,7 +312,7 @@ class Cart {
 		}
 
 		return $total;
-  	}
+	}
 
 	public function getTaxes() {
 		$tax_data = array();
@@ -332,9 +332,9 @@ class Cart {
 		}
 
 		return $tax_data;
-  	}
+	}
 
-  	public function getTotal() {
+	public function getTotal() {
 		$total = 0;
 
 		foreach ($this->getProducts() as $product) {
@@ -342,9 +342,9 @@ class Cart {
 		}
 
 		return $total;
-  	}
+	}
 
-  	public function countProducts() {
+	public function countProducts() {
 		$product_total = 0;
 
 		$products = $this->getProducts();
@@ -356,45 +356,45 @@ class Cart {
 		return $product_total;
 	}
 
-  	public function hasProducts() {
-    	return count($this->session->data['cart']);
-  	}
+	public function hasProducts() {
+		return count($this->session->data['cart']);
+	}
 
-  	public function hasStock() {
+	public function hasStock() {
 		$stock = true;
 
 		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
-	    		$stock = false;
+				$stock = false;
 			}
 		}
 
-    	return $stock;
-  	}
+		return $stock;
+	}
 
-  	public function hasShipping() {
+	public function hasShipping() {
 		$shipping = false;
 
 		foreach ($this->getProducts() as $product) {
-	  		if ($product['shipping']) {
-	    		$shipping = true;
+			if ($product['shipping']) {
+				$shipping = true;
 
 				break;
-	  		}
+			}
 		}
 
 		return $shipping;
 	}
 
-  	public function hasDownload() {
+	public function hasDownload() {
 		$download = false;
 
 		foreach ($this->getProducts() as $product) {
-	  		if ($product['download']) {
-	    		$download = true;
+			if ($product['download']) {
+				$download = true;
 
 				break;
-	  		}
+			}
 		}
 
 		return $download;

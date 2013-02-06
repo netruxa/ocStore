@@ -10,20 +10,20 @@ final class Tax {
 		$this->db = $registry->get('db');
 		$this->session = $registry->get('session');
 
-		if (isset($this->session->data['shipping_country_id']) || isset($this->session->data['shipping_zone_id'])) {
-			$this->setShippingAddress($this->session->data['shipping_country_id'], $this->session->data['shipping_zone_id']);
+		if (isset($this->session->data['shipping_addess'])) {
+			$this->setShippingAddress($this->session->data['shipping_addess']['country_id'], $this->session->data['shipping_addess']['zone_id']);
 		} elseif ($this->config->get('config_tax_default') == 'shipping') {
 			$this->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
-		if (isset($this->session->data['payment_country_id']) || isset($this->session->data['payment_zone_id'])) {
-			$this->setPaymentAddress($this->session->data['payment_country_id'], $this->session->data['payment_zone_id']);
+		if (isset($this->session->data['payment_addess'])) {
+			$this->setPaymentAddress($this->session->data['payment_addess']['country_id'], $this->session->data['payment_addess']['zone_id']);
 		} elseif ($this->config->get('config_tax_default') == 'payment') {
 			$this->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
 		$this->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-  	}
+	}
 
 	public function setShippingAddress($country_id, $zone_id) {
 		$this->shipping_address = array(
@@ -46,17 +46,27 @@ final class Tax {
 		);
 	}
 
-  	public function calculate($value, $tax_class_id, $calculate = true) {
+	public function calculate($value, $tax_class_id, $calculate = true) {
 		if ($tax_class_id && $calculate) {
-			$amount = $this->getTax($value, $tax_class_id);
+			$amount = 0;
+
+			$tax_rates = $this->getRates($value, $tax_class_id);
+
+			foreach ($tax_rates as $tax_rate) {
+				if ($calculate != 'P' && $calculate != 'F') {
+					$amount += $tax_rate['amount'];
+				} elseif ($tax_rate['type'] == $calculate) {
+					$amount += $tax_rate['amount'];
+				}
+			}
 
 			return $value + $amount;
 		} else {
-      		return $value;
-    	}
-  	}
+			return $value;
+		}
+	}
 
-  	public function getTax($value, $tax_class_id) {
+	public function getTax($value, $tax_class_id) {
 		$amount = 0;
 
 		$tax_rates = $this->getRates($value, $tax_class_id);
@@ -66,7 +76,7 @@ final class Tax {
 		}
 
 		return $amount;
-  	}
+	}
 
 	public function getRateName($tax_rate_id) {
 		$tax_query = $this->db->query("SELECT name FROM " . DB_PREFIX . "tax_rate WHERE tax_rate_id = '" . (int)$tax_rate_id . "'");
@@ -78,7 +88,7 @@ final class Tax {
 		}
 	}
 
-    public function getRates($value, $tax_class_id) {
+	public function getRates($value, $tax_class_id) {
 		$tax_rates = array();
 
 		if ($this->customer->isLogged()) {
@@ -156,8 +166,8 @@ final class Tax {
 		return $tax_rate_data;
 	}
 
-  	public function has($tax_class_id) {
+	public function has($tax_class_id) {
 		return isset($this->taxes[$tax_class_id]);
-  	}
+	}
 }
 ?>

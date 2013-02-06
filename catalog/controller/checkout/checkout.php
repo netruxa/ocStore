@@ -28,6 +28,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->language->load('checkout/checkout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 
@@ -60,7 +61,6 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
 		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');
 		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
-		$this->data['text_modify'] = $this->language->get('text_modify');
 
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['shipping_required'] = $this->cart->hasShipping();

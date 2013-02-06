@@ -48,3 +48,6 @@ backup
 # Log Files
 /system/logs/*
 !/system/logs/index.html
+
+# My local storage for "to be implemented" modules
+/yummy_modules

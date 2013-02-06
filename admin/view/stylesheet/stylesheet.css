@@ -112,7 +112,7 @@ label {
 	display: block;
 }
 #menu > ul ul li {
-	padding: 2px;
+	padding: 0px;
 	clear: both;
 }
 #menu > ul .selected .top {
@@ -125,18 +125,15 @@ label {
 	background-repeat:no-repeat;
 }
 #menu > ul li ul ul {
-	margin: -31px 0 0 163px;
+	margin: -29px 0 0 161px;
 }
 #menu > ul li li a {
-	padding: 6px;
-	margin: 1px;
+	padding: 7px;
 	color: #FFFFFF;
 	width: 147px;
 }
 #menu > ul li li > a:hover {
-	margin: 0px;
-	border: 1px solid #BD4C14;
-	background-color: #391706;
+	background-color: #C15C2A;
 }
 
 
@@ -287,16 +284,18 @@ body > #container {
 	min-height: 300px;
 	overflow: auto;
 }
-a.button, .list a.button {
+a.button, input.button, .list a.button {
 	text-decoration: none;
 	color: #FFF;
 	display: inline-block;
 	padding: 5px 15px 5px 15px;
 	background: #003A88;
+	border: 0px;
 	-webkit-border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
 	-khtml-border-radius: 10px 10px 10px 10px;
 	border-radius: 10px 10px 10px 10px;
+	cursor: pointer;
 }
 .list {
 	border-collapse: collapse;

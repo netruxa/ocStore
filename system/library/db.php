@@ -12,20 +12,20 @@ class DB {
 		$this->driver = new $driver($hostname, $username, $password, $database);
 	}
 
-  	public function query($sql) {
+	public function query($sql) {
 		return $this->driver->query($sql);
-  	}
+	}
 
 	public function escape($value) {
 		return $this->driver->escape($value);
 	}
 
-  	public function countAffected() {
+	public function countAffected() {
 		return $this->driver->countAffected();
-  	}
+	}
 
-  	public function getLastId() {
+	public function getLastId() {
 		return $this->driver->getLastId();
-  	}
+	}
 }
 ?>
