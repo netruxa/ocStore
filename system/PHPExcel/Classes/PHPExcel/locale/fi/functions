@@ -1,6 +1,6 @@
 ﻿##
 ## PHPExcel
-##
+##
 ## Copyright (c) 2006 - 2010 PHPExcel
 ##
 ## This library is free software; you can redistribute it and/or
@@ -133,7 +133,7 @@ OCT2HEX			= OKTHEKSA			##	Muuntaa oktaaliluvun heksadesimaaliluvuksi.
 
 
 ##
-##	Financial functions				Rahoitusfunktiot   
+##	Financial functions				Rahoitusfunktiot
 ##
 ACCRINT			= KERTYNYT.KORKO		##	Laskee arvopaperille kertyneen koron, kun korko kertyy säännöllisin väliajoin.
 ACCRINTM		= KERTYNYT.KORKO.LOPUSSA	##	Laskee arvopaperille kertyneen koron, kun korko maksetaan eräpäivänä.

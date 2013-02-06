@@ -1,6 +1,6 @@
 ﻿##
 ## PHPExcel
-##
+##
 ## Copyright (c) 2006 - 2010 PHPExcel
 ##
 ## This library is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ GETPIVOTDATA		= KIMUTATÁSADATOT.VESZ		##	A kimutatásokban tárolt adatok vissz
 
 
 ##
-##	Cube functions Kockafüggvények   
+##	Cube functions Kockafüggvények
 ##
 CUBEKPIMEMBER		= KOCKA.FŐTELJMUT		##	Egy fő teljesítménymutató (KPI) nevét, tulajdonságát és mértékegységét adja eredményül, a nevet és a tulajdonságot megjeleníti a cellában. A KPI-k számszerűsíthető mérési lehetőséget jelentenek – ilyen mutató például a havi bruttó nyereség vagy az egy alkalmazottra jutó negyedéves forgalom –, egy szervezet teljesítményének nyomonkövetésére használhatók.
 CUBEMEMBER		= KOCKA.TAG			##	Kockahierachia tagját vagy rekordját adja eredményül. Ellenőrizhető vele, hogy szerepel-e a kockában az adott tag vagy rekord.
