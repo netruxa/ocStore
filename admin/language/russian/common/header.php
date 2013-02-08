@@ -34,6 +34,7 @@ $_['text_localisation']						= 'Локализация';
 $_['text_logged']						= 'Вы вошли как <span>%s</span>';
 $_['text_logout']						= 'Выход';
 $_['text_contact']						= 'Почта';
+$_['text_modification']						= 'Управление';
 $_['text_manufacturer']						= 'Производители';
 $_['text_module']						= 'Модули';
 $_['text_option']						= 'Опции';
