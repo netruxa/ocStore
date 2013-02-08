@@ -928,7 +928,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (236, 'Черногория', 'CG', 'CGR', '', 0, 1),
 (237, 'Заир', 'ZR', 'ZAR', '', 0, 1),
 (238, 'Замбия', 'ZM', 'ZMB', '', 0, 1),
-(239, 'Зимбабве', 'ZW', 'ZWE', '', 0, 1)
+(239, 'Зимбабве', 'ZW', 'ZWE', '', 0, 1),
 (242, 'Монтенегро', 'ME', 'MNE', '', 0, 1),
 (243, 'Сербия', 'RS', 'SRB', '', 0, 1),
 (244, 'Аландские острова', 'AX', 'ALA', '', 0, 1),
@@ -1132,7 +1132,7 @@ CREATE TABLE `oc_customer_group` (
 -- Dumping data for table `oc_customer_group`
 --
 
-INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `company_id_display`, `company_id_required`, `tax_id_display`, `tax_id_required`, `sort_order`) VALUES
+INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
 (1, 0, 1);
 
 -- --------------------------------------------------------
@@ -7172,7 +7172,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3484, 220, 'DN', 'Днепропетровск', 1),
 (3485, 220, 'DO', 'Донецк', 1),
 (3486, 220, 'IV', 'Ивано-Франковск', 1),
-(3487, 220, 'KH', 'Харьков', 1),
+(3487, 220, 'KH/KE', 'Харьков/Херсон', 1),
 (3488, 220, 'KM', 'Хмельницкий', 1),
 (3489, 220, 'KR', 'Кировоград', 1),
 (3490, 220, 'KV', 'Киевская область', 1),
@@ -7630,9 +7630,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3965, 190, '10', 'Notranjsko-kraška', 1),
 (3966, 190, '11', 'Goriška', 1),
 (3967, 190, '12', 'Obalno-kraška', 1),
-(3968, 220, 'KE', 'Херсон', 1),
-(3969, 33, '', 'Ruse', 1),
-(3970, 101, 'ALB', 'Alborz', 1),
+(3968, 33, '', 'Ruse', 1),
+(3969, 101, 'ALB', 'Alborz', 1),
 (3970, 21, 'BRU', 'Brussels-Capital Region', 1),
 (3971, 138, 'AG', 'Aguascalientes', 1),
 (3972, 222, 'IOM', 'Isle of Man', 1),
