@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>">
+<html dir="ltr" lang="ru">
 <head>
 <meta charset="UTF-8" />
 <title>OpenCart - Установка</title>
