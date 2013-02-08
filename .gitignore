@@ -3,8 +3,8 @@
 !index.html
 
 #Commonly modified files
-/config.php
-/admin/config.php
+config.php
+admin/config.php
 
 # Default user's php.ini name, if enabled in global php.ini.
 # Our /php.ini can be copied or symlinked here, if you're using NginX+PHP-FPM.
@@ -18,6 +18,7 @@ backup
 /vqgen/
 /vqmod/vqmod.log
 /vqmod/vqcache
+/vqmod/mods.cache
 
 # Themes
 /catalog/view/theme/*
