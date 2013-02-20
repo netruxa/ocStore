@@ -492,7 +492,7 @@ class ControllerCatalogCategory extends Controller {
 				$this->data['breadcrumbs'][] = array(
 					'text'      => $result['name'],
 					'href'      => $href,
-					'separator' => ' :: '
+					'separator' => $this->language->get('breadcrumb_seperator')
 				);
 
 				$href = '';

@@ -82,7 +82,7 @@ class ControllerCatalogCategory extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 		'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . '&path=', 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 
 /* PORTME: start expanding categories */
@@ -217,7 +217,7 @@ class ControllerCatalogCategory extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 		'href'      => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 
 		if (!isset($this->request->get['category_id'])) {
@@ -422,7 +422,7 @@ class ControllerCatalogCategory extends Controller {
 				$this->data['breadcrumbs'][] = array(
 					'text'      => $result['name'],
 					'href'      => $href,
-					'separator' => ' :: '
+					'separator' => $this->language->get('breadcrumb_seperator')
 				);
 
 				$href = '';

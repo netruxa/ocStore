@@ -58,13 +58,13 @@ class ControllerFeedYandexMarket extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_feed'),
-			'separator' => ' :: '
+			'separator' => $this->language->get('breadcrumb_seperator')
 		);
 
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('feed/yml', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('heading_title'),
-			'separator' => ' :: '
+			'separator' => $this->language->get('breadcrumb_seperator')
 		);
 
 		$this->data['action'] = $this->url->link('feed/yandex_market', 'token=' . $this->session->data['token'], 'SSL');

@@ -86,13 +86,13 @@ class ControllerModuleExchange1c extends Controller {
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('text_module'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 
    		$this->data['breadcrumbs'][] = array(
        		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('module/exchange1c', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
+      		'separator' => $this->language->get('breadcrumb_seperator')
    		);
 
    		$this->data['token'] = $this->session->data['token'];
