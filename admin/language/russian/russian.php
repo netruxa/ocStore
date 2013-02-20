@@ -112,4 +112,8 @@ $_['error_upload_6']          = 'Не найдена временная папк
 $_['error_upload_7']          = 'Не удалось записать файл на диск!';
 $_['error_upload_8']          = 'Загрузка файла остановлена!';
 $_['error_upload_999']        = 'Код ошибки недоступен!';
+
+// Breadcrump Seperator
+$_['breadcrumb_seperator']                      = '<span class="breadcrumb-seperator">&rsaquo;&rsaquo;</span>';
+
 ?>

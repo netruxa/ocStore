@@ -1,18 +1,30 @@
 #!/usr/bin/env bash
 
 function find_missing_files() {
-echo
+find admin/language/english -type f | while read f; do
+	FILE=${f//english/russian};
+	test -f "${FILE}" || (
+		echo "Отсутствует: ${FILE}. Скопировано из английского перевода.";
+	#	cp ${f} ${FILE}
+	)
+done
 }
 
 function find_missing_strings() {
-grep \\$ admin/language/english/english.php | \
-sed -r -e 's/\$_\[(.*)\].*/\1/' | \
-while read i; do
-	grep "${i}" admin/language/russian/russian.php >/dev/null || \
-	echo "Нету: ${i}; Находится между \
-$(grep -B1 ${i} admin/language/english/english.php|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d') \
-и \
-$(grep -A1 ${i} admin/language/english/english.php|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
+find admin/language/english -type f | while read f; do
+	FILE="${f//english/russian}";
+	test -f "${FILE}" || { echo "Фатальная ошибка!"; exit 1; }
+	grep \\$ "${f}" | \
+	sed -r -e 's/\$_\[(.*)\].*/\1/' | \
+	while read i; do
+		grep "${i}" "${FILE}" >/dev/null || (
+			BEFORE="$(grep -B1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
+			AFTER="$(grep -A1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
+
+			echo "Нету: ${i}; Находится между ${BEFORE} и ${AFTER}; Строка скопирована из английского перевода и требует вмешательства.";
+			grep ${i} ${f} | while read tr; do sed -r -e "s@(.*${BEFORE}.*)@\1\n${tr}@" -i ${FILE}; done;
+		)
+	done;
 done;
 }
 
@@ -25,5 +37,6 @@ do
 done;
 }
 
+find_missing_files;
 find_missing_strings;
-#find_untranslated_strings;
+find_untranslated_strings;
