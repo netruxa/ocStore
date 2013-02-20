@@ -13,21 +13,17 @@ if (!defined('DIR_APPLICATION')) {
 	exit;
 }
 
-// vQmod
-require_once('./vqmod/vqmod.php');
-$vqmod = new VQMod();
-
-// VQMODDED Startup
-require_once($vqmod->modCheck(DIR_SYSTEM . 'startup.php'));
+// Startup
+require_once(DIR_SYSTEM . 'startup.php');
 
 // Application Classes
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/customer.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/affiliate.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/currency.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/tax.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/weight.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/length.php'));
-require_once($vqmod->modCheck(DIR_SYSTEM . 'library/cart.php'));
+require_once(DIR_SYSTEM . 'library/customer.php');
+require_once(DIR_SYSTEM . 'library/affiliate.php');
+require_once(DIR_SYSTEM . 'library/currency.php');
+require_once(DIR_SYSTEM . 'library/tax.php');
+require_once(DIR_SYSTEM . 'library/weight.php');
+require_once(DIR_SYSTEM . 'library/length.php');
+require_once(DIR_SYSTEM . 'library/cart.php');
 
 // Registry
 $registry = new Registry();
@@ -242,4 +238,9 @@ $controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();
+
+
+$mod = new Modification();
+
+$mod->load(DIR_SYSTEM . 'vqmod_opencart.xml');
 ?>

@@ -280,7 +280,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int) $order_info['order_id'])->rows;
 
 				foreach ($product_query as $product) {
-					$goods_list[] = array(
+                    $goods_list[] = array(
 						'qty'   => (int)$product['quantity'],
 						'goods' => array(
 							'artno'    => $product['model'],
@@ -318,7 +318,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$digest = '';
 
 				foreach ($goods_list as $goods) {
-					$digest .= $goods['goods']['title'] . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
 				}
 
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_invoice[$order_info['payment_iso_code_3']]['secret'])));
@@ -458,7 +458,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
                 $xml = '<double>' . (float)$data . '</double>';
                 break;
             case 'string':
-                $xml = '<string>' . htmlspecialchars($data) . '</string>';
+                    $xml = '<string>' . htmlspecialchars($data) . '</string>';
                 break;
             case 'array':
                 // is numeric ?
