@@ -75,6 +75,7 @@ $_['entry_required']         = 'Необходимо:';
 $_['entry_status']           = 'Статус:';
 $_['entry_sort_order']       = 'Порядок сортировки:';
 $_['entry_category']         = 'Показывать в категориях:';
+$_['entry_filter']           = 'Filters:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_download']         = 'Загрузки:';
 $_['entry_related']          = 'Рекомендуемые:<br/><span class="help">(Автодополнение)</span>';
 $_['entry_tag']          	 = 'Теги товара:<br /><span class="help">разделяются запятой</span>';

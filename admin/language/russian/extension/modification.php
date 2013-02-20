@@ -3,6 +3,8 @@
 $_['heading_title']    = 'Менеджер дополнений';
 
 // Text
+$_['text_install']     = 'Install';
+$_['text_uninstall']   = 'Uninstall';
 $_['text_success']     = 'Дополнение успешно установлено!';
 
 // Error
