@@ -325,7 +325,7 @@ class ControllerFeedYandexMarket extends Controller {
 	 * @return string
 	 */
 	private function getYml() {
-		$yml  = '<?xml version="1.0" encoding="windows-1251"?>' . $this->eol;
+		$yml  = '<?xml version="1.0" encoding="UTF-8"?>' . $this->eol;
 		$yml .= '<!DOCTYPE yml_catalog SYSTEM "shops.dtd">' . $this->eol;
 		$yml .= '<yml_catalog date="' . date('Y-m-d H:i') . '">' . $this->eol;
 		$yml .= '<shop>' . $this->eol;
@@ -436,9 +436,6 @@ class ControllerFeedYandexMarket extends Controller {
 		$from = array('"', '&', '>', '<', '\'');
 		$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
 		$field = str_replace($from, $to, $field);
-		if ($this->from_charset != 'windows-1251') {
-			$field = iconv($this->from_charset, 'windows-1251//IGNORE', $field);
-		}
 		$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 
 		return trim($field);
