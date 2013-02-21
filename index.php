@@ -242,5 +242,5 @@ $response->output();
 
 $mod = new Modification();
 
-$mod->load(DIR_SYSTEM . 'vqmod_opencart.xml');
+$mod->load('vqmod_opencart.xml');
 ?>
