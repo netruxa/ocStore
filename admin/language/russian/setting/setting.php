@@ -92,7 +92,7 @@ $_['entry_ftp_host']               = 'FTP Host:';
 $_['entry_ftp_port']               = 'FTP Port:';
 $_['entry_ftp_username']           = 'FTP Username:';
 $_['entry_ftp_password']           = 'FTP Password:';
-$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally 'public_html/'.</span>';
+$_['entry_ftp_root']               = 'FTP Root:<span class="help">The directory your opencart installation is stored in normally \'public_html/\'.</span>';
 $_['entry_ftp_status']             = 'Enable FTP:';
 $_['entry_mail_protocol']			= 'Почтовый протокол:<br /><span class="help">Выбирайте "Mail", и только в случае, если этот способ не работает или не подходит &mdash; используйте SMTP.</span>';
 $_['entry_mail_parameter']			= 'Параметры функции mail:<br /><span class="help">ОСТОРОЖНО. Не заполняйте поле, если не знаете, для чего оно. Когда используется "Mail", здесь могут быть указаны дополнительные параметры для sendmail (напр. "-femail@storeaddress.com").';
