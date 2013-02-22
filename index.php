@@ -1,5 +1,6 @@
 <?php
 // Version
+define('VERSION_NAME', 'ocStore');
 define('VERSION', '1.6.0');
 
 // Configuration
