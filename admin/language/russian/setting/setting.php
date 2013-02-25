@@ -164,5 +164,5 @@ $_['error_ftp_port']               = 'FTP Port required!';
 $_['error_ftp_username']           = 'FTP Username required!';
 $_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']			= 'Необходимо ввести имя журнала ошибок!';
-$_['error_encryption']             = 'Encryption must be between 3 and 32 characters!';
+$_['error_encryption']             = 'Encryption Key must be between 3 and 32 characters!';
 ?>

@@ -133,6 +133,7 @@ class ControllerProductManufacturer extends Controller {
 				$this->document->setTitle($manufacturer_info['name']);
 			}
 
+			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 			$this->document->setDescription($manufacturer_info['meta_description']);
 			$this->document->setKeywords($manufacturer_info['meta_keyword']);
