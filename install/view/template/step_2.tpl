@@ -110,8 +110,7 @@
              <span class="bad">Не доступен для записи</span>
             <?php } else { ?>
             <span class="good">Доступен для записи</span>
-            <?php } ?>
-            </td>
+            <?php } ?></td>
           </tr>
           <tr>
             <td><?php echo $config_admin; ?></td>
@@ -121,8 +120,7 @@
              <span class="bad">Не доступен для записи</span>
             <?php } else { ?>
             <span class="good">Доступен для записи</span>
-            <?php } ?>
-            </td>
+            <?php } ?></td>
           </tr>
         </table>
       </fieldset>
@@ -142,6 +140,10 @@
             <td><?php echo is_writable($logs) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
           </tr>
           <tr>
+          <td><?php echo $download . '/'; ?></td>
+          <td><?php echo is_writable($download) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
+        </tr>
+        <tr>
             <td><?php echo $image . '/'; ?></td>
             <td><?php echo is_writable($image) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
           </tr>
@@ -152,10 +154,6 @@
           <tr>
             <td><?php echo $image_data . '/'; ?></td>
             <td><?php echo is_writable($image_data) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $download . '/'; ?></td>
-            <td><?php echo is_writable($download) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
           </tr>
         </table>
       </fieldset>

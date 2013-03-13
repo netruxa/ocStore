@@ -42,9 +42,8 @@ class ControllerProductCategory extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-       		'separator' => false
+       		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
    		);
 
 		if (isset($this->request->get['path'])) {
@@ -79,9 +78,8 @@ class ControllerProductCategory extends Controller {
 
 				if ($category_info) {
 	       			$this->data['breadcrumbs'][] = array(
-   	    				'text'      => $category_info['name'],
-						'href'      => $this->url->link('product/category', 'path=' . $path . $url),
-        				'separator' => $this->language->get('text_separator')
+   	    				'text' => $category_info['name'],
+						'href' => $this->url->link('product/category', 'path=' . $path . $url)
         			);
 				}
 			}
@@ -100,6 +98,7 @@ class ControllerProductCategory extends Controller {
 
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
+			$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path']), 'canonical');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
@@ -147,9 +146,8 @@ class ControllerProductCategory extends Controller {
 			}
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $category_info['name'],
-				'href'      => $this->url->link('product/category', 'path=' . $this->request->get['path']),
-				'separator' => $this->language->get('text_separator')
+				'text' => $category_info['name'],
+				'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'])
 			);
 
 			if ($category_info['image']) {
@@ -429,9 +427,8 @@ class ControllerProductCategory extends Controller {
 			}
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_error'),
-				'href'      => $this->url->link('product/category', $url),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('product/category', $url)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));

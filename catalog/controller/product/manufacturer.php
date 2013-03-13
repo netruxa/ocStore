@@ -19,15 +19,13 @@ class ControllerProductManufacturer extends Controller {
 		$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
-        	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-        	'separator' => false
+        	'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
       	);
 
 		$this->data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_brand'),
-			'href'      => $this->url->link('product/manufacturer'),
-			'separator' => $this->language->get('text_separator')
+			'text' => $this->language->get('text_brand'),
+			'href' => $this->url->link('product/manufacturer')
 		);
 
 		$this->data['categories'] = array();
@@ -113,15 +111,13 @@ class ControllerProductManufacturer extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-      		'separator' => false
+       			'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home')
    		);
 
 		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_brand'),
-			'href'      => $this->url->link('product/manufacturer'),
-      		'separator' => $this->language->get('text_separator')
+       			'text'      => $this->language->get('text_brand'),
+			'href'      => $this->url->link('product/manufacturer')
    		);
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
@@ -133,6 +129,7 @@ class ControllerProductManufacturer extends Controller {
 				$this->document->setTitle($manufacturer_info['name']);
 			}
 
+			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 			$this->document->setDescription($manufacturer_info['meta_description']);
@@ -157,9 +154,8 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			$this->data['breadcrumbs'][] = array(
-       			'text'      => $manufacturer_info['name'],
-				'href'      => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
-      			'separator' => $this->language->get('text_separator')
+       			'text' => $manufacturer_info['name'],
+				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
    			);
 
 			$this->data['seo_h1'] = $manufacturer_info['seo_h1'];
@@ -405,9 +401,8 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			$this->data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_error'),
-				'href'      => $this->url->link('product/category', $url),
-				'separator' => $this->language->get('text_separator')
+				'text' => $this->language->get('text_error'),
+				'href' => $this->url->link('product/category', $url)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));

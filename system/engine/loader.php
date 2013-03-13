@@ -6,14 +6,6 @@ final class Loader {
 		$this->registry = $registry;
 	}
 
-	public function __get($key) {
-		return $this->registry->get($key);
-	}
-
-	public function __set($key, $value) {
-		$this->registry->set($key, $value);
-	}
-
 	public function library($library) {
 		$file = DIR_SYSTEM . 'library/' . $library . '.php';
 
@@ -25,13 +17,26 @@ final class Loader {
 		}
 	}
 
-	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
+	public function controller($controller) {
+		$file  = DIR_APPLICATION . 'controller/' . $controller . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $controller);
 
 		if (file_exists($file)) {
 			include_once($file);
+
+			$controller = new $class($this->registry);
+
+			if (is_callable(array($controller, $action->getMethod()))) {
+				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			} else {
+				$action = $this->error;
+
+				$this->error = '';
+			}
+
+			//$this->registry->set('controller_' . str_replace('/', '_', $controller
 		} else {
-			trigger_error('Error: Could not load helper ' . $helper . '!');
+			trigger_error('Error: Could not load controller ' . $model . '!');
 			exit();
 		}
 	}
@@ -46,6 +51,36 @@ final class Loader {
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
 			trigger_error('Error: Could not load model ' . $model . '!');
+			exit();
+		}
+	}
+
+	public function view($template, $data = array()) {
+		if (file_exists(DIR_TEMPLATE . $template)) {
+			extract($data);
+
+			ob_start();
+
+			require(DIR_TEMPLATE . $template);
+
+			$output = ob_get_contents();
+
+			ob_end_clean();
+
+			return $output;
+		} else {
+			trigger_error('Error: Could not load template ' . DIR_TEMPLATE . $template . '!');
+			exit();
+		}
+	}
+
+	public function helper($helper) {
+		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
+
+		if (file_exists($file)) {
+			include_once($file);
+		} else {
+			trigger_error('Error: Could not load helper ' . $helper . '!');
 			exit();
 		}
 	}

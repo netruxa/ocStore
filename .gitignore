@@ -6,6 +6,10 @@
 config.php
 admin/config.php
 
+# Modification Files
+/system/modification/*
+!/system/modification/index.html
+
 # Default user's php.ini name, if enabled in global php.ini.
 # Our /php.ini can be copied or symlinked here, if you're using NginX+PHP-FPM.
 .user.ini
@@ -43,8 +47,8 @@ backup
 !/image/templates/default.jpg
 
 # Download Files
-/download/*
-!/download/index.html
+/system/download/*
+!/system/download/index.html
 
 # Log Files
 /system/logs/*
