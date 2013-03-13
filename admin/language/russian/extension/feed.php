@@ -3,6 +3,7 @@
 $_['heading_title']  = 'Каналы продвижения';
 
 // Text
+$_['text_success']     = 'Success: You have modified feeds!';
 $_['text_install']   = 'Установить';
 $_['text_uninstall'] = 'Удалить';
 

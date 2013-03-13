@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Учитывать в заказе';
 
 // Text
+$_['text_success']      = 'Success: You have modified totals!';
 $_['text_install']      = 'Установить';
 $_['text_uninstall']    = 'Удалить';
 

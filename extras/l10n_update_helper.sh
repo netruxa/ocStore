@@ -21,7 +21,7 @@ find admin/language/english -type f | while read f; do
 			BEFORE="$(grep -B1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
 			AFTER="$(grep -A1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
 
-			echo "Нету: ${i}; Находится между ${BEFORE} и ${AFTER}; Строка скопирована из английского перевода и требует вмешательства.";
+			echo "Нету: ${i}; Находится между «${BEFORE}» и «${AFTER}»; Строка скопирована из английского перевода и требует вмешательства.";
 			grep ${i} ${f} | while read tr; do sed -r -e "s@(.*${BEFORE}.*)@\1\n${tr}@" -i ${FILE}; done;
 		)
 	done;

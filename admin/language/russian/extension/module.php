@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Модули';
 
 // Text
+$_['text_success']     = 'Success: You have modified modules!';
 $_['text_install']      = 'Установить';
 $_['text_uninstall']    = 'Удалить';
 

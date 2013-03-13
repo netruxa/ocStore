@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Доставка';
 
 // Text
+$_['text_success']      = 'Success: You have modified shipping!';
 $_['text_install']      = 'Установить';
 $_['text_uninstall']    = 'Удалить';
 

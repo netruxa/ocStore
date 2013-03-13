@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Оплата';
 
 // Text
+$_['text_success']      = 'Success: You have modified payments!';
 $_['text_install']      = 'Установить';
 $_['text_uninstall']    = 'Удалить';
 
