@@ -12,7 +12,7 @@ final class Front {
 		$this->pre_action[] = $pre_action;
 	}
 
-  	public function dispatch($action, $error) {
+ 	public function dispatch($action, $error) {
 		$this->error = $error;
 
 		foreach ($this->pre_action as $pre_action) {
@@ -31,20 +31,15 @@ final class Front {
   	}
 
 	private function execute($action) {
-		$file = $action->getFile();
-		$class = $action->getClass();
-		$method = $action->getMethod();
-		$args = $action->getArgs();
+		if (file_exists($action->getFile())) {
+			require_once($action->getFile());
 
-		$action = '';
-
-		if (file_exists($file)) {
-			require_once($file);
+			$class = $action->getClass();
 
 			$controller = new $class($this->registry);
 
-			if (is_callable(array($controller, $method))) {
-				$action = call_user_func_array(array($controller, $method), $args);
+			if (is_callable(array($controller, $action->getMethod()))) {
+				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
 			} else {
 				$action = $this->error;
 
