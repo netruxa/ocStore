@@ -1,20 +1,20 @@
 <?php
 class ModelCatalogProduct extends Model {
-	
+
 	//++++ OpenCart acceleration ++++
 	private $NOW;
-	
+
 	public function __construct($registry) {
 		$this->NOW = date('Y-m-d H:i') . ':00';
 		parent::__construct($registry);
 	}
-	
+
 	private $FOUND_ROWS;
-	
+
 	public function getFoundProducts() {
 		return $this->FOUND_ROWS;
 	}
-	
+
 	/**
 	 * Get verbose product data for getProducts method without SQL-query for each item
 	 *
@@ -27,13 +27,8 @@ class ModelCatalogProduct extends Model {
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
-		
-		$product_data = array();
-		foreach ($products as $result) {
-			$product_data[$result['product_id']] = $result;
-		}
 
-		$query = $this->db->query("SELECT DISTINCT pd.name AS name, p.image, m.name AS manufacturer,
+		$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer,
 			(SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id AND customer_group_id = '" . (int)$customer_group_id . "') AS reward,
 			(SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status,
 			(SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class,
@@ -43,11 +38,11 @@ class ModelCatalogProduct extends Model {
 		FROM " . DB_PREFIX . "product p
 		LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id)
 		LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)
-		WHERE p.product_id IN ('" . implode("','", array_keys($product_data)) . "')");
-		
+		WHERE p.product_id IN ('" . implode("','", array_keys($products)) . "')");
+
 		$ret = array();
 		foreach ($query->rows as $row) {
-			$row = array_merge($row, $product_data[$row['product_id']]);
+			$row = array_merge($row, $products[$row['product_id']]);
 			$row['price'] = ($row['discount'] ? $row['discount'] : $row['price']);
 			$row['rating'] = round($row['rating']);
 			$row['reviews'] = ($row['reviews'] ? $row['reviews'] : 0);
@@ -56,8 +51,8 @@ class ModelCatalogProduct extends Model {
 		return $ret;
 	}
 	//---- OpenCart acceleration ----
-	
-	
+
+
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
 	}
@@ -289,7 +284,7 @@ class ModelCatalogProduct extends Model {
 		$product_data = array();
 
 		$query = $this->db->query($sql);
-		
+
 		$num_query = $this->db->query("SELECT FOUND_ROWS() AS `found_rows`");
 		$this->FOUND_ROWS = intval($num_query->row['found_rows']);
 
@@ -419,13 +414,13 @@ class ModelCatalogProduct extends Model {
 
 	public function getProductAttributes($product_id) {
 		$product_attribute_group_data = array();
-		
+
 		$query = $this->db->query("SELECT ag.attribute_group_id, agd.name AS gname, a.attribute_id, ad.name AS aname, pa.text
 			FROM " . DB_PREFIX . "product_attribute pa
-			LEFT JOIN " . DB_PREFIX . "attribute a ON ( pa.attribute_id = a.attribute_id ) 
-			LEFT JOIN " . DB_PREFIX . "attribute_group ag ON ( a.attribute_group_id = ag.attribute_group_id ) 
+			LEFT JOIN " . DB_PREFIX . "attribute a ON ( pa.attribute_id = a.attribute_id )
+			LEFT JOIN " . DB_PREFIX . "attribute_group ag ON ( a.attribute_group_id = ag.attribute_group_id )
 			LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON ( ag.attribute_group_id = agd.attribute_group_id )
-			LEFT JOIN " . DB_PREFIX . "attribute_description ad ON ( a.attribute_id = ad.attribute_id ) 
+			LEFT JOIN " . DB_PREFIX . "attribute_description ad ON ( a.attribute_id = ad.attribute_id )
 			WHERE pa.product_id = '" . (int)$product_id . "'
 				AND agd.language_id =  '" . (int)$this->config->get('config_language_id') . "'
 				AND ad.language_id =  '" . (int)$this->config->get('config_language_id') . "'
