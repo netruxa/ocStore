@@ -104,7 +104,6 @@ class ControllerAccountWishList extends Controller {
 				}
 
 				$this->data['products'][] = array(
-					'quantity'	=> $product_info['quantity'],
 					'product_id'	=> $product_info['product_id'],
 					'thumb'		=> $image,
 					'name'		=> $product_info['name'],

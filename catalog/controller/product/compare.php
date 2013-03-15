@@ -111,7 +111,6 @@ class ControllerProductCompare extends Controller {
 				}
 
 				$this->data['products'][$product_id] = array(
-					'quantity'	=> $product_info['quantity'],
 					'product_id'	=> $product_info['product_id'],
 					'name'		=> $product_info['name'],
 					'thumb'		=> $image,

@@ -19,8 +19,6 @@ class ControllerCheckoutCheckout extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$this->session->data['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
-
 				$this->redirect($this->url->link('checkout/cart'));
 			}
 		}
