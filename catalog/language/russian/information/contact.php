@@ -4,6 +4,7 @@ $_['heading_title']  = 'Связаться с нами';
 
 // Text
 $_['text_location']  = 'Наше местонахождение';
+$_['text_open']      = 'Opening Times';
 $_['text_contact']   = 'Написать нам';
 $_['text_address']   = 'Адрес:';
 $_['text_email']     = 'E-Mail:';

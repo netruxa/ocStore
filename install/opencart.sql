@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `oc_address`;
 CREATE TABLE `oc_address` (
-  `address_id` int(11) NOT NULL auto_increment,
+  `address_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `oc_address` (
 
 DROP TABLE IF EXISTS `oc_affiliate`;
 CREATE TABLE `oc_affiliate` (
-  `affiliate_id` int(11) NOT NULL auto_increment,
+  `affiliate_id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE `oc_affiliate` (
 
 DROP TABLE IF EXISTS `oc_affiliate_transaction`;
 CREATE TABLE `oc_affiliate_transaction` (
-  `affiliate_transaction_id` int(11) NOT NULL auto_increment,
+  `affiliate_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `affiliate_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE `oc_affiliate_transaction` (
 
 DROP TABLE IF EXISTS `oc_attribute`;
 CREATE TABLE `oc_attribute` (
-  `attribute_id` int(11) NOT NULL auto_increment,
+  `attribute_id` int(11) NOT NULL AUTO_INCREMENT,
   `attribute_group_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`attribute_id`)
@@ -191,7 +191,7 @@ INSERT INTO `oc_attribute_description` (`attribute_id`, `language_id`, `name`) V
 
 DROP TABLE IF EXISTS `oc_attribute_group`;
 CREATE TABLE `oc_attribute_group` (
-  `attribute_group_id` int(11) NOT NULL auto_increment,
+  `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`attribute_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -242,7 +242,7 @@ INSERT INTO `oc_attribute_group_description` (`attribute_group_id`, `language_id
 
 DROP TABLE IF EXISTS `oc_banner`;
 CREATE TABLE `oc_banner` (
-  `banner_id` int(11) NOT NULL auto_increment,
+  `banner_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY  (`banner_id`)
@@ -265,7 +265,7 @@ INSERT INTO `oc_banner` (`banner_id`, `name`, `status`) VALUES
 
 DROP TABLE IF EXISTS `oc_banner_image`;
 CREATE TABLE `oc_banner_image` (
-  `banner_image_id` int(11) NOT NULL auto_increment,
+  `banner_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `banner_id` int(11) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
@@ -331,7 +331,7 @@ INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `ba
 
 DROP TABLE IF EXISTS `oc_category`;
 CREATE TABLE `oc_category` (
-  `category_id` int(11) NOT NULL auto_increment,
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) DEFAULT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `top` tinyint(1) NOT NULL,
@@ -675,7 +675,7 @@ INSERT INTO `oc_category_to_store` (`category_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_country`;
 CREATE TABLE `oc_country` (
-  `country_id` int(11) NOT NULL auto_increment,
+  `country_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `iso_code_2` varchar(2) NOT NULL,
   `iso_code_3` varchar(3) NOT NULL,
@@ -948,7 +948,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 
 DROP TABLE IF EXISTS `oc_coupon`;
 CREATE TABLE `oc_coupon` (
-  `coupon_id` int(11) NOT NULL auto_increment,
+  `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `code` varchar(10) NOT NULL,
   `type` char(1) NOT NULL,
@@ -999,7 +999,7 @@ CREATE TABLE `oc_coupon_category` (
 
 DROP TABLE IF EXISTS `oc_coupon_history`;
 CREATE TABLE `oc_coupon_history` (
-  `coupon_history_id` int(11) NOT NULL auto_increment,
+  `coupon_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -1020,7 +1020,7 @@ CREATE TABLE `oc_coupon_history` (
 
 DROP TABLE IF EXISTS `oc_coupon_product`;
 CREATE TABLE `oc_coupon_product` (
-  `coupon_product_id` int(11) NOT NULL auto_increment,
+  `coupon_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   PRIMARY KEY  (`coupon_product_id`)
@@ -1038,7 +1038,7 @@ CREATE TABLE `oc_coupon_product` (
 
 DROP TABLE IF EXISTS `oc_currency`;
 CREATE TABLE `oc_currency` (
-  `currency_id` int(11) NOT NULL auto_increment,
+  `currency_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `code` varchar(3) NOT NULL,
   `symbol_left` varchar(12) NOT NULL,
@@ -1067,7 +1067,7 @@ INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbo
 
 DROP TABLE IF EXISTS `oc_customer`;
 CREATE TABLE `oc_customer` (
-  `customer_id` int(11) NOT NULL auto_increment,
+  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
@@ -1122,7 +1122,7 @@ CREATE TABLE `oc_customer_field` (
 
 DROP TABLE IF EXISTS `oc_customer_group`;
 CREATE TABLE `oc_customer_group` (
-  `customer_group_id` int(11) NOT NULL auto_increment,
+  `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `approval` int(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
@@ -1184,7 +1184,7 @@ CREATE TABLE `oc_customer_history` (
 
 DROP TABLE IF EXISTS `oc_customer_ip`;
 CREATE TABLE `oc_customer_ip` (
-  `customer_ip_id` int(11) NOT NULL auto_increment,
+  `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -1204,7 +1204,7 @@ CREATE TABLE `oc_customer_ip` (
 
 DROP TABLE IF EXISTS `oc_customer_ban_ip`;
 CREATE TABLE `oc_customer_ban_ip` (
-  `customer_ban_ip_id` int(11) NOT NULL auto_increment,
+  `customer_ban_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(40) NOT NULL,
   PRIMARY KEY  (`customer_ban_ip_id`),
   KEY `ip` (`ip`)
@@ -1224,7 +1224,7 @@ CREATE TABLE `oc_customer_online` (
   `referer` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1234,7 +1234,7 @@ CREATE TABLE `oc_customer_online` (
 
 DROP TABLE IF EXISTS `oc_customer_reward`;
 CREATE TABLE `oc_customer_reward` (
-  `customer_reward_id` int(11) NOT NULL auto_increment,
+  `customer_reward_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `order_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
@@ -1255,7 +1255,7 @@ CREATE TABLE `oc_customer_reward` (
 
 DROP TABLE IF EXISTS `oc_customer_transaction`;
 CREATE TABLE `oc_customer_transaction` (
-  `customer_transaction_id` int(11) NOT NULL auto_increment,
+  `customer_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -1388,7 +1388,7 @@ CREATE TABLE `oc_custom_field_value_description` (
 
 DROP TABLE IF EXISTS `oc_download`;
 CREATE TABLE `oc_download` (
-  `download_id` int(11) NOT NULL auto_increment,
+  `download_id` int(11) NOT NULL AUTO_INCREMENT,
   `filename` varchar(128) NOT NULL,
   `mask` varchar(128) NOT NULL,
   `remaining` int(11) NOT NULL DEFAULT '0',
@@ -1499,7 +1499,7 @@ CREATE TABLE `oc_filter_description` (
 
 DROP TABLE IF EXISTS `oc_extension`;
 CREATE TABLE `oc_extension` (
-  `extension_id` int(11) NOT NULL auto_increment,
+  `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `code` varchar(32) NOT NULL,
   PRIMARY KEY  (`extension_id`)
@@ -1539,7 +1539,7 @@ INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
 
 DROP TABLE IF EXISTS `oc_geo_zone`;
 CREATE TABLE `oc_geo_zone` (
-  `geo_zone_id` int(11) NOT NULL auto_increment,
+  `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1562,7 +1562,7 @@ INSERT INTO `oc_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`
 
 DROP TABLE IF EXISTS `oc_information`;
 CREATE TABLE `oc_information` (
-  `information_id` int(11) NOT NULL auto_increment,
+  `information_id` int(11) NOT NULL AUTO_INCREMENT,
   `bottom` int(1) NOT NULL DEFAULT '0',
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -1662,7 +1662,7 @@ INSERT INTO `oc_information_to_store` (`information_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_language`;
 CREATE TABLE `oc_language` (
-  `language_id` int(11) NOT NULL auto_increment,
+  `language_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `code` varchar(5) NOT NULL,
   `locale` varchar(255) NOT NULL,
@@ -1691,7 +1691,7 @@ INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `di
 
 DROP TABLE IF EXISTS `oc_layout`;
 CREATE TABLE `oc_layout` (
-  `layout_id` int(11) NOT NULL auto_increment,
+  `layout_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY  (`layout_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1721,7 +1721,7 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_layout_route`;
 CREATE TABLE `oc_layout_route` (
-  `layout_route_id` int(11) NOT NULL auto_increment,
+  `layout_route_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `route` varchar(255) NOT NULL,
@@ -1752,7 +1752,7 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 
 DROP TABLE IF EXISTS `oc_length_class`;
 CREATE TABLE `oc_length_class` (
-  `length_class_id` int(11) NOT NULL auto_increment,
+  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` decimal(15,8) NOT NULL,
   PRIMARY KEY  (`length_class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1773,7 +1773,7 @@ INSERT INTO `oc_length_class` (`length_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_length_class_description`;
 CREATE TABLE `oc_length_class_description` (
-  `length_class_id` int(11) NOT NULL auto_increment,
+  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
@@ -1826,7 +1826,7 @@ CREATE TABLE `oc_location` (
 
 DROP TABLE IF EXISTS `oc_manufacturer`;
 CREATE TABLE `oc_manufacturer` (
-  `manufacturer_id` int(11) NOT NULL auto_increment,
+  `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) NOT NULL,
@@ -1937,7 +1937,7 @@ CREATE TABLE `oc_modification` (
 
 DROP TABLE IF EXISTS `oc_option`;
 CREATE TABLE `oc_option` (
-  `option_id` int(11) NOT NULL auto_increment,
+  `option_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY  (`option_id`)
@@ -2010,7 +2010,7 @@ INSERT INTO `oc_option_description` (`option_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_option_value`;
 CREATE TABLE `oc_option_value` (
-  `option_value_id` int(11) NOT NULL auto_increment,
+  `option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `sort_order` int(3) NOT NULL,
@@ -2094,7 +2094,7 @@ INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `op
 
 DROP TABLE IF EXISTS `oc_order`;
 CREATE TABLE `oc_order` (
-  `order_id` int(11) NOT NULL auto_increment,
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_no` int(11) NOT NULL DEFAULT '0',
   `invoice_prefix` varchar(26) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
@@ -2166,7 +2166,7 @@ CREATE TABLE `oc_order` (
 
 DROP TABLE IF EXISTS `oc_order_download`;
 CREATE TABLE `oc_order_download` (
-  `order_download_id` int(11) NOT NULL auto_increment,
+  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -2178,27 +2178,6 @@ CREATE TABLE `oc_order_download` (
 
 --
 -- Dumping data for table `oc_order_download`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_field`
---
-
-DROP TABLE IF EXISTS `oc_order_field`;
-CREATE TABLE `oc_order_field` (
-  `order_id` int(11) NOT NULL,
-  `custom_field_id` int(11) NOT NULL,
-  `custom_field_value_id` int(11) NOT NULL,
-  `name` int(128) NOT NULL,
-  `value` text NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`order_id`,`custom_field_id`,`custom_field_value_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_order_field`
 --
 
 -- --------------------------------------------------------
@@ -2273,12 +2252,33 @@ CREATE TABLE `oc_order_fraud` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_field`
+--
+
+DROP TABLE IF EXISTS `oc_order_field`;
+CREATE TABLE `oc_order_field` (
+  `order_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` int(128) NOT NULL,
+  `value` text NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`order_id`,`custom_field_id`,`custom_field_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_order_field`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_order_history`
 --
 
 DROP TABLE IF EXISTS `oc_order_history`;
 CREATE TABLE `oc_order_history` (
-  `order_history_id` int(11) NOT NULL auto_increment,
+  `order_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_status_id` int(5) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
@@ -2301,7 +2301,7 @@ CREATE TABLE `oc_order_history` (
 
 DROP TABLE IF EXISTS `oc_order_option`;
 CREATE TABLE `oc_order_option` (
-  `order_option_id` int(11) NOT NULL auto_increment,
+  `order_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `order_product_id` int(11) NOT NULL,
   `product_option_id` int(11) NOT NULL,
@@ -2325,7 +2325,7 @@ CREATE TABLE `oc_order_option` (
 
 DROP TABLE IF EXISTS `oc_order_product`;
 CREATE TABLE `oc_order_product` (
-  `order_product_id` int(11) NOT NULL auto_increment,
+  `order_product_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -2350,7 +2350,7 @@ CREATE TABLE `oc_order_product` (
 
 DROP TABLE IF EXISTS `oc_order_status`;
 CREATE TABLE `oc_order_status` (
-  `order_status_id` int(11) NOT NULL auto_increment,
+  `order_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`order_status_id`,`language_id`)
@@ -2398,7 +2398,7 @@ INSERT INTO `oc_order_status` (`order_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_order_total`;
 CREATE TABLE `oc_order_total` (
-  `order_total_id` int(10) NOT NULL auto_increment,
+  `order_total_id` int(10) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `code` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -2421,7 +2421,7 @@ CREATE TABLE `oc_order_total` (
 
 DROP TABLE IF EXISTS `oc_order_voucher`;
 CREATE TABLE `oc_order_voucher` (
-  `order_voucher_id` int(11) NOT NULL auto_increment,
+  `order_voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `voucher_id` int(11) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -2448,7 +2448,7 @@ CREATE TABLE `oc_order_voucher` (
 
 DROP TABLE IF EXISTS `oc_product`;
 CREATE TABLE `oc_product` (
-  `product_id` int(11) NOT NULL auto_increment,
+  `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `model` varchar(64) NOT NULL,
   `sku` varchar(64) NOT NULL,
   `upc` varchar(12) NOT NULL,
@@ -2614,7 +2614,7 @@ INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `desc
 
 DROP TABLE IF EXISTS `oc_product_discount`;
 CREATE TABLE `oc_product_discount` (
-  `product_discount_id` int(11) NOT NULL auto_increment,
+  `product_discount_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `quantity` int(4) NOT NULL DEFAULT '0',
@@ -2661,7 +2661,7 @@ CREATE TABLE `oc_product_filter` (
 
 DROP TABLE IF EXISTS `oc_product_image`;
 CREATE TABLE `oc_product_image` (
-  `product_image_id` int(11) NOT NULL auto_increment,
+  `product_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
@@ -2745,7 +2745,7 @@ INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUE
 
 DROP TABLE IF EXISTS `oc_product_option`;
 CREATE TABLE `oc_product_option` (
-  `product_option_id` int(11) NOT NULL auto_increment,
+  `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
   `value` text NOT NULL,
@@ -2779,7 +2779,7 @@ INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `option_id`,
 
 DROP TABLE IF EXISTS `oc_product_option_value`;
 CREATE TABLE `oc_product_option_value` (
-  `product_option_value_id` int(11) NOT NULL auto_increment,
+  `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_option_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
@@ -2848,7 +2848,7 @@ INSERT INTO `oc_product_related` (`product_id`, `related_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_product_reward`;
 CREATE TABLE `oc_product_reward` (
-  `product_reward_id` int(11) NOT NULL auto_increment,
+  `product_reward_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL DEFAULT '0',
   `points` int(8) NOT NULL DEFAULT '0',
@@ -2909,7 +2909,7 @@ INSERT INTO `oc_product_reward` (`product_reward_id`, `product_id`, `customer_gr
 
 DROP TABLE IF EXISTS `oc_product_special`;
 CREATE TABLE `oc_product_special` (
-  `product_special_id` int(11) NOT NULL auto_increment,
+  `product_special_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `priority` int(5) NOT NULL DEFAULT '1',
@@ -3065,7 +3065,7 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 
 DROP TABLE IF EXISTS `oc_return`;
 CREATE TABLE `oc_return` (
-  `return_id` int(11) NOT NULL auto_increment,
+  `return_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
@@ -3100,7 +3100,7 @@ CREATE TABLE `oc_return` (
 
 DROP TABLE IF EXISTS `oc_return_action`;
 CREATE TABLE `oc_return_action` (
-  `return_action_id` int(11) NOT NULL auto_increment,
+  `return_action_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
   PRIMARY KEY  (`return_action_id`,`language_id`)
@@ -3126,7 +3126,7 @@ INSERT INTO `oc_return_action` (`return_action_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_return_history`;
 CREATE TABLE `oc_return_history` (
-  `return_history_id` int(11) NOT NULL auto_increment,
+  `return_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `return_id` int(11) NOT NULL,
   `return_status_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL,
@@ -3147,7 +3147,7 @@ CREATE TABLE `oc_return_history` (
 
 DROP TABLE IF EXISTS `oc_return_reason`;
 CREATE TABLE `oc_return_reason` (
-  `return_reason_id` int(11) NOT NULL auto_increment,
+  `return_reason_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL,
   PRIMARY KEY  (`return_reason_id`,`language_id`)
@@ -3177,7 +3177,7 @@ INSERT INTO `oc_return_reason` (`return_reason_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_return_status`;
 CREATE TABLE `oc_return_status` (
-  `return_status_id` int(11) NOT NULL auto_increment,
+  `return_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`return_status_id`,`language_id`)
@@ -3203,7 +3203,7 @@ INSERT INTO `oc_return_status` (`return_status_id`, `language_id`, `name`) VALUE
 
 DROP TABLE IF EXISTS `oc_review`;
 CREATE TABLE `oc_review` (
-  `review_id` int(11) NOT NULL auto_increment,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `author` varchar(64) NOT NULL,
@@ -3229,7 +3229,7 @@ CREATE TABLE `oc_review` (
 
 DROP TABLE IF EXISTS `oc_setting`;
 CREATE TABLE `oc_setting` (
-  `setting_id` int(11) NOT NULL auto_increment,
+  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `group` varchar(32) NOT NULL,
   `key` varchar(64) NOT NULL,
@@ -3386,7 +3386,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 
 DROP TABLE IF EXISTS `oc_stock_status`;
 CREATE TABLE `oc_stock_status` (
-  `stock_status_id` int(11) NOT NULL auto_increment,
+  `stock_status_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY  (`stock_status_id`,`language_id`)
@@ -3414,7 +3414,7 @@ INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`) VALUES
 
 DROP TABLE IF EXISTS `oc_store`;
 CREATE TABLE `oc_store` (
-  `store_id` int(11) NOT NULL auto_increment,
+  `store_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `url` varchar(255) NOT NULL,
   `ssl` varchar(255) NOT NULL,
@@ -3434,7 +3434,7 @@ CREATE TABLE `oc_store` (
 
 DROP TABLE IF EXISTS `oc_tax_class`;
 CREATE TABLE `oc_tax_class` (
-  `tax_class_id` int(11) NOT NULL auto_increment,
+  `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3447,7 +3447,8 @@ CREATE TABLE `oc_tax_class` (
 --
 
 INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`, `date_modified`) VALUES
-(9, 'Налоги', 'Облагаемые налогом', '2009-01-06 23:21:53', '2011-03-09 21:17:10');
+(9, 'Налоги', 'Облагаемые налогом', '2009-01-06 23:21:53', '2011-03-09 21:17:10'),
+(10, 'Скачиваемые товары', 'Скачиваемые', '2011-09-21 22:19:39', '2011-09-22 10:27:36');
 
 -- --------------------------------------------------------
 
@@ -3457,7 +3458,7 @@ INSERT INTO `oc_tax_class` (`tax_class_id`, `title`, `description`, `date_added`
 
 DROP TABLE IF EXISTS `oc_tax_rate`;
 CREATE TABLE `oc_tax_rate` (
-  `tax_rate_id` int(11) NOT NULL auto_increment,
+  `tax_rate_id` int(11) NOT NULL AUTO_INCREMENT,
   `geo_zone_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(32) NOT NULL,
   `rate` decimal(15,4) NOT NULL DEFAULT '0.0000',
@@ -3506,7 +3507,7 @@ INSERT INTO `oc_tax_rate_to_customer_group` (`tax_rate_id`, `customer_group_id`)
 
 DROP TABLE IF EXISTS `oc_tax_rule`;
 CREATE TABLE `oc_tax_rule` (
-  `tax_rule_id` int(11) NOT NULL auto_increment,
+  `tax_rule_id` int(11) NOT NULL AUTO_INCREMENT,
   `tax_class_id` int(11) NOT NULL,
   `tax_rate_id` int(11) NOT NULL,
   `based` varchar(10) NOT NULL,
@@ -3532,7 +3533,7 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 
 DROP TABLE IF EXISTS `oc_url_alias`;
 CREATE TABLE `oc_url_alias` (
-  `url_alias_id` int(11) NOT NULL auto_increment,
+  `url_alias_id` int(11) NOT NULL AUTO_INCREMENT,
   `query` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
   PRIMARY KEY  (`url_alias_id`)
@@ -3619,7 +3620,7 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 
 DROP TABLE IF EXISTS `oc_user`;
 CREATE TABLE `oc_user` (
-  `user_id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_group_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
@@ -3646,7 +3647,7 @@ CREATE TABLE `oc_user` (
 
 DROP TABLE IF EXISTS `oc_user_group`;
 CREATE TABLE `oc_user_group` (
-  `user_group_id` int(11) NOT NULL auto_increment,
+  `user_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `permission` text NOT NULL,
   PRIMARY KEY  (`user_group_id`)
@@ -3668,7 +3669,7 @@ INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
 
 DROP TABLE IF EXISTS `oc_voucher`;
 CREATE TABLE `oc_voucher` (
-  `voucher_id` int(11) NOT NULL auto_increment,
+  `voucher_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `code` varchar(10) NOT NULL,
   `from_name` varchar(64) NOT NULL,
@@ -3696,7 +3697,7 @@ CREATE TABLE `oc_voucher` (
 
 DROP TABLE IF EXISTS `oc_voucher_history`;
 CREATE TABLE `oc_voucher_history` (
-  `voucher_history_id` int(11) NOT NULL auto_increment,
+  `voucher_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `voucher_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `amount` decimal(15,4) NOT NULL,
@@ -3717,7 +3718,7 @@ CREATE TABLE `oc_voucher_history` (
 
 DROP TABLE IF EXISTS `oc_voucher_theme`;
 CREATE TABLE `oc_voucher_theme` (
-  `voucher_theme_id` int(11) NOT NULL auto_increment,
+  `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY  (`voucher_theme_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -3765,7 +3766,7 @@ INSERT INTO `oc_voucher_theme_description` (`voucher_theme_id`, `language_id`, `
 
 DROP TABLE IF EXISTS `oc_weight_class`;
 CREATE TABLE `oc_weight_class` (
-  `weight_class_id` int(11) NOT NULL auto_increment,
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
   PRIMARY KEY  (`weight_class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -3786,7 +3787,7 @@ INSERT INTO `oc_weight_class` (`weight_class_id`, `value`) VALUES
 
 DROP TABLE IF EXISTS `oc_weight_class_description`;
 CREATE TABLE `oc_weight_class_description` (
-  `weight_class_id` int(11) NOT NULL auto_increment,
+  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
@@ -3811,7 +3812,7 @@ INSERT INTO `oc_weight_class_description` (`weight_class_id`, `language_id`, `ti
 
 DROP TABLE IF EXISTS `oc_zone`;
 CREATE TABLE `oc_zone` (
-  `zone_id` int(11) NOT NULL auto_increment,
+  `zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   `code` varchar(32) NOT NULL,
@@ -7819,7 +7820,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 
 DROP TABLE IF EXISTS `oc_zone_to_geo_zone`;
 CREATE TABLE `oc_zone_to_geo_zone` (
-  `zone_to_geo_zone_id` int(11) NOT NULL auto_increment,
+  `zone_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL DEFAULT '0',
   `geo_zone_id` int(11) NOT NULL,

@@ -19,6 +19,7 @@ $_['text_customer']      = 'Покупатель:';
 $_['text_comment']       = 'Комментарий по возврату';
 $_['text_history']       = 'История возвратов';
 $_['text_empty']         = 'У Вас не было раньше возвратов товаров!';
+$_['text_agree']         = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 $_['text_error']         = 'Запрос на возврат не найден!';
 
 // Column
@@ -58,4 +59,5 @@ $_['error_product']         = 'Наименование товара  должн
 $_['error_model']        = 'Название модели должно быть от 3 до 64 символов!';
 $_['error_reason']       = 'Необходимо указать причину возврата товара!';
 $_['error_captcha']      = 'Неверно введен код с картинки!';
+$_['error_agree']        = 'Warning: You must agree to the %s!';
 ?>
