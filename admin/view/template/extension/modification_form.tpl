@@ -17,51 +17,12 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
-            <td>Your upload file:</td>
-            <td><input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" /></td>
+            <td><?php echo $entry_code; ?></td>
+            <td><textarea name="code" cols="40" rows="15" style="width: 98%;"><?php echo $code; ?></textarea></td>
           </tr>
         </table>
-         <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
       </form>
     </div>
   </div>
 </div>
-<div style="display: none;">
-  <form enctype="multipart/form-data">
-    <input type="file" name="file" id="file" />
-  </form>
-</div>
-<script type="text/javascript"><!--
-$('#file').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=extension/modification/upload&token=<?php echo $token; ?>',
-        type: 'post',
-		dataType: 'json',
-		data: new FormData($(this).parent()[0]),
-		beforeSend: function() {
-			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-			$('#button-upload').attr('disabled', true);
-		},
-		complete: function() {
-			$('.loading').remove();
-			$('#button-upload').attr('disabled', false);
-		},
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
-
-			if (json['success']) {
-				alert(json['success']);
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-        cache: false,
-        contentType: false,
-        processData: false
-    });
-});
-//--></script>
 <?php echo $footer; ?>

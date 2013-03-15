@@ -229,10 +229,10 @@ class ControllerExtensionModification extends Controller {
 			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
+		$this->data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$this->data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['insert'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['sync'] = $this->url->link('extension/modification/sync', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$this->data['modifications'] = array();
 
@@ -277,6 +277,8 @@ class ControllerExtensionModification extends Controller {
 		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
 		$this->data['column_action'] = $this->language->get('column_action');
 
+		$this->data['button_refresh'] = $this->language->get('button_refresh');
+		$this->data['button_clear'] = $this->language->get('button_clear');
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 
@@ -347,7 +349,7 @@ class ControllerExtensionModification extends Controller {
   	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['entry_name'] = $this->language->get('entry_name');
+    	$this->data['entry_code'] = $this->language->get('entry_code');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -405,7 +407,13 @@ class ControllerExtensionModification extends Controller {
 
 		$this->data['token'] = $this->session->data['token'];
 
-		$this->data['log'] = '';
+		if (isset($this->request->post['xml'])) {
+			$this->data['code'] = $this->request->post['xml'];
+		} elseif (!empty($modification_info)) {
+			$this->data['code'] = $modification_info['xml'];
+		} else {
+			$this->data['code'] = '';
+		}
 
 		$this->template = 'extension/modification_form.tpl';
 		$this->children = array(
@@ -439,234 +447,5 @@ class ControllerExtensionModification extends Controller {
 	  		return false;
 		}
   	}
-
-	public function upload() {
-/*
-New XML Modifcation Standard
-
-<modification>
-	<id><![CDATA[Test]]></id>
-	<name><![CDATA[1.0]]></name>
-	<version><![CDATA[1.0]]></version>
-	<author><![CDATA[http://www.opencart.com]]></author>
-	<file name="catalog/controller/product/product.php" error="log|skip|abort">
-		<operation>
-			<search index="1"><![CDATA[
-
-			code
-
-			]]></search>
-
-			<add position="replace|before|after"><![CDATA[
-
-			code
-
-			]]></add>
-		</operation>
-	</file>
-</modification>
-*/
-		$log = new Log('modification.log');
-
-		$this->language->load('extension/modification');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'extension/modification')) {
-      		$json['error'] = $this->language->get('error_permission') . "\n";
-    	}
-
-		if (!empty($this->request->files['file']['name'])) {
-			if (strrchr($this->request->files['file']['name'], '.') != '.zip' && strrchr($this->request->files['file']['name'], '.') != '.xml') {
-				$json['error'] = $this->language->get('error_filetype');
-       		}
-
-			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
-			}
-		} else {
-			$json['error'] = $this->language->get('error_upload');
-		}
-
-		if (!isset($json['error']) && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-
-			$this->load->model('setting/modification');
-
-			// If xml file just put it straight into the DB
-			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
-				$xml = file_get_contents($this->request->files['file']['tmp_name']);
-
-				if ($xml) {
-					$dom = new DOMDocument('1.0', 'UTF-8');
-					$dom->loadXml($xml);
-
-					if (!$dom->schemaValidate(DIR_SYSTEM . 'modification.xsd')) {
-						print '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
-
-						//libxml_display_errors();
-					}
-
-					$data = array(
-						'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
-						'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-						'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-						'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-						'xml'     => $xml
-					);
-
-					$this->model_setting_modification->addModification($data);
-				}
-
-				unset($this->request->files['file']['tmp_name']);
-			}
-
-			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
-				$file = $this->request->files['file']['tmp_name'];
-				$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
-
-				// Unzip the files
-				$zip = new ZipArchive();
-				$zip->open($file);
-				$zip->extractTo($directory);
-				$zip->close();
-
-				// Remove Zip
-				unlink($file);
-
-				// Get a list of files ready to upload
-				$files = array();
-
-				$path = array($directory . '*');
-
-				while(count($path) != 0) {
-					$next = array_shift($path);
-
-					foreach(glob($next) as $file) {
-						if (is_dir($file)) {
-							$path[] = $file . '/*';
-						}
-
-						$files[] = $file;
-					}
-				}
-
-				sort($files);
-
-				// Connect to the site via FTP
-				$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
-
-				if (!$connection) {
-					exit($this->language->get('error_ftp_connection') . $this->config->get('config_ftp_host') . ':' . $this->config->get('config_ftp_port')) ;
-				}
-
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-
-				if (!$login) {
-					exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
-				}
-
-				if ($this->config->get('config_ftp_root')) {
-					$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-
-					if (!$root) {
-						exit('Couldn\'t change to directory ' . $this->config->get('config_ftp_root'));
-					}
-				}
-
-				foreach ($files as $file) {
-					// Upload everything in the upload directory
-					if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
-						$destination = substr(substr($file, strlen($directory)), 7);
-
-						if (is_dir($file)) {
-							$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-
-							if (!in_array($destination, $list)) {
-								if (ftp_mkdir($connection, $destination)) {
-									echo 'Made directory ' . $destination . '<br />';
-								}
-							}
-						}
-
-						if (is_file($file)) {
-							if (ftp_put($connection, $destination, $file, FTP_ASCII)) {
-								echo 'Successfully uploaded ' . $file . '<br />';
-							}
-						}
-					}
-
-					// SQL
-					if (strrchr(basename($file), '.') == '.sql') {
-						$sql = file_get_contents($file);
-
-
-
-					}
-
-					// XML
-					if (strrchr(basename($file), '.') == '.xml') {
-						$xml = file_get_contents($file);
-
-						$dom = new DOMDocument('1.0', 'UTF-8');
-						$dom->loadXml($xml);
-
-						$data = array(
-							'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
-							'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-							'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-							'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-							'xml'     => $xml
-						);
-
-						$this->model_setting_modification->addModification($data);
-					}
-				}
-
-				ftp_close($connection);
-
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				if (file_exists($directory)) {
-					rmdir($directory);
-				}
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function sql() {
-		$query = '';
-
-		foreach($lines as $line) {
-			if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-				$query .= $line;
-
-				if (preg_match('/;\s*$/', $line)) {
-					$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-					$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-					$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
-
-					$result = mysql_query($query, $connection);
-
-					if (!$result) {
-						die(mysql_error());
-					}
-
-					$query = '';
-				}
-			}
-		}
-	}
 }
 ?>
