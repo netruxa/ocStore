@@ -30,16 +30,15 @@ abstract class Controller {
 
 	protected function getChild($child, $args = array()) {
 		$action = new Action($child, $args);
-		$file = $action->getFile();
-		$class = $action->getClass();
-		$method = $action->getMethod();
 
-		if (file_exists($file)) {
-			require_once($file);
+		if (file_exists($action->getFile())) {
+			require_once($action->getFile());
+
+			$class = $action->getClass();
 
 			$controller = new $class($this->registry);
 
-			$controller->$method($args);
+			$controller->{$action->getMethod()}($action->getArgs());
 
 			return $controller->output;
 		} else {
@@ -56,16 +55,16 @@ abstract class Controller {
 		if (file_exists(DIR_TEMPLATE . $this->template)) {
 			extract($this->data);
 
-      			ob_start();
+			ob_start();
 
-	  		require(DIR_TEMPLATE . $this->template);
+			require(DIR_TEMPLATE . $this->template);
 
-	  		$this->output = ob_get_contents();
+			$this->output = ob_get_contents();
 
-      			ob_end_clean();
+			ob_end_clean();
 
 			return $this->output;
-	    	} else {
+		} else {
 			trigger_error('Error: Could not load template ' . DIR_TEMPLATE . $this->template . '!');
 			exit();
 		}

@@ -259,8 +259,8 @@ class ControllerExtensionModification extends Controller {
 				'modification_id' => $result['modification_id'],
 				'name'            => $result['name'],
 				'author'          => $result['author'],
-				'date_added'      => $result['date_added'],
-				'date_modified'   => $result['date_modified'],
+				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'selected'        => isset($this->request->post['selected']) && in_array($result['modification_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
@@ -351,6 +351,7 @@ class ControllerExtensionModification extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
+    	$this->data['button_upload'] = $this->language->get('button_upload');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -399,12 +400,12 @@ class ControllerExtensionModification extends Controller {
 		$this->data['cancel'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['modification_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$modification_info = $this->model_extension_modification->getModification($this->request->get['modification_id']);
+			$modification_info = $this->model_setting_modification->getModification($this->request->get['modification_id']);
 		}
 
 		$this->data['token'] = $this->session->data['token'];
 
-
+		$this->data['log'] = '';
 
 		$this->template = 'extension/modification_form.tpl';
 		$this->children = array(
@@ -450,7 +451,7 @@ New XML Modifcation Standard
 	<author><![CDATA[http://www.opencart.com]]></author>
 	<file name="catalog/controller/product/product.php" error="log|skip|abort">
 		<operation>
-			<search index="1" error="log|skip|abort"><![CDATA[
+			<search index="1"><![CDATA[
 
 			code
 
@@ -491,28 +492,38 @@ New XML Modifcation Standard
 
 			$this->load->model('setting/modification');
 
-			$file = $this->request->files['file']['tmp_name'];
-			$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
-
 			// If xml file just put it straight into the DB
-			if (strrchr($this->request->files['file']['tmp_name'], '.') == '.xml') {
+			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
 				$xml = file_get_contents($this->request->files['file']['tmp_name']);
 
-				$dom = new DOMDocument('1.0', 'UTF-8');
-				$dom->loadXml($xml);
+				if ($xml) {
+					$dom = new DOMDocument('1.0', 'UTF-8');
+					$dom->loadXml($xml);
 
-				$data = array(
-					'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
-					'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-					'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-					'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-					'xml'     => $xml
-				);
+					if (!$dom->schemaValidate(DIR_SYSTEM . 'modification.xsd')) {
+						print '<b>DOMDocument::schemaValidate() Generated Errors!</b>';
 
-				$this->model_setting_modification->addModification($data);
+						//libxml_display_errors();
+					}
+
+					$data = array(
+						'code'    => $dom->getElementsByTagName('id')->item(0)->nodeValue,
+						'name'    => $dom->getElementsByTagName('name')->item(0)->nodeValue,
+						'version' => $dom->getElementsByTagName('version')->item(0)->nodeValue,
+						'author'  => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+						'xml'     => $xml
+					);
+
+					$this->model_setting_modification->addModification($data);
+				}
 
 				unset($this->request->files['file']['tmp_name']);
-			} else {
+			}
+
+			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
+				$file = $this->request->files['file']['tmp_name'];
+				$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
+
 				// Unzip the files
 				$zip = new ZipArchive();
 				$zip->open($file);
@@ -582,9 +593,18 @@ New XML Modifcation Standard
 								echo 'Successfully uploaded ' . $file . '<br />';
 							}
 						}
-					} elseif (strrchr(basename($file), '.') == '.sql') {
+					}
+
+					// SQL
+					if (strrchr(basename($file), '.') == '.sql') {
 						$sql = file_get_contents($file);
-					} elseif (strrchr(basename($file), '.') == '.xml') {
+
+
+
+					}
+
+					// XML
+					if (strrchr(basename($file), '.') == '.xml') {
 						$xml = file_get_contents($file);
 
 						$dom = new DOMDocument('1.0', 'UTF-8');
@@ -617,9 +637,9 @@ New XML Modifcation Standard
 				if (file_exists($directory)) {
 					rmdir($directory);
 				}
-
-				$json['success'] = $this->language->get('text_success');
 			}
+
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->setOutput(json_encode($json));
