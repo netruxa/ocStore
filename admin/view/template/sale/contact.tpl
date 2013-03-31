@@ -6,82 +6,84 @@
     <?php } ?>
   </ul>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/mail.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="button"><?php echo $button_send; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-        <table id="mail" class="form">
-          <tr>
-            <td><?php echo $entry_store; ?></td>
-            <td><select name="store_id">
-                <option value="0"><?php echo $text_default; ?></option>
-                <?php foreach ($stores as $store) { ?>
-                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-                <?php } ?>
-              </select></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_to; ?></td>
-            <td><select name="to">
-                <option value="newsletter"><?php echo $text_newsletter; ?></option>
-                <option value="customer_all"><?php echo $text_customer_all; ?></option>
-                <option value="customer_group"><?php echo $text_customer_group; ?></option>
-                <option value="customer"><?php echo $text_customer; ?></option>
-                <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
-                <option value="affiliate"><?php echo $text_affiliate; ?></option>
-                <option value="product"><?php echo $text_product; ?></option>
-              </select></td>
-          </tr>
-          <tbody id="to-customer-group" class="to">
-            <tr>
-              <td><?php echo $entry_customer_group; ?></td>
-              <td><select name="customer_group_id">
-                  <?php foreach ($customer_groups as $customer_group) { ?>
-                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                  <?php } ?>
-                </select></td>
-            </tr>
-          </tbody>
-          <tbody id="to-customer" class="to">
-            <tr>
-              <td><?php echo $entry_customer; ?></td>
-              <td><input type="text" name="customers" value="" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><div id="customer" class="scrollbox"></div></td>
-            </tr>
-          </tbody>
-          <tbody id="to-affiliate" class="to">
-            <tr>
-              <td><?php echo $entry_affiliate; ?></td>
-              <td><input type="text" name="affiliates" value="" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><div id="affiliate" class="scrollbox"></div></td>
-            </tr>
-          </tbody>
-          <tbody id="to-product" class="to">
-            <tr>
-              <td><?php echo $entry_product; ?></td>
-              <td><input type="text" name="products" value="" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><div id="product" class="scrollbox"></div></td>
-            </tr>
-          </tbody>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_subject; ?></td>
-            <td><input type="text" name="subject" value="" /></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_message; ?></td>
-            <td><textarea name="message"></textarea></td>
-          </tr>
-        </table>
+    <div class="box-content">
+      <form class="form-horizontal">
+        <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+          <div class="controls">
+            <select name="store_id">
+              <option value="0"><?php echo $text_default; ?></option>
+              <?php foreach ($stores as $store) { ?>
+              <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_to; ?></label>
+          <div class="controls">
+            <select name="to">
+              <option value="newsletter"><?php echo $text_newsletter; ?></option>
+              <option value="customer_all"><?php echo $text_customer_all; ?></option>
+              <option value="customer_group"><?php echo $text_customer_group; ?></option>
+              <option value="customer"><?php echo $text_customer; ?></option>
+              <option value="affiliate_all"><?php echo $text_affiliate_all; ?></option>
+              <option value="affiliate"><?php echo $text_affiliate; ?></option>
+              <option value="product"><?php echo $text_product; ?></option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group to" id="to-customer-group">
+          <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+          <div class="controls">
+            <select name="customer_group_id">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="control-group to" id="to-customer">
+          <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
+          <div class="controls">
+            <input type="text" name="customers" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_customer; ?>" class="icon-question-sign"></i></span>
+            <div id="customer" class="scrollbox"></div>
+          </div>
+        </div>
+        <div class="control-group to" id="to-affiliate">
+          <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
+          <div class="controls">
+            <input type="text" name="affiliates" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_affiliate; ?>" class="icon-question-sign"></i></span>
+            <div id="affiliate" class="scrollbox"></div>
+          </div>
+        </div>
+        <div class="control-group to" id="to-product">
+          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <div class="controls">
+            <input type="text" name="products" value="" />
+            <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_product; ?>" class="icon-question-sign"></i></span>
+            <div id="product" class="scrollbox"></div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_subject; ?></label>
+          <div class="controls">
+            <input type="text" name="subject" value="" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_message; ?></label>
+          <div class="controls">
+            <textarea name="message"></textarea>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -98,9 +100,9 @@ CKEDITOR.replace('message', {
 //--></script>
 <script type="text/javascript"><!--
 $('select[name=\'to\']').on('change', function() {
-	$('#mail .to').hide();
+	$('.to').hide();
 
-	$('#mail #to-' + $(this).attr('value').replace('_', '-')).show();
+	$('#to-' + this.value.replace('_', '-')).show();
 });
 
 $('select[name=\'to\']').trigger('change');
@@ -143,7 +145,7 @@ $('input[name=\'customers\']').catcomplete({
 	select: function(event, ui) {
 		$('#customer' + ui.item.value).remove();
 
-		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
+		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
 
 		$('#customer div:odd').attr('class', 'odd');
 		$('#customer div:even').attr('class', 'even');
@@ -155,7 +157,7 @@ $('input[name=\'customers\']').catcomplete({
    	}
 });
 
-$('#customer div img').live('click', function() {
+$('#customer div img').on('click', function() {
 	$(this).parent().remove();
 
 	$('#customer div:odd').attr('class', 'odd');
@@ -183,7 +185,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	select: function(event, ui) {
 		$('#affiliate' + ui.item.value).remove();
 
-		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
+		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
 
 		$('#affiliate div:odd').attr('class', 'odd');
 		$('#affiliate div:even').attr('class', 'even');
@@ -195,7 +197,7 @@ $('input[name=\'affiliates\']').autocomplete({
    	}
 });
 
-$('#affiliate div img').live('click', function() {
+$('#affiliate div img').on('click', function() {
 	$(this).parent().remove();
 
 	$('#affiliate div:odd').attr('class', 'odd');
@@ -221,7 +223,7 @@ $('input[name=\'products\']').autocomplete({
 	select: function(event, ui) {
 		$('#product' + ui.item.value).remove();
 
-		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
+		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product div:odd').attr('class', 'odd');
 		$('#product div:even').attr('class', 'even');
@@ -233,7 +235,7 @@ $('input[name=\'products\']').autocomplete({
    	}
 });
 
-$('#product div img').live('click', function() {
+$('#product div img').on('click', function() {
 	$(this).parent().remove();
 
 	$('#product div:odd').attr('class', 'odd');
@@ -261,7 +263,7 @@ function send(url) {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+					$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 
 					$('.warning').fadeIn('slow');
 				}
@@ -277,13 +279,13 @@ function send(url) {
 
 			if (json['next']) {
 				if (json['success']) {
-					$('.box').before('<div class="success">' + json['success'] + '</div>');
+					$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
 
 					send(json['next']);
 				}
 			} else {
 				if (json['success']) {
-					$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
+					$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
 
 					$('.success').fadeIn('slow');
 				}

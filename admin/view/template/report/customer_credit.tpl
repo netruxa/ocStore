@@ -6,11 +6,11 @@
     <?php } ?>
   </ul>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
+    <div class="box-heading">
+      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
-      <table class="list">
+    <div class="box-content">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_customer; ?></td>
@@ -43,6 +43,7 @@
         </tbody>
       </table>
       <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="results"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

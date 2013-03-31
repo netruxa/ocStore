@@ -7,9 +7,9 @@
   </ul>
 </div>
 <div id="content">
-    <div class="warning">Не забудьте удалить каталог установки!</div>
+    <div class="alert alert-error">Не забудьте удалить каталог установки!</div>
     <p>Поздравляем! Вы успешно обновили ocStore.</p>
-    <div style="success">
+    <div class="alert alert-success">
       <div><a href="../"><img src="view/image/screenshot_1.png" alt="" /></a><br />
        <a href="../">Перейти к витрине магазина</a></div>
       <div ><a href="../admin/"><img src="view/image/screenshot_2.png" alt="" /></a><br />
