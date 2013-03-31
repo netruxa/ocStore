@@ -1022,12 +1022,11 @@
                   <?php } ?>
                   <?php } ?>
                 </select> <span class="help-block"><?php echo $help_fraud_status; ?></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="tab-sms">
-          <table class="form">
-            <tr>
+          <div class="tab-pane" id="tab-sms">
+            <div class="control-group">
               <td><?php echo $entry_sms_alert; ?></td>
               <td><?php if ($config_sms_alert) { ?>
                 <input type="radio" name="config_sms_alert" value="1" checked="checked" />
@@ -1040,44 +1039,55 @@
                 <input type="radio" name="config_sms_alert" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sms_gatename; ?></td>
-              <td>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_gatename; ?></label>
+              <div class="controls">
                 <select name="config_sms_gatename">
-                <?php foreach($sms_gatenames as $sms_gatename) { ?>
-                <?php if ($config_sms_gatename == $sms_gatename) { ?>
-                <option value="<?php echo $sms_gatename; ?>" selected="selected"><?php echo $sms_gatename; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $sms_gatename; ?>"><?php echo $sms_gatename; ?></option>
-                <?php } ?>
-                <?php } ?>
+                  <?php foreach($sms_gatenames as $sms_gatename) { ?>
+                  <?php if ($config_sms_gatename == $sms_gatename) { ?>
+                  <option value="<?php echo $sms_gatename; ?>" selected="selected"><?php echo $sms_gatename; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $sms_gatename; ?>"><?php echo $sms_gatename; ?></option>
+                  <?php } ?>
+                  <?php } ?>
                 </select>
-              </td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sms_from; ?></td>
-              <td><input type="text" name="config_sms_from" value="<?php echo $config_sms_from; ?>" maxlength="15" /></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sms_to; ?></td>
-              <td><input type="text" name="config_sms_to" value="<?php echo $config_sms_to; ?>" maxlength="15" /></td>
-            </tr>
-            <tr>
-              <td valign="top"><?php echo $entry_sms_copy; ?></td>
-              <td><textarea name="config_sms_copy" cols="40"><?php echo $config_sms_copy; ?></textarea></td>
-            </tr>
-            <tr>
-              <td valign="top"><?php echo $entry_sms_message; ?></td>
-              <td><textarea name="config_sms_message" cols="40" rows="5"><?php echo $config_sms_message; ?></textarea></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sms_gate_username; ?></td>
-              <td><input type="text" name="config_sms_gate_username" value="<?php echo $config_sms_gate_username; ?>" /></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_sms_gate_password; ?></td>
-                </select> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_fraud_status; ?>" class="icon-question-sign"></i></span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_from; ?></label>
+              <div class="controls">
+                <input type="text" name="config_sms_from" value="<?php echo $config_sms_from; ?>" maxlength="15" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_to; ?></label>
+              <div>
+                <input type="text" name="config_sms_to" value="<?php echo $config_sms_to; ?>" maxlength="15" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_copy; ?></label>
+              <div class="controls">
+                <textarea name="config_sms_copy" cols="40"><?php echo $config_sms_copy; ?></textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_message; ?></label>
+              <div class="controls">
+                <textarea name="config_sms_message" cols="40" rows="5"><?php echo $config_sms_message; ?></textarea>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_gate_username; ?></label>
+              <div class="controls">
+                <input type="text" name="config_sms_gate_username" value="<?php echo $config_sms_gate_username; ?>" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_sms_gate_password; ?></label>
+              <div class="controls">
+                <input type="text" name="config_sms_gate_password" value="<?php echo $config_sms_gate_password; ?>" />
               </div>
             </div>
           </div>
@@ -1134,9 +1144,10 @@
                 <input type="radio" name="config_seo_url" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?> <span class="help-block"><?php echo $help_seo_url; ?></span>
+              </div>
             </div>
-            <tr>
-              <td><?php echo $entry_seo_url_type; ?></td>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_seo_url_type; ?></label>
               <td><select name="config_seo_url_type">
                 <?php foreach ($seo_types as $seo_type) { ?>
                 <?php if ($seo_type['type'] == $config_seo_url_type) { ?>
@@ -1146,10 +1157,11 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_seo_url_include_path; ?></td>
-              <td><?php if ($config_seo_url_include_path) { ?>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_seo_url_include_path; ?></label>
+              <div class="controls">
+                <?php if ($config_seo_url_include_path) { ?>
                 <input type="radio" name="config_seo_url_include_path" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_seo_url_include_path" value="0" />
@@ -1159,11 +1171,13 @@
                 <?php echo $text_yes; ?>
                 <input type="radio" name="config_seo_url_include_path" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_seo_url_postfix; ?></td>
-                <?php } ?> <span class="help-inline"><i data-toggle="tooltip" data-placement="top" data-original-title="<?php echo $help_seo_url; ?>" class="icon-question-sign"></i></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-name"><?php echo $entry_seo_url_postfix; ?></label>
+              <div class="controls">
+                <input type="text" name="config_seo_url_postfix" value="<?php echo $config_seo_url_postfix; ?>" size="3" /></td>
               </div>
             </div>
             <div class="control-group">
