@@ -12,7 +12,7 @@ class ControllerPaymentQiwi extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 
-		$this->load->language('payment/qiwi');
+		$this->language->load('payment/qiwi');
 		$this->data['sub_text_info'] = $this->language->get('sub_text_info');
 		$this->data['sub_text_info_phone'] = $this->language->get('sub_text_info_phone');
 

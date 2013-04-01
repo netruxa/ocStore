@@ -5,7 +5,7 @@ class ControllerModuleCSVPrice extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/csvprice');
+		$this->language->load('module/csvprice');
 		$this->load->model('module/csvprice');
 		$this->document->setTitle($this->language->get('heading_title'));
 

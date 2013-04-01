@@ -4,7 +4,7 @@ class ControllerShippingEms extends Controller {
 
 	public function index() {
 
-		$this->load->language('shipping/ems');
+		$this->language->load('shipping/ems');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
@@ -16,7 +16,7 @@ class ControllerShippingEms extends Controller {
 			$this->redirect(HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token']);
 		}
 
-		//ßçûêîâûå îáîçíà÷åíèÿ
+		//Ð¯Ð·Ñ‹ÐºÐ¾Ð²Ñ‹Ðµ Ð¾Ð±Ð¾Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
 		$this->data['heading_title'] 	= 	$this->language->get('heading_title');
 		$this->data['text_enabled'] 	= 	$this->language->get('text_enabled');
 		$this->data['text_disabled'] 	= 	$this->language->get('text_disabled');
@@ -31,7 +31,7 @@ class ControllerShippingEms extends Controller {
 		$this->data['tab_general'] 		= 	$this->language->get('tab_general');
 		$this->data['entry_vid'] 		= 	$this->language->get('entry_vid');
 		$this->data['entry_vid_out'] 	= 	$this->language->get('entry_vid_out');
-		//ßçûêîâûå îáîçíà÷åíèÿ
+		//Ð¯Ð·Ñ‹ÐºÐ¾Ð²Ñ‹Ðµ Ð¾Ð±Ð¾Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
 
  		if (isset($this->error['warning']))
 			$this->data['error_warning'] = $this->error['warning'];

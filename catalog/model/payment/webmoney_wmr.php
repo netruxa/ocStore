@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentWebmoneyWMR extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/webmoney_wmr');
+		$this->language->load('payment/webmoney_wmr');
 
 		if ($this->config->get('webmoney_wmr_status')) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('webmoney_wmr_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");

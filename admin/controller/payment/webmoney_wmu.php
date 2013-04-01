@@ -3,7 +3,7 @@ class ControllerPaymentWebmoneyWMU extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/webmoney_wmu');
+		$this->language->load('payment/webmoney_wmu');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

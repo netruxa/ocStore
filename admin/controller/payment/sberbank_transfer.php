@@ -3,7 +3,7 @@ class ControllerPaymentSberBankTransfer extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/sberbank_transfer');
+		$this->language->load('payment/sberbank_transfer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

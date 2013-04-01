@@ -3,7 +3,7 @@ class ControllerPaymentQiwi extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/qiwi');
+		$this->language->load('payment/qiwi');
 		$this->data['qiwi_version'] = '1.6';
 
 	$this->document->setTitle = $this->language->get('heading_title');

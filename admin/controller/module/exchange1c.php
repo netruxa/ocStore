@@ -4,7 +4,7 @@ class ControllerModuleExchange1c extends Controller {
 
 	public function index() {
 
-		$this->load->language('module/exchange1c');
+		$this->language->load('module/exchange1c');
 
 		//$this->document->title = $this->language->get('heading_title');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -285,7 +285,7 @@ class ControllerModuleExchange1c extends Controller {
 	}
 
 	public function manualImport() {
-		$this->load->language('module/exchange1c');
+		$this->language->load('module/exchange1c');
 
 		$cache = DIR_CACHE . 'exchange1c/';
 		$json = array();

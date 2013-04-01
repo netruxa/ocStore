@@ -3,7 +3,7 @@ class ControllerShippingByTotal extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/by_total');
+		$this->language->load('shipping/by_total');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
