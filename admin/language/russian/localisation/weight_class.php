@@ -16,6 +16,9 @@ $_['entry_title']      = 'Название единицы веса:';
 $_['entry_unit']       = 'Единица веса:';
 $_['entry_value']      = 'Значение:<br /><span class="help">Установите на 1.00000 если это единица веса по умолчанию.</span>';
 
+// Help
+$_['help_value']       = 'Set to 1.00000 if this is your default weight.';
+
 // Error
 $_['error_permission'] = 'У Вас нет прав для изменения списка единиц веса!';
 $_['error_title']      = 'Название единицы веса должно быть от 3 до 32 символов!';

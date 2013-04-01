@@ -32,6 +32,9 @@ $_['entry_message']     = 'Сообщение:';
 $_['entry_amount']      = 'Сумма:';
 $_['entry_status']      = 'Статус:';
 
+// Help
+$_['help_code']         = 'The code the customer enters to activate the voucher.';
+
 // Error
 $_['error_permission']  = 'У Вас нет прав для изменения подарочных сертификатов!';
 $_['error_exists']      = 'Такой код подарочного сертификата уже используется!';

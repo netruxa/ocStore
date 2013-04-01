@@ -41,6 +41,7 @@ $_['button_edit']             = 'Редактировать';
 $_['button_copy']             = 'Копировать';
 $_['button_back']             = 'Назад';
 $_['button_remove']           = 'Удалить';
+$_['button_refresh']                = 'Refresh';
 $_['button_backup']           = 'Бэкап';
 $_['button_restore']          = 'Восстановить';
 $_['button_repair']                 = 'Repair';

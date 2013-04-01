@@ -16,6 +16,51 @@ $_['entry_position']      = 'Расположение:';
 $_['entry_status']        = 'Статус:';
 $_['entry_sort_order']    = 'Порядок сортировки:';
 
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
+// Help
+$_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/badge/New" target="_blank"><u>Create a Google Talk chatback badge</u></a> and copy // Helpamp; paste the generated code into the text box.';
+
 // Error
 $_['error_permission']    = 'У Вас нет прав для управления этим модулем!';
 $_['error_code']          = 'Необходим код';

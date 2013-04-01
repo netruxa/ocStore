@@ -20,6 +20,10 @@ $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
+// Help
+$_['help_password']      = 'Leave empty if you do not have "Digest Key Authentication" enabled on your account.';
+$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment PayPoint!';
 $_['error_merchant']     = 'Merchant ID Required!';

@@ -30,6 +30,7 @@ $_['text_front']						= 'Магазин';
 $_['text_geo_zone']						= 'Географические зоны';
 $_['text_help']							= 'Помощь';
 $_['text_information']						= 'Статьи';
+$_['text_installer']                   = 'Extension Installer';
 $_['text_language']						= 'Языки';
 $_['text_layout']						= 'Схемы';
 $_['text_localisation']						= 'Локализация';

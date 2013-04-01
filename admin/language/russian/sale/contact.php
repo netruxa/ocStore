@@ -24,6 +24,11 @@ $_['entry_product']        	= 'Товары:<br /><span class="help">Отпра�
 $_['entry_subject']    		= 'Тема:';
 $_['entry_message']    		= 'Сообщение:';
 
+// Help
+$_['help_customer']       = 'Autocomplete';
+$_['help_affiliate']      = 'Autocomplete';
+$_['help_product']        = 'Send only to customers who have ordered products in the list. (Autocomplete)';
+
 // Error
 $_['error_permission'] 		= 'У Вас нет прав для отправки сообщений!';
 $_['error_subject']    		= 'Необходимо заполнить тему письма!';

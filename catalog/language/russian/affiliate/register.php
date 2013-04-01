@@ -15,6 +15,7 @@ $_['text_cheque']               = 'Чек';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Банковский перевод';
 $_['text_agree']                = 'Я прочитал <a class="colorbox" href="%s" alt="%s"><b>%s</b></a> и согласен с условиями';
+
 // Entry
 $_['entry_firstname']           = 'Имя, Отчество:';
 $_['entry_lastname']            = 'Фамилия:';
@@ -40,6 +41,7 @@ $_['entry_bank_account_name']   = 'Имя счета:';
 $_['entry_bank_account_number'] = 'Номер счета:';
 $_['entry_password']            = 'Пароль:';
 $_['entry_confirm']             = 'Подтверждение пароля:';
+
 // Error
 $_['error_exists']              = 'Такой E-Mail уже зарегистрирован!';
 $_['error_firstname']           = 'Имя должно быть от 1 до 32 символов!';

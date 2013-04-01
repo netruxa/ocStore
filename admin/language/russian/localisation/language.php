@@ -21,6 +21,14 @@ $_['entry_filename']    = 'Файл перевода:<br /><span class="help">о
 $_['entry_status']      = 'Статус:<br /><span class="help">Показывать/Скрывать в переключателе языков витрины магазина</span>';
 $_['entry_sort_order']  = 'Порядок сортировки:';
 
+// Help
+$_['help_code']         = 'eg: en. Do not change if this is your default language.';
+$_['help_locale']       = 'eg: en_US.UTF-8,en_US,en-gb,en_gb,english';
+$_['help_image']        = 'eg: gb.png';
+$_['help_directory']    = 'name of the language directory (case-sensitive)';
+$_['help_filename']     = 'main language filename without extension';
+$_['help_status']       = 'Hide/Show it in language dropdown';
+
 // Error
 $_['error_permission']  = 'У Вас нет прав для изменения списка языков!';
 $_['error_name']        = 'Название языка должно быть от 3 до 32 символов!';

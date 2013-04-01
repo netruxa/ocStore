@@ -36,6 +36,16 @@ $_['entry_uses_total']    = 'Количество применений купо�
 $_['entry_uses_customer'] = 'Количество применений одним клиентом: <br /><span class="help">Сколько раз максимально может использоваться купон одним клиентом. Для бесконечного использования оставить пустым.</span>';
 $_['entry_status']        = 'Статус:';
 
+// Help
+$_['help_code']           = 'The code the customer enters to get the discount.';
+$_['help_type']           = 'Percentage or Fixed Amount.';
+$_['help_logged']         = 'Customer must be logged in to use the coupon.';
+$_['help_total']          = 'The total amount that must reached before the coupon is valid.';
+$_['help_category']       = 'Choose all products under selected category.';
+$_['help_product']        = 'Choose specific products the coupon will apply to. Select no products to apply coupon to entire cart.';
+$_['help_uses_total']     = 'The maximum number of times the coupon can be used by any customer. Leave blank for unlimited';
+$_['help_uses_customer']  = 'The maximum number of times the coupon can be used by a single customer. Leave blank for unlimited';
+
 // Error
 $_['error_permission']    = 'У Вас нет прав для изменения купонов!';
 $_['error_exists']        = 'Warning: Coupon code is already in use!';

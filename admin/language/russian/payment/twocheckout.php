@@ -17,6 +17,10 @@ $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
+// Help
+$_['help_secret']        = 'The secret word to confirm transactions with (must be the same as defined on the merchat account configuration page).';
+$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment 2Checkout!';
 $_['error_account']      = 'Account No. Required!';

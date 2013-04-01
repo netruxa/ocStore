@@ -25,6 +25,10 @@ $_['entry_meta_description']	= 'META Description:<br/><span class="help">Мет�
 $_['entry_seo_title']		= 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
 $_['entry_seo_h1']		= 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 
+// Help
+$_['help_keyword']      = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_bottom']       = 'Display in the bottom footer.';
+
 // Error
 $_['error_warning']		= 'Внимательно проверьте форму на ошибки!';
 $_['error_permission']		= 'У Вас нет прав для изменения статей!';

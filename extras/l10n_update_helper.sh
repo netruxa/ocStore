@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
 
 function find_missing_files() {
 find {admin,catalog}/language/english -type f | while read f; do
@@ -21,8 +21,8 @@ find {admin,catalog}/language/english -type f | while read f; do
 			BEFORE="$(grep -B1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
 			AFTER="$(grep -A1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
 
-			echo "Нету: ${i}; Находится между «${BEFORE}» и «${AFTER}»; Строка скопирована из английской локализации и требует перевода.";
-			grep "${i}" "${f}" | while read tr; do sed -r -e "s@(.*${BEFORE}.*)@\1\n${tr}@" -i "${FILE}"; done;
+			echo "Нету: ${i}; Находится между «${BEFORE}» и «${AFTER}»; Строка скопирована из английской локализации и требует перевода в файле ${FILE} (оригинал: ${f}).";
+			grep "${i}" "${f}" | while read tr; do sed -r -e "s^(.*${BEFORE}.*)^\1\n${tr}^" -i "${FILE}"; done;
 		)
 	done;
 done;

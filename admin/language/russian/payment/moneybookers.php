@@ -20,6 +20,9 @@ $_['entry_geo_zone']          = 'Geo Zone:';
 $_['entry_status']            = 'Status:';
 $_['entry_sort_order']        = 'Sort Order:';
 
+// Help
+$_['help_total']              = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']	      = 'Warning: You do not have permission to modify Moneybookers!';
 $_['error_email']		      = 'E-Mail Required!';

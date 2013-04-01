@@ -22,6 +22,9 @@ $_['entry_text']        = 'Текст:';
 $_['entry_good']        = 'Хорошо';
 $_['entry_bad']         = 'Плохо';
 
+// Help
+$_['help_product']      = '(Autocomplete)';
+
 // Error
 $_['error_permission']  = 'У Вас нет прав для изменения отзывов!';
 $_['error_product']     = 'Требуется выбрать товар!';

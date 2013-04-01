@@ -20,6 +20,11 @@ $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
+// Help
+$_['help_password']      = 'This has to be set in the WorldPay control panel.';
+$_['help_callback']      = 'This has to be set in the WorldPay control panel. You will also need to check the "Enable the Shopper Response".';
+$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment WorldPay!';
 $_['error_merchant']     = 'Merchant ID Required!';

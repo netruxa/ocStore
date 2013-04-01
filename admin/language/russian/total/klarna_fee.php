@@ -20,29 +20,5 @@ $_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify Klarna fee total!';
-?>
-<?php
-// Heading
-$_['heading_title']    = 'Klarna Fee';
-
-// Text
-$_['text_total']       = 'Общая сумма заказа';
-$_['text_success']     = 'Настройки модуля обновлены!';
-$_['text_sweden']      = 'Sweden';
-$_['text_norway']      = 'Norway';
-$_['text_finland']     = 'Finland';
-$_['text_denmark']     = 'Denmark';
-$_['text_germany']     = 'Germany';
-$_['text_netherlands'] = 'The Netherlands';
-
-// Entry
-$_['entry_total']      = 'Сумма заказа:';
-$_['entry_fee']        = 'Плата:';
-$_['entry_tax_class']  = 'Класс налога:';
-$_['entry_status']     = 'Статус:';
-$_['entry_sort_order'] = 'Порядок сортировки:';
-
-// Error
 $_['error_permission'] = 'У Вас нет прав для управления этим модулем!';
 ?>

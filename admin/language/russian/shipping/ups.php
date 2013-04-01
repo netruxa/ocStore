@@ -78,6 +78,28 @@ $_['entry_status']                 = 'Status:';
 $_['entry_sort_order']             = 'Sort Order:';
 $_['entry_debug']      			   = 'Debug Mode:<br /><span class="help">Saves send/recv data to the system log</span>';
 
+// Help
+$_['help_key']                     = 'Enter the XML rates access key assigned to you by UPS.';
+$_['help_username']                = 'Enter your UPS Services account username.';
+$_['help_password']                = 'Enter your UPS Services account password.';
+$_['help_pickup']                  = 'How do you give packages to UPS (only used when origin is US)?';
+$_['help_packaging']               = 'What kind of packaging do you use?';
+$_['help_classification']          = '01 - If you are billing to a UPS account and have a daily UPS pickup, 03 - If you do not have a UPS account or you are billing to a UPS account but do not have a daily pickup, 04 - If you are shipping from a retail outlet (only used when origin is US)';
+$_['help_origin']                  = 'What origin point should be used (this setting affects only what UPS product names are shown to the user)';
+$_['help_city']                    = 'Enter the name of the origin city.';
+$_['help_state']                   = 'Enter the two-letter code for your origin state/province.';
+$_['help_country']                 = 'Enter the two-letter code for your origin country.';
+$_['help_postcode']                = 'Enter your origin zip/postalcode.';
+$_['help_test']                    = 'Use this module in Test (YES) or Production mode (NO)?';
+$_['help_quote_type']              = 'Quote for Residential or Commercial Delivery.';
+$_['help_service']                 = 'Select the UPS services to be offered.';
+$_['help_insurance']               = 'Enables insurance with product total as the value';
+$_['help_display_weight']          = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)';
+$_['help_weight_class']            = 'Set to kilograms or pounds.</span>';
+$_['help_length_class']            = 'Set to centimeters or inches.</span>';
+$_['help_dimension']                       = 'This is assumed to be your average packing box size. Individual item dimensions are not supported at this time so you must enter average dimensions like 5x5x5.';
+$_['help_debug']                           = 'Saves send/recv data to the system log';
+
 // Error
 $_['error_permission']             = 'Warning: You do not have permission to modify UPS (US) shipping!';
 $_['error_key']                    = 'Access Key Required!';

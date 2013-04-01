@@ -31,6 +31,11 @@ $_['entry_image']        = 'Image:';
 $_['entry_open']         = 'Opening Times:<br /><span class="help">Fill in your stores opening times.</span>';
 $_['entry_comment']      = 'Comment:<br ?><span class="help">This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.</span>';
 
+// Help
+$_['help_geocode']       = 'Please use the get Geocode button to generate your store location Geocode, you can also enter it in manually.';
+$_['help_open']          = 'Fill in your stores opening times.';
+$_['help_comment']       = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify store locations!';
 $_['error_name']         = 'Store name must be at least 1 character!';

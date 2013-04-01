@@ -69,9 +69,28 @@ $_['entry_image_cart']				= 'Размер изображений товаров 
 $_['entry_secure']                 = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed.</span>';
 $_['entry_use_ssl']				= 'Использовать SSL:<br /><span class="help">Для использования SSL убедитесь что Ваш хостинг поддерживает SSL сертификат и пропишите SSL адреса в файле конфигурации.</span>';
 
+// Help
+$_['help_url']                     = 'Include the full URL to your store. Make sure to add '/' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don't use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_ssl']                     = 'SSL URL to your store. Make sure to add '/' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don't use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_catalog_limit'] 	       = 'Determines how many catalog items are shown per page (products, categories, etc)';
+$_['help_list_description_limit']  = 'In the list view, short description character limit (categories, special etc)';
+$_['help_tax_default']             = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
+$_['help_tax_customer']            = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';
+$_['help_customer_group']          = 'Default customer group.';
+$_['help_customer_group_display']  = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
+$_['help_customer_price']          = 'Only show prices when a customer is logged in.';
+$_['help_account']                 = 'Forces people to agree to terms before an account can be created.';
+$_['help_guest_checkout']          = 'Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.';
+$_['help_checkout']                = 'Forces people to agree to terms before an a customer can checkout.';
+$_['help_order_status']            = 'Set the default order status when an order is processed.';
+$_['help_stock_display']           = 'Display stock quantity on the product page.';
+$_['help_stock_checkout']          = 'Allow customers to still checkout if the products they are ordering are not in stock.';
+$_['help_icon']                    = 'The icon should be a PNG that is 16px x 16px.';
+$_['help_secure']                  = 'To use SSL check with your host if a SSL certificate is installed.';
+
 // Error
-$_['error_warning']				= 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';
-$_['error_permission']				= 'У Вас нет прав для управления магазинами!';
+$_['error_warning']                             = 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';
+$_['error_permission']                          = 'У Вас нет прав для управления магазинами!';
 $_['error_name']				= 'Название магазина должно быть от 3 до 32 символов!';
 $_['error_owner']				= 'Владелец магазина должен быть от 3 до 64 символов!';
 $_['error_address']				= 'Адрес магазина должен быть от 10 до 256 символов!';

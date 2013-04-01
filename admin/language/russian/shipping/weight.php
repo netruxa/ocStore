@@ -13,6 +13,9 @@ $_['entry_geo_zone']     = 'Географическая зона:';
 $_['entry_status']       = 'Статус:';
 $_['entry_sort_order']   = 'Порядок сортировки:';
 
+// Help
+$_['help_rate']        = 'Example: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc..';
+
 // Error
 $_['error_permission']   = 'У Вас нет прав для управления этим модулем!';
 ?>

@@ -20,6 +20,7 @@ $_['entry_title']        = 'Заголовок:';
 $_['entry_link']         = 'Ссылка:';
 $_['entry_image']        = 'Изображение:';
 $_['entry_status']       = 'Статус:';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Error
 $_['error_permission']   = 'Вы не имеете прав для изменения баннеров!';

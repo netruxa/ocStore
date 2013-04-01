@@ -53,6 +53,10 @@ $_['entry_bank_account_number'] = 'Номер счета:';
 $_['entry_amount']              = 'Сумма:';
 $_['entry_description']         = 'Описание:';
 
+// Help
+$_['help_code']                = 'The tracking code that will be used to track referrals.';
+$_['help_commission']          = 'Percentage the affiliate recieves on each order.';
+
 // Error
 $_['error_permission']          = 'У Вас нет прав для управления партнерами!';
 $_['error_exists']              = 'Ошибка: E-Mail адрес уже зарегистрирован!';

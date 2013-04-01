@@ -22,6 +22,14 @@ $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
+// Help
+$_['help_vendor']        = 'Your merchant login ID that you created when you registered for the Website Payments Pro account.';
+$_['help_user']          = 'If you set up one or more additional users on the account, this value is the ID of the user authorised to process transactions. If, however, you have not set up additional users on the account, USER has the same value as VENDOR.';
+$_['help_password']      = 'The 6 to 32 character password that you defined while registering for the account.';
+$_['help_partner']       = 'The ID provided to you by the authorised PayPal Reseller who registered you for the Payflow SDK. If you purchased your account directly from PayPal, use PayPalUK.';
+$_['help_test']          = 'Use the live or testing (sandbox) gateway server to process transactions?';
+$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment PayPal Website Payment Pro (UK)!';
 $_['error_vendor']       = 'Vendor Required!';

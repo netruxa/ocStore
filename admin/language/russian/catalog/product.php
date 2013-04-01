@@ -19,9 +19,6 @@ $_['text_amount']            = 'Фиксированная сумма';
 $_['column_name']            	= 'Название товара';
 $_['column_model']           	= 'Модель';
 $_['column_image']           	= 'Изображения';
-// Filter by category ADD
-$_['column_category']        = 'Категория';
-// End add
 $_['column_price']           	= 'Цена на сайте';
 $_['column_quantity']        	= 'Количество';
 $_['column_status']          	= 'Статус';
@@ -31,8 +28,6 @@ $_['column_action']          	= 'Действие';
 $_['entry_name']             = 'Название товара:';
 $_['entry_meta_keyword']        = 'META Keywords:<br/><span class="help">Мета-тег "Ключевые слова"</span>';
 $_['entry_meta_description']    = 'META Description:<br/><span class="help">Мета-тег "Описание"</span>';
-$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
-$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 $_['entry_description']      = 'Описание:';
 $_['entry_store']            = 'Магазины:';
 $_['entry_keyword']          = 'SEO URL:<br/><span class="help">Не используйте пробелы (замените их, например, на "-").<br/>Должно быть уникальным на всю систему.</span>';
@@ -60,6 +55,8 @@ $_['entry_subtract']         = 'Вычитать со склада:';
 $_['entry_weight_class']     = 'Единица измерения веса:';
 $_['entry_weight']           = 'Вес:';
 $_['entry_length']           = 'Единица измерения длины:';
+$_['entry_width']            = 'Width';
+$_['entry_height']           = 'Height';
 $_['entry_dimension']        = 'Размеры (длина x ширина x высота):';
 $_['entry_image']            = 'Изображение товара:';
 $_['entry_customer_group']   = 'Группа покупателей:';
@@ -81,11 +78,37 @@ $_['entry_related']          = 'Рекомендуемые:<br/><span class="hel
 $_['entry_tag']          	 = 'Теги товара:<br /><span class="help">разделяются запятой</span>';
 $_['entry_reward']           = 'Бонусные баллы:';
 $_['entry_layout']           = 'Изменить схему:';
-$_['entry_main_category']    = 'Категория:';
+
+// Help
+$_['help_keyword']           = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_sku']               = 'Stock Keeping Unit';
+$_['help_upc']               = 'Universal Product Code';
+$_['help_ean']               = 'European Article Number';
+$_['help_jan']               = 'Japanese Article Number';
+$_['help_isbn']              = 'International Standard Book Number';
+$_['help_mpn']               = 'Manufacturer Part Number';
+$_['help_manufacturer']      = '(Autocomplete)';
+$_['help_minimum']           = 'Force a minimum ordered amount';
+$_['help_stock_status']      = 'Status shown when a product is out of stock';
+$_['help_points']            = 'Number of points needed to buy this item. If you don\'t want this product to be purchased with points leave as 0.';
+$_['help_category']          = '(Autocomplete)';
+$_['help_filter']            = '(Autocomplete)';
+$_['help_download']          = '(Autocomplete)';
+$_['help_related']           = '(Autocomplete)';
+$_['help_tag']                   = 'comma separated';
 
 // Error
 $_['error_warning']          = 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';
 $_['error_permission']       = 'У Вас нет прав для изменения товаров!';
 $_['error_name']             = 'Название товара должно быть от 3 до 255 символов!';
 $_['error_model']            = 'Модель товара должна быть от 3 до 64 символов!';
+
+// ocStore
+$_['entry_main_category']    = 'Категория:';
+$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
+$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
+// Filter by category ADD
+$_['column_category']        = 'Категория';
+// End add
+
 ?>

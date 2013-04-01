@@ -21,6 +21,10 @@ $_['entry_symbol_right']   = 'Символ справа:';
 $_['entry_decimal_place']  = 'Количество знаков после запятой:';
 $_['entry_status']         = 'Статус:';
 
+// Help
+$_['help_code']            = 'Do not change if this is your default currency. Must be valid <a href="http://www.xe.com/iso4217.php" target="_blank">ISO code</a>.';
+$_['help_value']           = 'Set to 1.00000 if this is your default currency.';
+
 // Error
 $_['error_permission']     = 'У Вас нет прав для изменения списка валют';
 $_['error_title']          = 'Название валюты должно быть от 3 до 32 символов!';

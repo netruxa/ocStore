@@ -14,10 +14,15 @@ $_['text_column_right']   = 'Правая колонка';
 $_['entry_product']       = 'Товары:<br /><span class="help">(Автодополнение)</span>';
 $_['entry_limit']         = 'Limit:';
 $_['entry_image']         = 'Изображение (Ширина x Высота):';
+$_['entry_width']         = 'Width';
+$_['entry_height']        = 'Height';
 $_['entry_layout']        = 'Страница:';
 $_['entry_position']      = 'Расположение:';
 $_['entry_status']        = 'Статус:';
 $_['entry_sort_order']    = 'Порядок сортировки:';
+
+// Help
+$_['help_product']        = '(Autocomplete)';
 
 // Error
 $_['error_permission']    = 'У Вас нет прав для управления этим модулем!';

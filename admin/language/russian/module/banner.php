@@ -13,6 +13,8 @@ $_['text_column_right']   = 'Правая колонка';
 // Entry
 $_['entry_banner']        = 'Баннер:';
 $_['entry_dimension']     = 'Размеры (Ширина x Высота):';
+$_['entry_width']         = 'Width';
+$_['entry_height']        = 'Height';
 $_['entry_layout']        = 'Схема:';
 $_['entry_position']      = 'Расположение:';
 $_['entry_status']        = 'Статус:';

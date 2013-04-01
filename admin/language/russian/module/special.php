@@ -13,6 +13,8 @@ $_['text_column_right']		= 'Правая колонка';
 // Entry
 $_['entry_limit']			= 'Лимит:';
 $_['entry_image']			= 'Изображение (Ширина x Высота):';
+$_['entry_width']         = 'Width';
+$_['entry_height']        = 'Height';
 $_['entry_layout']			= 'Страница:';
 $_['entry_position']		= 'Расположение:';
 $_['entry_status']			= 'Статус:';

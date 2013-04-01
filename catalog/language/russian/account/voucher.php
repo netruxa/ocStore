@@ -19,6 +19,10 @@ $_['entry_theme']      = 'Тема Подарочного сертификата
 $_['entry_message']    = 'Сообщение:<br /><span class="help">(необязательно)</span>';
 $_['entry_amount']     = 'Сумма:<br /><span class="help">(Значение должно быть между %s и %s)</span>';
 
+// Help
+$_['help_message']     = '(Optional)';
+$_['help_amount']      = '(Value must be between %s and %s)';
+
 // Error
 $_['error_to_name']    = 'Имя получателя должно быть от 1 до 64 символов!';
 $_['error_from_name']  = 'Ваше имя должно быть от 1 до 64 символов!';

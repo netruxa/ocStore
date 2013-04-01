@@ -9,6 +9,7 @@ $_['text_edit_address'] = 'Редактировать адрес';
 $_['text_insert']       = 'Ваш адрес был успешно добавлен';
 $_['text_update']       = 'Ваш адрес был успешно изменен';
 $_['text_delete']       = 'Ваш адрес был успешно удален';
+$_['text_empty']        = 'You have no addresses in your account.';
 
 // Entry
 $_['entry_firstname']   = 'Имя, Отчество:';

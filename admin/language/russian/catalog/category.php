@@ -19,8 +19,6 @@ $_['column_action']          = 'Действие';
 $_['entry_name']             = 'Название категории:';
 $_['entry_meta_keyword']        = 'META Keywords:<br/><span class="help">Мета-тег "Ключевые слова"</span>';
 $_['entry_meta_description']    = 'META Description:<br/><span class="help">Мета-тег "Описание"</span>';
-$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
-$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 $_['entry_description']      = 'Описание:';
 $_['entry_parent']         	 = 'Родительская категория:';
 $_['entry_filter']           = 'Filters:<br /><span class="help">(Autocomplete)</span>';
@@ -33,8 +31,19 @@ $_['entry_sort_order']       = 'Порядок сортировки:';
 $_['entry_status']           = 'Статус:';
 $_['entry_layout']           = 'Изменить схему:';
 
+// Help
+$_['help_filter']            = '(Autocomplete)';
+$_['help_keyword']           = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_top']               = 'Display in the top menu bar. Only works for the top parent categories.';
+$_['help_column']            = 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.';
+
 // Error
 $_['error_warning']          = 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';
 $_['error_permission']       = 'У Вас нет прав для изменения категорий!';
 $_['error_name']             = 'Название категории должно быть от 2 до 32 символов!';
+
+// ocStore
+$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
+$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
+
 ?>

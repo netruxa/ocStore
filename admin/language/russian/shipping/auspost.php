@@ -19,6 +19,10 @@ $_['entry_geo_zone']   = 'Geo Zone:';
 $_['entry_status']     = 'Status:';
 $_['entry_sort_order'] = 'Sort Order:';
 
+// Help
+$_['help_display_time']  = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
+$_['help_weight_class']  = 'Set to grams.';
+
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Australia Post shipping!';
 $_['error_postcode']   = 'Post Code must be 4 digits!';

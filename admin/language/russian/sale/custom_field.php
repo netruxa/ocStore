@@ -53,6 +53,9 @@ $_['entry_position']        = 'Position:<br /><span class="help">Select which fi
 $_['entry_status']          = 'Status:';
 $_['entry_sort_order']      = 'Sort Order:';
 
+// Help
+$_['help_position']         = 'Select which field you want the new field to appear after.';
+
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify custom fields!';
 $_['error_name']            = 'Customer Field Name must be between 1 and 128 characters!';

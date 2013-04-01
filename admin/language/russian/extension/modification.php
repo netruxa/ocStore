@@ -1,14 +1,21 @@
 <?php
 // Heading
-$_['heading_title']    = 'Менеджер дополнений';
+$_['heading_title']        = 'Modifications';
 
 // Text
-$_['text_install']     = 'Install';
-$_['text_uninstall']   = 'Uninstall';
-$_['text_success']     = 'Дополнение успешно установлено!';
+$_['text_success']         = 'Success: You have modified modifications!';
+
+// Column
+$_['column_name']          = 'Modification Name';
+$_['column_author']        = 'Author';
+$_['column_date_added']    = 'Date Added';
+$_['column_date_modified'] = 'Date Modified';
+$_['column_action']        = 'Action';
+
+// Entry
+$_['entry_code']           = 'Modification';
+$_['entry_status']         = 'Status';
 
 // Error
-$_['error_permission'] = 'Внимание: у Вас нет прав на работу с менеджером дополнений!';
-$_['error_upload']     = 'Требуется загрузка!';
-$_['error_filetype']   = 'Неправильный типа файла!';
+$_['error_permission']     = 'Warning: You do not have permission to modify modifications!';
 ?>

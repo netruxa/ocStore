@@ -16,6 +16,10 @@ $_['entry_geo_zone']     = 'Geo Zone:';
 $_['entry_status']       = 'Status:';
 $_['entry_sort_order']   = 'Sort Order:';
 
+// Help
+$_['help_password']      = 'Just use some random password. This will be used to make sure the payment information is not interfered with after being sent to the payment gateway.';
+$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
+
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Paymate!';
 $_['error_username']     = 'Paymate Username required!';
