@@ -61,7 +61,7 @@ $(function() {
 
     checkModal: function() {
       var $modal = $("div.modal");
-
+      
       if ($modal.length > 0) {
         $modal.modal("hide");
       }
