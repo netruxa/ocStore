@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,49 +14,45 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
           <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" class="input-xxlarge" />
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
             <?php if ($error_name) { ?>
             <span class="error"><?php echo $error_name; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+          <div class="control-label"><?php echo $entry_store; ?></div>
           <div class="controls">
-            <div class="scrollbox">
-              <?php $class = 'even'; ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array(0, $manufacturer_store)) { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
-                <?php echo $text_default; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="0" />
-                <?php echo $text_default; ?>
-                <?php } ?>
-              </div>
-              <?php foreach ($stores as $store) { ?>
-              <?php $class = ($class == 'even' ? 'odd' : 'even'); ?>
-              <div class="<?php echo $class; ?>">
-                <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                <?php echo $store['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
-                <?php echo $store['name']; ?>
-                <?php } ?>
-              </div>
+            <label class="checkbox">
+              <?php if (in_array(0, $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+              <?php echo $text_default; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" />
+              <?php echo $text_default; ?>
               <?php } ?>
-            </div>
+            </label>
+            <?php foreach ($stores as $store) { ?>
+            <label class="checkbox">
+              <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+              <?php echo $store['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
+              <?php echo $store['name']; ?>
+              <?php } ?>
+            </label>
+            <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_keyword; ?></label>
+          <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
           <div class="controls">
-            <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" />
+            <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
             <span class="help-block"><?php echo $help_keyword; ?></span></div>
         </div>
         <div class="control-group">
@@ -69,9 +65,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_sort_order; ?></label>
+          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" />
+            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" />
           </div>
           <div id="languages" class="htabs">
             <?php foreach ($languages as $language) { ?>

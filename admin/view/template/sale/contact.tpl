@@ -11,11 +11,13 @@
     </div>
     <div class="box-content">
       <form class="form-horizontal">
-        <div class="buttons"><a id="button-send" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_store; ?></label>
+          <label class="control-label" for="input-store"><?php echo $entry_store; ?></label>
           <div class="controls">
-            <select name="store_id">
+            <select name="store_id" id="input-store">
               <option value="0"><?php echo $text_default; ?></option>
               <?php foreach ($stores as $store) { ?>
               <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
@@ -24,9 +26,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_to; ?></label>
+          <label class="control-label" for="input-to"><?php echo $entry_to; ?></label>
           <div class="controls">
-            <select name="to">
+            <select name="to" id="input-to">
               <option value="newsletter"><?php echo $text_newsletter; ?></option>
               <option value="customer_all"><?php echo $text_customer_all; ?></option>
               <option value="customer_group"><?php echo $text_customer_group; ?></option>
@@ -38,9 +40,9 @@
           </div>
         </div>
         <div class="control-group to" id="to-customer-group">
-          <label class="control-label" for="input-name"><?php echo $entry_customer_group; ?></label>
+          <label class="control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
           <div class="controls">
-            <select name="customer_group_id">
+            <select name="customer_group_id" id="input-customer-group">
               <?php foreach ($customer_groups as $customer_group) { ?>
               <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
               <?php } ?>
@@ -48,39 +50,39 @@
           </div>
         </div>
         <div class="control-group to" id="to-customer">
-          <label class="control-label" for="input-name"><?php echo $entry_customer; ?></label>
+          <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
           <div class="controls">
-            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" />
+            <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
             <span class="help-block"><?php echo $help_customer; ?></span>
             <div id="customer" class="scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-affiliate">
-          <label class="control-label" for="input-name"><?php echo $entry_affiliate; ?></label>
+          <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
-            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" />
+            <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
             <span class="help-block"><?php echo $help_affiliate; ?></span>
             <div id="affiliate" class="scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-product">
-          <label class="control-label" for="input-name"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" />
+            <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="product" class="scrollbox"></div>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_subject; ?></label>
+          <label class="control-label" for="input-subject"><span class="required">*</span> <?php echo $entry_subject; ?></label>
           <div class="controls">
-            <input type="text" name="subject" value="" placeholder="<?php echo $entry_subject; ?>" />
+            <input type="text" name="subject" value="" placeholder="<?php echo $entry_subject; ?>" id="input-subject" />
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_message; ?></label>
+          <label class="control-label" for="input-message"><span class="required">*</span> <?php echo $entry_message; ?></label>
           <div class="controls">
-            <textarea name="message" placeholder="<?php echo $entry_message; ?>"></textarea>
+            <textarea name="message" placeholder="<?php echo $entry_message; ?>" id="input-message"></textarea>
           </div>
         </div>
       </form>
@@ -242,30 +244,31 @@ $('#product div img').on('click', function() {
 	$('#product div:even').attr('class', 'even');
 });
 
-function send(url) {
+
+$('#button-send').on('click', function() {
 	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
 
 	$.ajax({
-		url: url,
+		url: 'index.php?route=sale/contact/send&token=<?php echo $token; ?>',
 		type: 'post',
 		data: $('select, input, textarea'),
 		dataType: 'json',
 		beforeSend: function() {
+			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-send').attr('disabled', true);
-			$('#button-send').before('<img src="view/image/loading.gif" class="loading" style="padding-right: 5px;" />');
 		},
 		complete: function() {
+			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
 			$('#button-send').attr('disabled', false);
-			$('.loading').remove();
 		},
 		success: function(json) {
-			$('.success, .warning, .error').remove();
+			$('.alert, .error').remove();
 
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 
-					$('.warning').fadeIn('slow');
+					$('.alert-error').fadeIn('slow');
 				}
 
 				if (json['error']['subject']) {
@@ -287,11 +290,11 @@ function send(url) {
 				if (json['success']) {
 					$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
 
-					$('.success').fadeIn('slow');
+					$('.alert-success').fadeIn('slow');
 				}
 			}
 		}
 	});
-}
+});
 //--></script>
 <?php echo $footer; ?>

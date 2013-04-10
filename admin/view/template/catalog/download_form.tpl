@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,9 +14,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><a onclick="$('#form').submit();" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
             <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
@@ -28,9 +28,9 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_filename; ?></label>
+          <label class="control-label" for="input-filename"><?php echo $entry_filename; ?></label>
           <div class="controls">
-            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" />
+            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" />
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
@@ -39,28 +39,29 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_mask; ?></label>
+          <label class="control-label" for="input-mask"><?php echo $entry_mask; ?></label>
           <div class="controls">
-            <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" />
+            <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" />
+            <span class="help-block"><?php echo $help_mask; ?></span>
             <?php if ($error_mask) { ?>
             <span class="error"><?php echo $error_mask; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_remaining; ?></label>
+          <label class="control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
           <div class="controls">
-            <input type="text" name="remaining" value="<?php echo $remaining; ?>" class="input-small" />
+            <input type="text" name="remaining" value="<?php echo $remaining; ?>" id="input-remaining" class="input-small" />
           </div>
         </div>
         <?php if ($download_id) { ?>
         <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_update; ?></label>
+          <label class="control-label" for="input-update"><?php echo $entry_update; ?></label>
           <div class="controls">
             <?php if ($update) { ?>
-            <input type="checkbox" name="update" value="1" checked="checked" />
+            <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
             <?php } else { ?>
-            <input type="checkbox" name="update" value="1" />
+            <input type="checkbox" name="update" value="1" id="input-update" />
             <?php } ?>
             <span class="help-block"><?php echo $help_update; ?></span></div>
         </div>
@@ -82,11 +83,11 @@ $('#file').on('change', function() {
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
 		beforeSend: function() {
-			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-upload').attr('disabled', true);
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
 			$('#button-upload').attr('disabled', false);
 		},
 		success: function(json) {
