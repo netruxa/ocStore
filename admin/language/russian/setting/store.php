@@ -70,8 +70,8 @@ $_['entry_secure']                 = 'Use SSL:<br /><span class="help">To use SS
 $_['entry_use_ssl']				= 'Использовать SSL:<br /><span class="help">Для использования SSL убедитесь что Ваш хостинг поддерживает SSL сертификат и пропишите SSL адреса в файле конфигурации.</span>';
 
 // Help
-$_['help_url']                     = 'Include the full URL to your store. Make sure to add '/' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don't use directories to create a new store. You should always point another domain or sub domain to your hosting.';
-$_['help_ssl']                     = 'SSL URL to your store. Make sure to add '/' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don't use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_url']                     = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
+$_['help_ssl']                     = 'SSL URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_catalog_limit'] 	       = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_list_description_limit']  = 'In the list view, short description character limit (categories, special etc)';
 $_['help_tax_default']             = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
