@@ -1355,7 +1355,7 @@
             <div class="control-group">
               <label class="control-label" for="input-image-file-size"><?php echo $entry_image_file_size; ?></label>
               <div class="controls">
-                <input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" placeholder="<?php echo $entry_image_file_size; ?>" />
+                <input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" placeholder="<?php echo $entry_image_file_size; ?>" id="input-image-file-size" />
                 <span class="help-block"><?php echo $help_image_file_size; ?></span></div>
             </div>
             <div class="control-group">
@@ -1367,8 +1367,8 @@
             <div class="control-group">
               <label class="control-label" for="input-file-mime-allowed"><?php echo $entry_file_mime_allowed; ?></label>
               <div class="controls">
-                <textarea name="config_file_mime_allowed" cols="60" rows="5"><?php echo $config_file_mime_allowed; ?></textarea> <span class="help-block"><?php echo $help_ile_mime_allowed; ?></span>
-              </div>
+                <textarea name="config_file_mime_allowed" cols="60" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed"><?php echo $config_file_mime_allowed; ?></textarea>
+                <span class="help-block"><?php echo $help_file_mime_allowed; ?></span></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_maintenance; ?></div>
