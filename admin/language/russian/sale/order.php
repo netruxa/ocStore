@@ -165,6 +165,7 @@ $_['entry_theme']		= 'Тема подарочного сертификата:';
 $_['entry_message']		= 'Сообщение:';
 $_['entry_amount']		= 'Сумма:';
 $_['entry_affiliate']		= 'Партнер:';
+$_['entry_status']                            = 'Order Status';
 $_['entry_order_status']	= 'Статус заказа:';
 $_['entry_notify']		= 'Уведомить покупателя:';
 $_['entry_comment']		= 'Комментарий:';

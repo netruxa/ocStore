@@ -58,6 +58,7 @@ $_['entry_length']           = 'Единица измерения длины:';
 $_['entry_width']            = 'Width';
 $_['entry_height']           = 'Height';
 $_['entry_dimension']        = 'Размеры (длина x ширина x высота):';
+$_['entry_length_class']     = 'Length Class';
 $_['entry_image']            = 'Изображение товара:';
 $_['entry_customer_group']   = 'Группа покупателей:';
 $_['entry_date_start']       = 'Дата начала:';

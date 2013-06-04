@@ -10,6 +10,7 @@ $_['text_total_sale']              	= 'Всего продано на сумму
 $_['text_total_sale_year']         	= 'Всего продано в этом году на сумму:';
 $_['text_total_order']             	= 'Всего заказов:';
 $_['text_total_customer']          	= 'Всего покупателей:';
+$_['text_total_online']   = 'Number of People online';
 $_['text_total_customer_approval'] 	= 'Покупателей, ожидающих подтверждения:';
 $_['text_total_review_approval']   	= 'Отзывов, ожидающих подтверждения:';
 $_['text_total_affiliate']              = 'Количество партнёров:';

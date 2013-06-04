@@ -52,6 +52,7 @@ $_['entry_quantity']      = 'Количество:';
 $_['entry_reason']        = 'Причина возврата:';
 $_['entry_opened']        = 'Открытый:';
 $_['entry_comment']       = 'Комментарий:';
+$_['entry_status']        = 'Return Status';
 $_['entry_return_status'] = 'Статус возврата:';
 $_['entry_notify']        = 'Клиент уведомлен:';
 $_['entry_action']        = 'Действие по возврату:';
