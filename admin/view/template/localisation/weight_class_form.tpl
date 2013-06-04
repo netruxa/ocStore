@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -43,7 +43,10 @@
           <label class="control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="controls">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
-            <span class="help-block"><?php echo $help_value; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_value; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
       </form>
     </div>

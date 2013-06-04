@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -39,7 +39,10 @@
           <label class="control-label" for="input-address-format"><?php echo $entry_address_format; ?></label>
           <div class="controls">
             <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format"><?php echo $address_format; ?></textarea>
-            <span class="help-block"><?php echo $help_address_format; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_address_format; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_postcode_required; ?></div>

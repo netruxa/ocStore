@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -85,7 +85,7 @@
               <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?></label>
               <div class="controls">
                 <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <span class="help-block"><?php echo $help_product; ?></span>
+                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>
@@ -174,87 +174,58 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-
-				currentCategory = item.category;
-			}
-
-			self._renderItem(ul, item);
-		});
-	}
-});
-
-$('input[name=\'customer\']').catcomplete({
-	delay: 500,
-	source: function(request, response) {
+$('input[name=\'customer\']').autocomplete({
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						category: item.customer_group,
-						label: item.name,
-						value: item.customer_id,
-						firstname: item.firstname,
-						lastname: item.lastname,
-						email: item.email,
-						telephone: item.telephone
+						category: item['customer_group'],
+						label: item['name'],
+						value: item['customer_id'],
+						firstname: item['firstname'],
+						lastname: item['lastname'],
+						email: item['email'],
+						telephone: item['telephone']
 					}
 				}));
 			}
 		});
-
 	},
-	select: function(event, ui) {
-		$('input[name=\'customer\']').attr('value', ui.item.label);
-		$('input[name=\'customer_id\']').attr('value', ui.item.value);
-		$('input[name=\'firstname\']').attr('value', ui.item.firstname);
-		$('input[name=\'lastname\']').attr('value', ui.item.lastname);
-		$('input[name=\'email\']').attr('value', ui.item.email);
-		$('input[name=\'telephone\']').attr('value', ui.item.telephone);
-
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	'select': function(item) {
+		$('input[name=\'customer\']').val(item['label']);
+		$('input[name=\'customer_id\']').val(item['value']);
+		$('input[name=\'firstname\']').attr('value', item['firstname']);
+		$('input[name=\'lastname\']').attr('value', item['lastname']);
+		$('input[name=\'email\']').attr('value', item['email']);
+		$('input[name=\'telephone\']').attr('value', item['telephone']);
+	}
 });
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.product_id,
-						model: item.model
+						label: item['name'],
+						value: item['product_id'],
+						model: item['model']
 					}
 				}));
 			}
 		});
 	},
-	select: function(event, ui) {
-		$('input[name=\'product_id\']').attr('value', ui.item.value);
-		$('input[name=\'product\']').attr('value', ui.item.label);
-		$('input[name=\'model\']').attr('value', ui.item.model);
-
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	'select': function(item) {
+		$('input[name=\'product\']').val(item['label']);
+		$('input[name=\'product_id\']').val(item['value']);
+		$('input[name=\'model\']').val(item['model']);
+	}
 });
 //--></script>
 <?php echo $footer; ?>

@@ -276,8 +276,6 @@ class ControllerCatalogOption extends Controller {
 		$this->data['text_datetime'] = $this->language->get('text_datetime');
 		$this->data['text_time'] = $this->language->get('text_time');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
@@ -289,6 +287,8 @@ class ControllerCatalogOption extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_add_option_value'] = $this->language->get('button_add_option_value');
 		$this->data['button_remove'] = $this->language->get('button_remove');
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -482,7 +482,7 @@ class ControllerCatalogOption extends Controller {
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
-				'limit'       => 20
+				'limit'       => 5
 			);
 
 			$options = $this->model_catalog_option->getOptions($data);

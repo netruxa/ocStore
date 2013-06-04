@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -37,13 +37,18 @@
           <label class="control-label" for="input-callback"><?php echo $entry_callback; ?></label>
           <div class="controls">
             <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
-            <span class="help-block"><?php echo $help_callback; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_callback; ?>"><i class="icon-info-sign"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-            <span class="help-block"><?php echo $help_total; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

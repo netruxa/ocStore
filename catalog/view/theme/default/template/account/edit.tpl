@@ -46,12 +46,12 @@ $('#button-edit').on('click', function() {
 		data: $('input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked, input[type=\'radio\']:checked, input[type=\'hidden\'], select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-edit').attr('disabled', true);
-			$('#button-edit').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-edit').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#button-edit').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-edit').attr('disabled', false);
-			$('.loading').remove();
+			$('.icon-spinner').remove();
+			$('#button-edit').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.warning, .error').remove();

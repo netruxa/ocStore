@@ -490,7 +490,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_product'] = $this->language->get('text_product');
 		$this->data['text_voucher'] = $this->language->get('text_voucher');
 		$this->data['text_order'] = $this->language->get('text_order');
@@ -542,7 +541,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['button_add_product'] = $this->language->get('button_add_product');
 		$this->data['button_add_voucher'] = $this->language->get('button_add_voucher');
 		$this->data['button_update_total'] = $this->language->get('button_update_total');
-		$this->data['button_remove'] = $this->language->get('button_remove');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
 		$this->data['tab_order'] = $this->language->get('tab_order');
@@ -1206,6 +1204,8 @@ class ControllerSaleOrder extends Controller {
 
 				if ($product_info && $product_info['shipping']) {
 					$shipping = true;
+
+					break;
 				}
 			}
 		}
@@ -1349,7 +1349,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_payment_method'] = $this->language->get('text_payment_method');
 			$this->data['text_download'] = $this->language->get('text_download');
-			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_generate'] = $this->language->get('text_generate');
 			$this->data['text_reward_add'] = $this->language->get('text_reward_add');
 			$this->data['text_reward_remove'] = $this->language->get('text_reward_remove');

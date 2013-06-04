@@ -1,5 +1,5 @@
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($payment_methods) { ?>
 <p><?php echo $text_payment_method; ?></p>
@@ -48,11 +48,11 @@ $('#button-payment-method').off().on('click', function() {
 		data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-payment-method').attr('disabled', true);
+			$('#button-payment-method').prop('disabled', true);
 			$('#button-payment-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('#button-payment-method').attr('disabled', false);
+			$('#button-payment-method').prop('disabled', false);
 			$('.loading').remove();
 		},
 		success: function(json) {

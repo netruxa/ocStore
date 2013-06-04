@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -32,7 +32,7 @@
           <label class="control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
           <div class="controls">
             <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
-            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" align="top" /> </div>
+            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></div>
         </div>
         <?php } ?>
         <div class="control-group">
@@ -56,7 +56,9 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_approval; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_approval; ?>"><i class="icon-info-sign"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

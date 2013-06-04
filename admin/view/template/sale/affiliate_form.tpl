@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -136,7 +136,10 @@
               <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
                 <input type="code" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                <span class="help-block"><?php echo $help_code; ?></span>
+
+
+                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
+
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
@@ -180,7 +183,10 @@
               <label class="control-label" for="input-commission"><?php echo $entry_commission; ?></label>
               <div class="controls">
                 <input type="text" name="commission" value="<?php echo $commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" />
-                <span class="help-block"><?php echo $help_commission; ?></span></div>
+
+
+                <a data-toggle="tooltip" title="<?php echo $help_commission; ?>"><i class="icon-info-sign"></i></a>
+                </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-tax"><?php echo $entry_tax; ?></label>
@@ -294,10 +300,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=sale/affiliate/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('select[name=\'payment_country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('.icon-spinner').remove();
 		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -360,11 +366,11 @@ $('#button-transaction').on('click', function() {
 			$('.alert').remove();
 
 			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-transaction').attr('disabled', true);
+			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-transaction i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-transaction').attr('disabled', false);
+			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#transaction').html(html);

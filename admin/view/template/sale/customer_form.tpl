@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -286,7 +286,10 @@
               <label class="control-label" for="input-points"><?php echo $entry_points; ?></label>
               <div class="controls">
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
-                <span class="help-block"><?php echo $help_points; ?></span></div>
+
+                <a data-toggle="tooltip" title="<?php echo $help_points; ?>"><i class="icon-info-sign"></i></a>
+
+                </div>
             </div>
             <button id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
           </div>
@@ -475,11 +478,11 @@ $('#button-history').on('click', function() {
 			$('.alert').remove();
 
 			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-history').attr('disabled', true);
+			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-history i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-history').attr('disabled', false);
+			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#history').html(html);
@@ -508,11 +511,11 @@ $('#button-transaction').on('click', function() {
 			$('.alert').remove();
 
 			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-transaction').attr('disabled', true);
+			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
 			$('#button-transaction i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-transaction').attr('disabled', false);
+			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#transaction').html(html);
@@ -542,12 +545,12 @@ $('#button-reward').on('click', function() {
 			$('.alert').remove();
 
 			$('#button-reward i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-reward').attr('disabled', true);
+			$('#button-reward').prop('disabled', true);
 
 		},
 		complete: function() {
 			$('#button-reward i').replaceWith('<i class="icon-plus-sign"></i>');
-			$('#button-reward').attr('disabled', false);
+			$('#button-reward').prop('disabled', false);
 		},
 		success: function(html) {
 			$('#reward').html(html);

@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <?php if ($coupon_id) { ?>
@@ -36,7 +40,7 @@
               <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
               <div class="controls">
                 <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                <span class="help-block"><?php echo $help_code; ?></span>
+                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
@@ -57,7 +61,7 @@
                   <option value="F"><?php echo $text_amount; ?></option>
                   <?php } ?>
                 </select>
-                <span class="help-block"><?php echo $help_type; ?></span></div>
+                <a data-toggle="tooltip" title="<?php echo $help_type; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-discount"><?php echo $entry_discount; ?></label>
@@ -69,7 +73,7 @@
               <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
               <div class="controls">
                 <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-                <span class="help-block"><?php echo $help_total; ?></span></div>
+                <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_logged; ?></div>
@@ -92,7 +96,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <span class="help-block"><?php echo $help_logged; ?></span></div>
+                <a data-toggle="tooltip" title="<?php echo $help_logged; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_shipping; ?></div>
@@ -121,10 +125,11 @@
               <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
               <div class="controls">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <span class="help-block"><?php echo $help_product; ?></span>
-                <div id="coupon-product">
+                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
+                <br />
+                <div id="coupon-product" class="well well-small scrollbox">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
-                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><?php echo $coupon_product['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -135,10 +140,11 @@
               <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
-                <span class="help-block"><?php echo $help_category ?></span>
-                <div id="coupon-category">
+                <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-info-sign"></i></a>
+                <br />
+                <div id="coupon-category" class="well well-small scrollbox">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
-                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><?php echo $coupon_category['name']; ?><img src="view/image/icon-delete.png" alt="" />
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -148,26 +154,26 @@
             <div class="control-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <div class="controls">
-                <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" id="input-date-start" class="input-small" id="date-start" />
+                <input type="date" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" id="input-date-start" class="input-medium" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
               <div class="controls">
-                <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" id="input-date-end" class="input-small" />
+                <input type="date" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" id="input-date-end" class="input-medium" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-uses-total"><?php echo $entry_uses_total; ?></label>
               <div class="controls">
                 <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" />
-                <span class="help-block"><?php echo $help_uses_total; ?></span></div>
+                <a data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?></label>
               <div class="controls">
                 <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" />
-                <span class="help-block"><?php echo $help_uses_customer; ?></span></div>
+                <a data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -196,87 +202,61 @@
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.product_id
+						label: item['name'],
+						value: item['product_id']
 					}
 				}));
 			}
 		});
 	},
-	select: function(event, ui) {
-		$('#coupon-product' + ui.item.value).remove();
-
-		$('#coupon-product').append('<div id="coupon-product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="coupon_product[]" value="' + ui.item.value + '" /></div>');
-
-		$('#coupon-product div:odd').attr('class', 'odd');
-		$('#coupon-product div:even').attr('class', 'even');
-
+	'select': function(item) {
 		$('input[name=\'product\']').val('');
 
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+		$('#coupon-product' + item['value']).remove();
+
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');
+	}
 });
 
-$('#coupon-product div img').on('click', function() {
+$('#coupon-product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
-
-	$('#coupon-product div:odd').attr('class', 'odd');
-	$('#coupon-product div:even').attr('class', 'even');
 });
 
+// Category
 $('input[name=\'category\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.category_id
+						label: item['name'],
+						value: item['category_id']
 					}
 				}));
 			}
 		});
-
 	},
-	select: function(event, ui) {
-		$('#coupon-category' + ui.item.value).remove();
+	'select': function(item) {
+		$('input[name=\'category\']').val('');
 
-		$('#coupon-category').append('<div id="product-category' + ui.item.value + '">' + ui.item.label + '<img src="view/image/icon-delete.png" alt="" /><input type="hidden" name="coupon_category[]" value="' + ui.item.value + '" /></div>');
+		$('#coupon-category' + item['value']).remove();
 
-		$('#coupon-category div:odd').attr('class', 'odd');
-		$('#coupon-category div:even').attr('class', 'even');
-
-		return false;
-	},
-	focus: function(event, ui) {
-      return false;
-   }
+		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
+	}
 });
 
-$('#coupon-category div img').on('click', function() {
+$('#coupon-category').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
-
-	$('#coupon-category div:odd').attr('class', 'odd');
-	$('#coupon-category div:even').attr('class', 'even');
 });
-//--></script>
-<script type="text/javascript"><!--
-$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
-$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 //--></script>
 <?php if ($coupon_id) { ?>
 <script type="text/javascript"><!--

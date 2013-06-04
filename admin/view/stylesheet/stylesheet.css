@@ -1,52 +1,46 @@
-html, body {
-	margin: 0;
-	padding: 0;
-}
-html, body, label, .control-group input, textarea, select, btn {
+html, body, label, .control-group input, textarea, select {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 15px;
 }
-#header {
-	height: 50px;
-	background-image: url('../image/header.png');
-	border-bottom: 4px solid #00C3F4;
 
+.alert {
+	font-size: 14px;
+	line-height: 20px;
 }
-#logo {
-	float: left;
-	padding-top: 11px;
-	padding-left: 25px;
+
+.btn-group .btn, .btn {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
-#account {
-	float: right;
-	padding-top: 10px;
-	padding-right: 25px;
-}
-#account .nav > .dropdown > a {
-	font-size: 11px;
-	color: #FFF;
+
+.brand {
+	margin: 0px;
+	padding-top: 0px;
+	padding-left: 5px;
 }
 .navbar {
-	background: #F6F6F6;
-	border-bottom: 1px solid #E2E2E2;
+	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 14px;
-	padding: 0px 25px;
+	-webkit-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+	-moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
+	box-shadow: 0 1px 10px rgba(0,0,0,.1);
 }
-.navbar .nav > li > a {
-	color: #666666;
-	font-size: 13px;
-	text-shadow: none;
+.navbar-inverse .nav > li > a {
+	text-shadow: 1px 1px 0px #000000;
 	cursor: pointer;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #E2E2E2;
-	padding: 6px 15px;
 }
-.navbar .nav > li > a:fist {
-	border-left: none;
+.navbar-inner {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+.breadcrumb li + li:before {
+	content: "\f105";
+	font-family: FontAwesome;
 }
 #content {
-	padding: 10px 30px 0px 30px;
+	padding: 10px 15px 0px 15px;
 	padding-bottom: 128px;
 }
 #footer {
@@ -68,7 +62,7 @@ html, body, label, .control-group input, textarea, select, btn {
 	margin-bottom: 15px;
 }
 .box-heading {
-	padding: 0px 10px;
+	padding: 0px 15px;
 	border: 1px solid #DBDBDB;
 	background: #EFEFEF;
 	-webkit-border-radius: 7px 7px 0px 0px;
@@ -80,13 +74,15 @@ html, body, label, .control-group input, textarea, select, btn {
 	margin: 0px;
 	padding: 0px;
 	color: #666666;
-	font-size: 15px;
-	line-height: 32px;
-	padding-top: 3px;
+	font-size: 19px;
+	font-weight: normal;
+	text-shadow: 1px 1px 0px #FFFFFF;
+	line-height: 42px;
+	padding-top: 0px;
 }
 .box-heading h1 i {
-	font-size: 17px;
 	font-weight: normal;
+	color: #00C3F4;
 	margin-right: 5px;
 }
 .box-content {
@@ -94,33 +90,7 @@ html, body, label, .control-group input, textarea, select, btn {
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
-	min-height: 300px;
 	overflow: auto;
-}
-.breadcrumb li a:before {
-	content: "\f105";
-	font-family: FontAwesome;
-	font-style: normal;
-	font-weight: normal;
-	text-decoration: inherit;
-	color: #000;
-	font-size: 16px;
-	padding-right: 5px;
-	text-decoration: none;
-}
-.breadcrumb li a:hover {
-	text-decoration: none;
-}
-.breadcrumb li:first-child a:before {
-	content: "\f015";
-	font-family: FontAwesome;
-	font-style: normal;
-	font-weight: normal;
-	text-decoration: inherit;
-	color: #000;
-	font-size: 16px;
-	padding-right: 5px;
-	text-decoration: none;
 }
 .buttons {
 	text-align: right;
@@ -137,16 +107,83 @@ html, body, label, .control-group input, textarea, select, btn {
 .table .center {
 	text-align: center;
 }
+.table a.asc:after {
+	content: "  \f0d7";
+	font-family: FontAwesome;
+	font-size: 14px;
+}
+.table a.desc:after {
+	content: "  \f0d8";
+	font-family: FontAwesome;
+	font-size: 14px;
+}
 .control-group {
 	border-bottom: 1px dotted #CCCCCC;
 	padding-bottom: 20px;
 	margin-bottom: 10px;
 }
-.control-group .icon-question-sign {
-	color: #37A6CD;
-	font-size: 18px;
+.control-group a[data-toggle='tooltip'] {
+	font-size: 15px;
 	cursor: pointer;
+	text-decoration: none;
+	margin-left: 5px;
+}
+/*
+.control-label:after {
+	content: ':';
+}
+*/
+.required .control-label:before {
+	content: '* ';
+	color: #B94A48;
+}
+.help-block {
+	color: #999;
+}
+.scrollbox {
+	width: 250px;
+	height: 200px;
+	overflow-y: scroll;
 }
 .results {
 	float: right;
+}
+.chart {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	border: 1px solid #000;
+}
+.detail {
+	display: inline-block;
+	margin-left: 10px;
+	border: 1px solid #000;
+}
+/* thumbnails */
+.image {
+	float: left;
+	position: relative;
+}
+.image .image-option {
+	background-color: #000000;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	opacity: 0;
+	text-align: center;
+}
+.image:hover .image-option {
+	opacity: 0.8;
+}
+.image-option a {
+	text-decoration: none;
+	color: #FFF;
+	font-size: 15px;
+	padding: 5px 8px;
+	display: inline-block;
+}
+.image-option a:hover {
+	background-color: #FFF;
+	color: #000000;
 }

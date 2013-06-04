@@ -1,12 +1,12 @@
 <?php echo $header; ?>
 <?php if ($attention) { ?>
-<div class="attention"><?php echo $attention; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert"><i class="icon-warning-sign"></i> <?php echo $attention; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="alert alert-success"><?php echo $success; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
@@ -211,11 +211,11 @@ $('#button-quote').on('click', function() {
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-quote').attr('disabled', true);
+			$('#button-quote').prop('disabled', true);
 			$('#button-quote').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('#button-quote').attr('disabled', false);
+			$('#button-quote').prop('disabled', false);
 			$('.loading').remove();
 		},
 		success: function(json) {
@@ -296,7 +296,7 @@ $('#button-quote').on('click', function() {
 				});
 
 				$('input[name=\'shipping_method\']').on('change', function() {
-					$('#button-shipping').attr('disabled', false);
+					$('#button-shipping').prop('disabled', false);
 				});
 			}
 		}

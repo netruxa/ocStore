@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -19,13 +19,16 @@
           <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
           <div class="controls">
             <textarea name="google_talk_code" cols="40" rows="5" id="input-code"><?php echo $google_talk_code; ?></textarea>
-            <span class="help-block"><?php echo $help_code; ?></span>
+
+
+            <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
+
             <?php if ($error_code) { ?>
             <span class="error"><?php echo $error_code; ?></span>
             <?php } ?>
           </div>
         </div>
-        <table id="module" class="table">
+        <table id="module" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_layout; ?></td>

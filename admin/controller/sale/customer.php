@@ -1322,13 +1322,26 @@ class ControllerSaleCustomer extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_email'])) {
+			if (isset($this->request->get['filter_name'])) {
+				$filter_name = $this->request->get['filter_name'];
+			} else {
+				$filter_name = '';
+			}
+
+			if (isset($this->request->get['filter_email'])) {
+				$filter_email = $this->request->get['filter_email'];
+			} else {
+				$filter_email = '';
+			}
+
 			$this->load->model('sale/customer');
 
 			$data = array(
-				'filter_name' => $this->request->get['filter_name'],
-				'start'       => 0,
-				'limit'       => 20
+				'filter_name'  => $filter_name,
+				'filter_email' => $filter_email,
+				'start'        => 0,
+				'limit'        => 5
 			);
 
 			$results = $this->model_sale_customer->getCustomers($data);

@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -97,7 +97,7 @@
               <?php } ?>
             </label>
             <?php } ?>
-            <a onclick="$(this).parent().find(':checkbox').attr('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').attr('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
+            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-dropoff-type"><?php echo $entry_dropoff_type; ?></label>
@@ -211,7 +211,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+
+
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
         <div class="control-group">
           <div class="control-label"><?php echo $entry_display_weight; ?></div>
@@ -234,7 +238,11 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+
+
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
@@ -248,7 +256,10 @@
               <?php } ?>
               <?php } ?>
             </select>
-            <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+
+
+            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-info-sign"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

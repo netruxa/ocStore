@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -31,7 +31,10 @@
             <?php if ($error_secret) { ?>
             <span class="error"><?php echo $error_secret; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $help_secret; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-info-sign"></i></a>
+
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label"><?php echo $entry_test; ?></label>
@@ -57,10 +60,28 @@
           </div>
         </div>
         <div class="control-group">
+          <tr>
+            <td><?php echo $entry_display; ?></td>
+            <td><?php if ($twocheckout_display) { ?>
+              <input type="radio" name="twocheckout_display" value="1" checked="checked" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="twocheckout_display" value="0" />
+              <?php echo $text_no; ?>
+              <?php } else { ?>
+              <input type="radio" name="twocheckout_display" value="1" />
+              <?php echo $text_yes; ?>
+              <input type="radio" name="twocheckout_display" value="0" checked="checked" />
+              <?php echo $text_no; ?>
+              <?php } ?></td>
+          </tr>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
           <div class="controls">
             <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-            <span class="help-block"><?php echo $help_total; ?></span></div>
+
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
+            </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
