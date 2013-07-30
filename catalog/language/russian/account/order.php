@@ -24,6 +24,9 @@ $_['text_empty']            = 'Вы еще не совершали покупо�
 $_['text_error']            = 'Запрошенный заказ не найден!';
 
 // Column
+$_['column_order_id']       = 'Order ID';
+$_['column_product']        = 'No. of Products';
+$_['column_customer']       = 'Customer';
 $_['column_name']           = 'Название товара';
 $_['column_model']          = 'Модель';
 $_['column_quantity']       = 'Количество';

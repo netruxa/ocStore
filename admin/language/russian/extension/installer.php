@@ -9,6 +9,7 @@ $_['text_ftp']             = 'Copying Files!';
 $_['text_sql']             = 'Running SQL!';
 $_['text_xml']             = 'Applying Modifications!';
 $_['text_php']             = 'Running PHP!';
+$_['text_remove']          = 'Removing temporary files!';
 $_['text_clear']           = 'Deleting installer files!';
 $_['text_overwrite']       = 'The listed files are going to be overwrite. Continue yes / No';
 

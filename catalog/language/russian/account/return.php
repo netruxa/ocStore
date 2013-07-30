@@ -23,6 +23,8 @@ $_['text_agree']         = 'I have read and agree to the <a class="colorbox" hre
 $_['text_error']         = 'Запрос на возврат не найден!';
 
 // Column
+$_['column_return_id']   = 'Return ID';
+$_['column_order_id']    = 'Order ID';
 $_['column_product']     = 'Название товара';
 $_['column_model']       = 'Модель';
 $_['column_quantity']    = 'Количество';
@@ -32,6 +34,7 @@ $_['column_comment']     = 'Комментарий';
 $_['column_reason']      = 'Причина';
 $_['column_action']      = 'Действие';
 $_['column_date_added']  = 'Добавлено';
+$_['column_customer']    = 'Customer';
 $_['column_status']      = 'Статус';
 
 // Entry

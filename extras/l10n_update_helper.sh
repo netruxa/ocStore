@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 
 function find_missing_files() {
 find {admin,catalog}/language/english -type f | while read f; do
@@ -15,14 +15,14 @@ find {admin,catalog}/language/english -type f | while read f; do
 	FILE="${f//english/russian}";
 	test -f "${FILE}" || { echo "Фатальная ошибка!"; exit 1; }
 	grep \\$ "${f}" | \
-	sed -r -e 's/\$_\[(.*)\].*/\1/' | \
+	sed -r -e 's+\$_\[(.*)\].*+\1+' | \
 	while read i; do
 		grep "${i}" "${FILE}" >/dev/null || (
-			BEFORE="$(grep -B1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
-			AFTER="$(grep -A1 ${i} ${f}|sed -r -e 's/\$_\[(.*)\].*/\1/' -e '/'${i}'/d')";
+			BEFORE="$(grep -B1 ${i} ${f}|sed -r -e 's+\$_\[(.*)\].*+\1+' -e '/'${i}'/d')";
+			AFTER="$(grep -A1 ${i} ${f}|sed -r -e 's+\$_\[(.*)\].*+\1+' -e '/'${i}'/d')";
 
 			echo "Нету: ${i}; Находится между «${BEFORE}» и «${AFTER}»; Строка скопирована из английской локализации и требует перевода в файле ${FILE} (оригинал: ${f}).";
-			grep "${i}" "${f}" | while read tr; do sed -r -e "s^(.*${BEFORE}.*)^\1\n${tr}^" -i "${FILE}"; done;
+			grep "${i}" "${f}" | while read tr; do sed -r -e "s+(.*${BEFORE}.*)+\1\n${tr}+" -i "${FILE}"; done;
 		)
 	done;
 done;

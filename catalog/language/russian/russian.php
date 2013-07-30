@@ -16,6 +16,7 @@ $_['text_none']             = ' --- Не выбрано --- ';
 $_['text_select']           = ' --- Выберите --- ';
 $_['text_all_zones']        = 'Все зоны';
 $_['text_pagination']       = 'Показано с {start} по {end} из {total} (всего {pages} страниц)';
+$_['text_loading']          = 'Loading...';
 $_['text_separator']        = ' &raquo; ';
 
 // Buttons
@@ -52,6 +53,7 @@ $_['button_reward']         = 'Применить бонусные баллы';
 $_['button_quote']          = 'Узнать цены';
 
 // Error
+$_['error_exception']       = 'Error Code(%s): %s in %s on line %s';
 $_['error_upload_1']        = 'Загружаемый на сервер файл превышает параметр upload_max_filesize в php.ini!';
 $_['error_upload_2']        = 'Загружаемый на сервер файл превышает параметр MAX_FILE_SIZE который определен в HTML форме!';
 $_['error_upload_3']        = 'Загружаемый на сервер файл был загружен не полностью!';

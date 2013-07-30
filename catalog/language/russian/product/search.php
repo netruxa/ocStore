@@ -1,6 +1,7 @@
 <?php
 // Heading
 $_['heading_title']     = 'Поиск';
+$_['heading_tag']		= 'Tag - ';
 
 // Text
 $_['text_search']       = 'Товары, соответствующие критериям поиска';
