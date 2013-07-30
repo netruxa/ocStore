@@ -4,10 +4,10 @@ $_['text_home']           = 'Главная';
 $_['text_wishlist']       = 'Закладки (%s)';
 $_['text_shopping_cart']  = 'Корзина';
 $_['text_search']         = 'Поиск';
-$_['text_category']       = 'Categories';
+$_['text_category']       = 'Категории';
 $_['text_welcome']        = '<a href="%s">Войти</a> или <a href="%s">зарегистрироваться</a>';
 $_['text_logged']         = 'Вы вошли как <a href="%s">%s</a> <b>(</b> <a href="%s">Выйти</a> <b>)</b>';
 $_['text_account']        = 'Личный кабинет';
 $_['text_checkout']       = 'Оформление заказа';
-$_['text_all']            = 'See All';
+$_['text_all']            = 'Смотреть все';
 ?>
