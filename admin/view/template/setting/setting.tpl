@@ -1329,7 +1329,7 @@
               </select>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_seo_url_include_path; ?></label>
+              <label class="control-label" for="input-name"><?php echo $entry_seo_url_include_path; ?> <span class="help-block"><?php echo $help_seo_url_include_path; ?></span></label>
               <div class="controls">
                 <label class="radio inline">
                   <?php if ($config_seo_url_include_path) { ?>
@@ -1342,7 +1342,7 @@
                   <?php echo $text_yes; ?>
                   <input type="radio" name="config_seo_url_include_path" value="0" checked="checked" />
                   <?php echo $text_no; ?>
-                  <?php } ?> <span class="help-block"><?php echo $help_seo_url_include_path; ?></span>
+                  <?php } ?>
                 </label>
               </div>
             </div>

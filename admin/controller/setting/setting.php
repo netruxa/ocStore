@@ -202,6 +202,8 @@ class ControllerSettingSetting extends Controller {
 		$this->data['help_shared'] = $this->language->get('help_shared');
 		$this->data['help_robots'] = $this->language->get('help_robots');
 		$this->data['help_seo_url'] = $this->language->get('help_seo_url');
+		$this->data['help_seo_url_include_path'] = $this->language->get('help_seo_url_include_path');
+		$this->data['help_seo_url_postfix'] = $this->language->get('help_seo_url_postfix');
 		$this->data['help_image_file_size'] = $this->language->get('help_image_file_size');
 		$this->data['help_file_extension_allowed'] = $this->language->get('help_file_extension_allowed');
 		$this->data['help_file_mime_allowed'] = $this->language->get('help_file_mime_allowed');
