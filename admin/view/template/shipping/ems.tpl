@@ -61,7 +61,7 @@ obj = document.getElementById(idd);
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><?php echo $heading_title; ?>, <font color=red>версия 5.5a</font> (разработчик: Эльхан Исаев)</h1>
+      <h1><?php echo $heading_title; ?>, <font color=red>версия 5.5b</font> (разработчик: Эльхан Исаев)</h1>
 
       <div class="buttons">
 	<a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a>
@@ -140,8 +140,8 @@ echo '4. <b>Библиотека ICONV:</b> <font color=red>не подключ�
 
 
 <tr>
-<td>Город (с настроек сайта):</td> <td><b><?php echo $mycity; ?></b>*</td>
-<td><small>* <font color=red>город (с настроек сайта) будет, пунктом отправления, если пункт отправления не выбран ниже!</font></small></td>
+<td>Город (из настроек сайта):</td> <td><b><?php echo $mycity; ?></b>*</td>
+<td><small>* <font color=red>город (из настроек сайта), который будет выбран в качестве пункта отправления, если пункт отправления не выбран ниже!</font></small></td>
 </tr>
 
 <tr>
@@ -191,7 +191,7 @@ echo $rez;
         </tr>
 
 	<tr>
-        <td>Добавлять дней к периоду доставки:</td> <td><input type="text" name="ems_plus" value="<?php echo $ems_plus; ?>" size="1"></td>
+        <td>Добавлять к периоду доставки</td> <td><input type="text" name="ems_plus" value="<?php echo $ems_plus; ?>" size="1"></td> <td>дней</td>
 	</tr>
 
 	<tr>

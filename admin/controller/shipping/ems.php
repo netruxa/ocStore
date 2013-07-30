@@ -4,7 +4,7 @@ class ControllerShippingEms extends Controller {
 
 	public function index() {
 
-		$this->language->load('shipping/ems');
+		$this->load->language('shipping/ems');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
@@ -49,13 +49,13 @@ class ControllerShippingEms extends Controller {
    		$this->document->breadcrumbs[] = array
    			(
        		'href'      => HTTPS_SERVER . 'index.php?route=extension/shipping&token=' . $this->session->data['token'],
-       		'text'      => $this->language->get('text_shipping'), 'separator' => $this->language->get('breadcrumb_seperator')
+       		'text'      => $this->language->get('text_shipping'), 'separator' => ' :: '
    			);
 
    		$this->document->breadcrumbs[] = array
    			(
        		'href'      => HTTPS_SERVER . 'index.php?route=shipping/ems&token=' . $this->session->data['token'],
-       		'text'      => $this->language->get('heading_title'), 'separator' => $this->language->get('breadcrumb_seperator')
+       		'text'      => $this->language->get('heading_title'), 'separator' => ' :: '
    			);
 
 		$this->data['action'] = HTTPS_SERVER . 'index.php?route=shipping/ems&token=' . $this->session->data['token'];

@@ -10,6 +10,8 @@
 
 class ModelShippingEms extends Model {
 
+
+
 //Connect to EMS
 	public function connect_ems ($url) {
 		$ch = curl_init();
@@ -116,7 +118,7 @@ $listc = $this->connect_ems($urlc);
 
 	public function getQuote($address)
 	{
-		$this->language->load('shipping/ems');
+		$this->load->language('shipping/ems');
 
 		if ( $this->config->get('ems_status') && isset($address) && !empty($address) )
 		{
@@ -137,9 +139,9 @@ $listc = $this->connect_ems($urlc);
 
 			//TO CITY
 			$query = $this->db->query("SELECT name, country_id FROM " . DB_PREFIX . "zone WHERE zone_id = '" . (int)$address['zone_id'] . "'");
-			$city_to = isset($query->row['name']) ? $this->dest_check($query->row['name'],$address['city']) : FALSE;
-			$country_id = isset($query->row['country_id']) ? $query->row['country_id'] : FALSE;
-			$tociid = isset($query->row['name']) ? $query->row['name'] : FALSE;
+			$city_to = $this->dest_check($query->row['name'],$address['city']);
+			$country_id = $query->row['country_id'];
+			$tociid = $query->row['name'];
 
 			//FROM COUNTRY
 			$query = $this->db->query("SELECT name, iso_code_2 FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id_from . "'");
@@ -148,8 +150,8 @@ $listc = $this->connect_ems($urlc);
 
 			//TO COUNTRY
 			$query = $this->db->query("SELECT name, iso_code_2 FROM " . DB_PREFIX . "country WHERE country_id = '" . (int)$country_id . "'");
-			$country_name = isset($query->row['name']) ? $query->row['name'] : FALSE;
-			$country_iso = isset($query->row['iso_code_2']) ? $query->row['iso_code_2'] : FALSE;
+			$country_name = $query->row['name'];
+			$country_iso = $query->row['iso_code_2'];
 
 
 
@@ -186,7 +188,7 @@ $mname = ( $this->config->get('ems_mname')=="" || $this->config->get('ems_mname'
 $text_error = FALSE;
 
 if($status && ($this->config->get('ems_max_weight') < $normves) ) $text_error .= '<li>Расчет и выбор недоступен, по причине превышения допустимого веса в '.$this->config->get('ems_max_weight').' кг. </li>';
-if($city_to=="error" || !isset($city_to) || empty($city_to) ) $text_error .= '<li>Расчет и выбор недоступен, по причине ввода некорректного пункта (города или области) доставки!</li>';
+if($city_to=="error") $text_error .= '<li>Расчет и выбор недоступен, по причине ввода некорректного пункта (города или области) доставки!</li>';
 
 if($text_error )
 {
@@ -316,6 +318,9 @@ $method_data = array
 		}
 		return $method_data;
 	}
+
+
+
+
 }
 ?>
-
