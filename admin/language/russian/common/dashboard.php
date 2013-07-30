@@ -3,7 +3,7 @@
 $_['heading_title']  = 'Панель управления';
 
 // Text
-$_['text_sales']     = "Продажи"
+$_['text_sales']     = 'Продажи';
 $_['text_orders']    = 'Заказы';
 $_['text_customers'] = 'Клиенты';
 $_['text_clicks']    = 'Переходы';
