@@ -1174,23 +1174,25 @@
           </div>
           <div class="tab-pane" id="tab-sms">
             <div class="control-group">
-              <td><?php echo $entry_sms_alert; ?></td>
-              <td><?php if ($config_sms_alert) { ?>
-                <input type="radio" name="config_sms_alert" value="1" checked="checked" />
+              <label class="control-label" for="config_sms_alert"><?php echo $entry_sms_alert; ?></label>
+              <div class="controls">
+                <?php if ($config_sms_alert) { ?>
+                <input type="radio" name="config_sms_alert" id="config_sms_alert" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_sms_alert" value="0" />
+                <input type="radio" name="config_sms_alert" id="config_sms_alert" value="0" />
                 <?php echo $text_no; ?>
                 <?php } else { ?>
-                <input type="radio" name="config_sms_alert" value="1" />
+                <input type="radio" name="config_sms_alert" id="config_sms_alert" value="1" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_sms_alert" value="0" checked="checked" />
+                <input type="radio" name="config_sms_alert" id="config_sms_alert" value="0" checked="checked" />
                 <?php echo $text_no; ?>
-                <?php } ?></td>
+                <?php } ?>
+              </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_gatename; ?></label>
+              <label class="control-label" for="config_sms_gatename"><?php echo $entry_sms_gatename; ?></label>
               <div class="controls">
-                <select name="config_sms_gatename">
+                <select name="config_sms_gatename" id="config_sms_gatename">
                   <?php foreach($sms_gatenames as $sms_gatename) { ?>
                   <?php if ($config_sms_gatename == $sms_gatename) { ?>
                   <option value="<?php echo $sms_gatename; ?>" selected="selected"><?php echo $sms_gatename; ?></option>
@@ -1202,39 +1204,39 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_from; ?></label>
+              <label class="control-label" for="config_sms_from"><?php echo $entry_sms_from; ?></label>
               <div class="controls">
-                <input type="text" name="config_sms_from" value="<?php echo $config_sms_from; ?>" maxlength="15" />
+                <input type="text" name="config_sms_from" id="config_sms_from" value="<?php echo $config_sms_from; ?>" maxlength="15" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_to; ?></label>
+              <label class="control-label" for="config_sms_to"><?php echo $entry_sms_to; ?></label>
               <div>
-                <input type="text" name="config_sms_to" value="<?php echo $config_sms_to; ?>" maxlength="15" />
+                <input type="text" name="config_sms_to" id="config_sms_to" value="<?php echo $config_sms_to; ?>" maxlength="15" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_copy; ?></label>
+              <label class="control-label" for="config_sms_copy"><?php echo $entry_sms_copy; ?></label>
               <div class="controls">
-                <textarea name="config_sms_copy" cols="40"><?php echo $config_sms_copy; ?></textarea>
+                <textarea name="config_sms_copy" cols="40" id="config_sms_copy"><?php echo $config_sms_copy; ?></textarea>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_message; ?></label>
+              <label class="control-label" for="config_sms_message"><?php echo $entry_sms_message; ?></label>
               <div class="controls">
-                <textarea name="config_sms_message" cols="40" rows="5"><?php echo $config_sms_message; ?></textarea>
+                <textarea name="config_sms_message" cols="40" rows="5" id="config_sms_message"><?php echo $config_sms_message; ?></textarea>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_gate_username; ?></label>
+              <label class="control-label" for="config_sms_gate_username"><?php echo $entry_sms_gate_username; ?></label>
               <div class="controls">
-                <input type="text" name="config_sms_gate_username" value="<?php echo $config_sms_gate_username; ?>" />
+                <input type="text" name="config_sms_gate_username" id="config_sms_gate_username" value="<?php echo $config_sms_gate_username; ?>" />
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-name"><?php echo $entry_sms_gate_password; ?></label>
+              <label class="control-label" for="config_sms_gate_password"><?php echo $entry_sms_gate_password; ?></label>
               <div class="controls">
-                <input type="text" name="config_sms_gate_password" value="<?php echo $config_sms_gate_password; ?>" />
+                <input type="text" name="config_sms_gate_password" id="config_sms_gate_password" value="<?php echo $config_sms_gate_password; ?>" />
               </div>
             </div>
           </div>
@@ -1288,7 +1290,7 @@
             <div class="control-group">
               <label class="control-label" for="input-robots"><?php echo $entry_robots; ?> <span class="help-block"><?php echo $help_robots; ?></span></label>
               <div class="controls">
-                <textarea name="config_robots" cols="40" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots"><?php echo $config_robots; ?></textarea>
+                <textarea name="config_robots" cols="40" rows="5" id="input-robots"><?php echo $config_robots; ?></textarea>
               </div>
             </div>
             <div class="control-group">
@@ -1316,7 +1318,7 @@
             </div>
             <div class="control-group">
               <label class="control-label" for="input-seo-url-type"><?php echo $entry_seo_url_type; ?></label>
-              <td><select name="config_seo_url_type">
+              <select name="config_seo_url_type">
                 <?php foreach ($seo_types as $seo_type) { ?>
                 <?php if ($seo_type['type'] == $config_seo_url_type) { ?>
                 <option value="<?php echo $seo_type['type']; ?>" selected="selected"><?php echo $seo_type['name']; ?></option>
@@ -1324,7 +1326,7 @@
                 <option value="<?php echo $seo_type['type']; ?>"><?php echo $seo_type['name']; ?></option>
                 <?php } ?>
                 <?php } ?>
-              </select></td>
+              </select>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_seo_url_include_path; ?></label>

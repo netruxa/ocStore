@@ -123,6 +123,7 @@ $_['entry_error_display']			= 'Показывать ошибки:';
 $_['entry_error_log']				= 'Записывать ошибки:';
 $_['entry_error_filename']			= 'Файл журнала ошибок:';
 $_['entry_google_analytics']			= 'Код Google Analytics:';
+
 //ocStore
 $_['entry_sms_gatename']			= 'Сервис отправки SMS:';
 $_['entry_sms_to']                  = 'Номер телефона получателя:';
@@ -192,13 +193,6 @@ $_['help_password']                = 'Allow forgotten password to be used for th
 $_['help_encryption']              = 'Ключ, который будет использоваться для шифрования конфиденциальной информации при обработке заказов.';
 $_['help_compression']             = 'Задайте значение от 0 до 9. 0 = быстрее, но меньшая степень сжатия, 9 = медленнее, но максимальная степень сжатия.';
 $_['help_google_analytics']        = 'Войдите в Ваш <a onclick="window.open(\'http://www.google.com/analytics/\');"><u>Google Analytics аккаунт</u></a> и после настройки добавьте сюда код выданный Google Analytics.';
-// ocStore
-$_['help_sms_to']                  = 'В международном формате, только цифры 7926xxxxxxx';
-$_['help_sms_from']                = 'Не более 11 символов, либо номер телефона до 15 цифр';
-$_['help_sms_message']             = 'Можно использовать теги:<br/>{ID} - номер заказа<br/>{DATE} - дата заказа<br/>{TIME} - время заказа<br/>{SUM} - сумма заказа<br/>{PHONE} - телефон клиента';
-$_['help_sms_copy']                = 'Указывать через запятую, в международном формате, без разделителей (например: 7926xxxxxxx)';
-$_['help_seo_url_include_path']        = '/category/subcategory/product<br />(только для SeoPro)';
-$_['help_seo_url_postfix']         = 'Например .html<br />(только для SeoPro)';
 
 // Error
 $_['error_warning']				= 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';
@@ -228,4 +222,13 @@ $_['error_ftp_username']           = 'FTP Username required!';
 $_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']			= 'Необходимо ввести имя журнала ошибок!';
 $_['error_encryption']             = 'Encryption Key must be between 3 and 32 characters!';
+
+// ocStore
+$_['help_sms_to']                  = 'В международном формате, только цифры 7926xxxxxxx';
+$_['help_sms_from']                = 'Не более 11 символов, либо номер телефона до 15 цифр';
+$_['help_sms_message']             = 'Можно использовать теги:<br/>{ID} - номер заказа<br/>{DATE} - дата заказа<br/>{TIME} - время заказа<br/>{SUM} - сумма заказа<br/>{PHONE} - телефон клиента';
+$_['help_sms_copy']                = 'Указывать через запятую, в международном формате, без разделителей (например: 7926xxxxxxx)';
+$_['help_seo_url_include_path']    = '/category/subcategory/product<br />(только для SeoPro)';
+$_['help_seo_url_postfix']         = 'Например .html<br />(только для SeoPro)';
+
 ?>
