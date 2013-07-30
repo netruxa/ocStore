@@ -3,10 +3,10 @@
 $_['heading_title']  = 'Панель управления';
 
 // Text
-$_['text_customers'] = 'Всего покупателей';
-$_['text_orders']    = 'Всего заказов';
-$_['text_clicks']    = 'Переходы';
+$_['text_sales']     = "Продажи"
+$_['text_orders']    = 'Заказы';
 $_['text_customers'] = 'Клиенты';
+$_['text_clicks']    = 'Переходы';
 $_['text_activity']  = 'Недавняя активность';
 $_['text_marketing'] = 'Маркетинг';
 $_['text_online']    = 'Люди онлайн';
