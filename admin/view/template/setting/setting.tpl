@@ -33,6 +33,7 @@
           <li><a href="#tab-ftp" data-toggle="tab"><?php echo $tab_ftp; ?></a></li>
           <li><a href="#tab-mail" data-toggle="tab"><?php echo $tab_mail; ?></a></li>
           <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
+          <li><a href="#tab-sms" data-toggle="tab"><?php echo $tab_sms; ?></a></li>
           <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
         </ul>
         <div class="tab-content">
@@ -1339,9 +1340,8 @@
                   <?php echo $text_yes; ?>
                   <input type="radio" name="config_seo_url_include_path" value="0" checked="checked" />
                   <?php echo $text_no; ?>
-                  <?php } ?>
+                  <?php } ?> <span class="help-block"><?php echo $help_seo_url_include_path; ?></span>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_seo_url_include_path; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </div>
             <div class="control-group">
