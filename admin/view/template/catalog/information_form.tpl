@@ -12,13 +12,13 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-information" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons">
-          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-information" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
@@ -34,8 +34,8 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <div class="control-group">
-                  <label class="control-label" for="input-title<?php echo $language['language_id']; ?>"><span class="required">*</span> <?php echo $entry_title; ?></label>
+                <div class="control-group required">
+                  <label class="control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
                   <div class="controls">
                     <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="input-xxlarge" />
                     <?php if (isset($error_title[$language['language_id']])) { ?>
@@ -67,8 +67,8 @@
                     <textarea name="information_description[<?php echo $language['language_id']; ?>][meta_description]" cols="100" rows="2"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
                   </div>
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="input-description"><span class="required">*</span> <?php echo $entry_description; ?></label>
+                <div class="control-group required">
+                  <label class="control-label" for="input-description"><?php echo $entry_description; ?></label>
                   <div class="controls">
                     <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                     <?php if (isset($error_description[$language['language_id']])) { ?>
@@ -107,13 +107,13 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-info-sign"></i></a> </div>
+              </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
+              <label class="control-label" for="input-bottom"><?php echo $entry_bottom; ?> <span class="help-block"><?php echo $help_bottom; ?></span> </label>
               <div class="controls">
                 <label class="checkbox inline">
                   <?php if ($bottom) { ?>
@@ -122,7 +122,7 @@
                   <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><i class="icon-info-sign"></i></a> </div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

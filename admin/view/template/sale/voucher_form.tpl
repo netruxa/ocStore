@@ -6,15 +6,22 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <?php if ($voucher_id) { ?>
+        <button type="button" id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <?php } ?>
+        <button type="submit" form="form-voucher" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-voucher" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <?php if ($voucher_id) { ?>
@@ -23,20 +30,17 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <div class="control-group">
-              <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
               <div class="controls">
                 <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-
-                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
-
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-from-name"><span class="required">*</span> <?php echo $entry_from_name; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
               <div class="controls">
                 <input type="text" name="from_name" value="<?php echo $from_name; ?>" placeholder="<?php echo $entry_from_name; ?>" id="input-from-name" />
                 <?php if ($error_from_name) { ?>
@@ -44,8 +48,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-from-email"><span class="required">*</span> <?php echo $entry_from_email; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
               <div class="controls">
                 <input type="text" name="from_email" value="<?php echo $from_email; ?>" placeholder="<?php echo $entry_from_email; ?>" id="input-from-email" />
                 <?php if ($error_from_email) { ?>
@@ -53,8 +57,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-to-name"><span class="required">*</span> <?php echo $entry_to_name; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
               <div class="controls">
                 <input type="text" name="to_name" value="<?php echo $to_name; ?>" placeholder="<?php echo $entry_to_name; ?>" id="input-to-name" />
                 <?php if ($error_to_name) { ?>
@@ -62,8 +66,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-to-email"><span class="required">*</span> <?php echo $entry_to_email; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
               <div class="controls">
                 <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" />
                 <?php if ($error_to_email) { ?>
@@ -85,8 +89,8 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-message"><span class="required">*</span> <?php echo $entry_message; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-message"><?php echo $entry_message; ?></label>
               <div class="controls">
                 <textarea name="message" cols="40" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message"><?php echo $message; ?></textarea>
               </div>
@@ -126,6 +130,38 @@
   </div>
 </div>
 <?php if ($voucher_id) { ?>
+<script type="text/javascript"><!--
+$('#button-send').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>',
+		type: 'post',
+		dataType: 'json',
+		data: 'voucher_id=<?php echo $voucher_id; ?>',
+		beforeSend: function() {
+			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-send').prop('disabled', true);
+		},
+		complete: function() {
+			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
+			$('#button-send').prop('disabled', false);
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+			}
+
+			if (json['success']) {
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i>  ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+})
+//--></script>
 <script type="text/javascript"><!--
 $('#history .pagination a').on('click', function() {
 	$('#history').load(this.href);

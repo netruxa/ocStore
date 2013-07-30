@@ -39,10 +39,12 @@ class ControllerCommonSeoUrl extends Controller {
 					}
 				} else {
 					$this->request->get['route'] = 'error/not_found';
+
+					break;
 				}
 			}
 
-			if(!isset($this->request->get['route'])){
+			if (!isset($this->request->get['route'])){
 				if (isset($this->request->get['product_id'])) {
 					$this->request->get['route'] = 'product/product';
 				} elseif (isset($this->request->get['path'])) {

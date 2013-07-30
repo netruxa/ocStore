@@ -279,7 +279,7 @@ class ControllerSaleOrder extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -502,7 +502,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
 		$this->data['entry_address'] = $this->language->get('entry_address');
@@ -529,6 +528,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_voucher'] = $this->language->get('entry_voucher');
 		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
 		$this->data['entry_reward'] = $this->language->get('entry_reward');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 
 		$this->data['column_product'] = $this->language->get('column_product');
 		$this->data['column_model'] = $this->language->get('column_model');
@@ -719,7 +719,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -1526,7 +1526,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
@@ -1592,16 +1592,16 @@ class ControllerSaleOrder extends Controller {
 			$this->data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 
 			if ($order_info['affiliate_id']) {
-				$this->data['affiliate'] = $this->url->link('sale/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+				$this->data['affiliate'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
 			} else {
 				$this->data['affiliate'] = '';
 			}
 
 			$this->data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 
-			$this->data['commission_total'] = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+			$this->data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
 
 			$this->load->model('localisation/order_status');
 
@@ -1938,7 +1938,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
@@ -2105,12 +2105,12 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 
-				$affiliate_total = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
 
 				if (!$affiliate_total) {
-					$this->model_sale_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
+					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
 
 					$json['success'] = $this->language->get('text_commission_added');
 				} else {
@@ -2137,9 +2137,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 
-				$this->model_sale_affiliate->deleteTransaction($this->request->get['order_id']);
+				$this->model_marketing_affiliate->deleteTransaction($this->request->get['order_id']);
 
 				$json['success'] = $this->language->get('text_commission_removed');
 			} else {
@@ -2260,7 +2260,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(

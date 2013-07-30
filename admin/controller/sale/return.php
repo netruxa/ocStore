@@ -323,7 +323,7 @@ class ControllerSaleReturn extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -564,14 +564,14 @@ class ControllerSaleReturn extends Controller {
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_comment'] = $this->language->get('entry_comment');
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_quantity'] = $this->language->get('entry_quantity');
- 		$this->data['entry_reason'] = $this->language->get('entry_reason');
 		$this->data['entry_opened'] = $this->language->get('entry_opened');
-		$this->data['entry_action'] = $this->language->get('entry_action');
+		$this->data['entry_return_reason'] = $this->language->get('entry_return_reason');
+		$this->data['entry_return_action'] = $this->language->get('entry_return_action');
+		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
+		$this->data['entry_comment'] = $this->language->get('entry_comment');
 
 		$this->data['help_product'] = $this->language->get('help_product');
 
@@ -681,7 +681,7 @@ class ControllerSaleReturn extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -882,17 +882,18 @@ class ControllerSaleReturn extends Controller {
 			$this->data['text_customer'] = $this->language->get('text_customer');
 			$this->data['text_email'] = $this->language->get('text_email');
 			$this->data['text_telephone'] = $this->language->get('text_telephone');
-			$this->data['text_return_status'] = $this->language->get('text_return_status');
 			$this->data['text_date_added'] = $this->language->get('text_date_added');
 			$this->data['text_date_modified'] = $this->language->get('text_date_modified');
 			$this->data['text_product'] = $this->language->get('text_product');
 			$this->data['text_model'] = $this->language->get('text_model');
 			$this->data['text_quantity'] = $this->language->get('text_quantity');
-			$this->data['text_return_reason'] = $this->language->get('text_return_reason');
 			$this->data['text_opened'] = $this->language->get('text_opened');
-			$this->data['text_comment'] = $this->language->get('text_comment');
+			$this->data['text_return_reason'] = $this->language->get('text_return_reason');
 			$this->data['text_return_action'] = $this->language->get('text_return_action');
+			$this->data['text_return_status'] = $this->language->get('text_return_status');
+			$this->data['text_comment'] = $this->language->get('text_comment');
 
+			$this->data['entry_return_action'] = $this->language->get('entry_return_action');
 			$this->data['entry_return_status'] = $this->language->get('entry_return_status');
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
 			$this->data['entry_comment'] = $this->language->get('entry_comment');
@@ -956,7 +957,7 @@ class ControllerSaleReturn extends Controller {
 
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(
@@ -1025,6 +1026,14 @@ class ControllerSaleReturn extends Controller {
 
 			$this->load->model('localisation/return_action');
 
+			$return_action_info = $this->model_localisation_return_action->getReturnAction($return_info['return_action_id']);
+
+			if ($return_action_info) {
+				$this->data['return_action'] = $return_action_info['name'];
+			} else {
+				$this->data['return_action'] = '';
+			}
+
 			$this->data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
 			$this->data['return_action_id'] = $return_info['return_action_id'];
@@ -1053,7 +1062,7 @@ class ControllerSaleReturn extends Controller {
 
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$this->data['breadcrumbs'][] = array(

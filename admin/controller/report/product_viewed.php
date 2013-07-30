@@ -21,7 +21,7 @@ class ControllerReportProductViewed extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -38,7 +38,7 @@ class ControllerReportProductViewed extends Controller {
 
 		$product_viewed_total = $this->model_report_product->getTotalProductsViewed($data);
 
-		$product_views_total = $this->model_report_product->getTotalProductViews();
+		$product_viewed_total = $this->model_report_product->getTotalProductViews();
 
 		$this->data['products'] = array();
 
@@ -46,7 +46,7 @@ class ControllerReportProductViewed extends Controller {
 
 		foreach ($results as $result) {
 			if ($result['viewed']) {
-				$percent = round($result['viewed'] / $product_views_total * 100, 2);
+				$percent = round($result['viewed'] / $product_viewed_total * 100, 2);
 			} else {
 				$percent = 0;
 			}

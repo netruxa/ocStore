@@ -36,17 +36,17 @@ class ModelReportAffiliate extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalCommission() {
+	public function getTotalCommission($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT affiliate_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
 
 		$implode = array();
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(at.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(at.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 
 		if ($implode) {
@@ -94,17 +94,17 @@ class ModelReportAffiliate extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalProducts() {
+	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT product_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
 
 		$implode = array();
 
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(at.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(at.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 
 		if ($implode) {

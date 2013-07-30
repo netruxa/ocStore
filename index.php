@@ -86,9 +86,11 @@ $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($number, $string, $file, $line) {
-	throw new ErrorException($string, $number, 0, $file, $line);
-});
+function error_handler($number, $string, $file, $line) {
+    throw new ErrorException($string, $number, 0, $file, $line);
+}
+
+set_error_handler('error_handler');
 
 // Request
 $request = new Request();
@@ -167,12 +169,15 @@ $registry->set('document', new Document());
 // Customer
 $registry->set('customer', new Customer($registry));
 
-// Affiliate
-$registry->set('affiliate', new Affiliate($registry));
-
+// Tracking Code
 if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+
+	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
 }
+
+// Affiliate
+$registry->set('affiliate', new Affiliate($registry));
 
 // Currency
 $registry->set('currency', new Currency($registry));
@@ -217,11 +222,11 @@ try {
 } catch(Exception $exception) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
-		echo sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+		echo sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write(sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+		$log->write(sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 	}
 }
 

@@ -68,7 +68,7 @@ class ControllerProductSearch extends Controller {
 		if (isset($this->request->get['search'])) {
 			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->request->get['search']);
 		} elseif (isset($this->request->get['tag'])) {
-			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . ' tag - ' . $this->request->get['tag']);
+			$this->document->setTitle($this->language->get('heading_title') .  ' - ' . $this->language->get('heading_tag') . $this->request->get['tag']);
 		} else {
 			$this->document->setTitle($this->language->get('heading_title'));
 		}
@@ -214,9 +214,9 @@ class ControllerProductSearch extends Controller {
 				'limit'               => $limit
 			);
 
+			$product_total = $this->model_catalog_product->getTotalProducts($data);
+
 			$results = $this->model_catalog_product->getProducts($data);
-			
-			$product_total = $this->model_catalog_product->getFoundProducts();
 
 			foreach ($results as $result) {
 				if ($result['image']) {

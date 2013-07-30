@@ -26,7 +26,7 @@ $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#dashboard').addClass('active');
+		$('#header #dashboard a').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -36,17 +36,15 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
+		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 
-	$('[data-toggle=\'tooltip\']').tooltip({
-		'placement': 'top',
-		'animation': false,
-		'html': true
-	});
+	$('[data-toggle=\'tooltip\']').tooltip();
 });
 
-$('.ajax').on('submit', function(event) {
+
+/*
+$('[data-target=]').on('submit', function(event) {
 	event.preventDefault();
 
 	$.ajax({
@@ -69,7 +67,7 @@ $('.ajax').on('submit', function(event) {
 
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				for (i in json['error']) {
@@ -80,7 +78,7 @@ $('.ajax').on('submit', function(event) {
 			}
 
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -88,7 +86,7 @@ $('.ajax').on('submit', function(event) {
 		}
 	});
 });
-
+*/
 // Added my own autocomplete method for jquery since bootstraps is pretty much useless
 (function($) {
 	function Autocomplete(element, options) {

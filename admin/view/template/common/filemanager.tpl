@@ -10,57 +10,85 @@
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">
-#directory, ul {
-	list-style: none;
+body {
+	font-size: 12px;
+}
++.container-fluid {
+	width: 900px;
+	border: 1px solid #000;
+	margin: auto;
+}
+#menu {
+	margin-bottom: 10px;
+}
+#directory {
+	float: left;
+	margin-right: 5px;
+	width: 160px;
+}
+#file {
+	margin-left: 200px;
 }
 </style>
 </head>
 <body>
 <div class="container-fluid">
-<div id="menu">
-  <div class="row">
-    <div class="span3">
-      <div class="well well-small">
-        <ul id="directory">
-          <li><a href="#"><i class="icon-folder-close"></i> Image <i class="icon-edit pull-right"></i> <i class="icon-remove pull-right"></i></a></li>
-        </ul>
+    <div class="row-fluid">
+      <div class="span12">
+        <button id="button-create" class="btn"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
+        <button id="button-upload" class="btn"><i class="icon-upload"></i></button>
+        <button id="button-refresh" class="btn"><i class="icon-refresh"></i></button>
       </div>
     </div>
-    <div class="span9">
-      <div class="well well-small">
-        <ul id="files" class="thumbnails">
-        </ul>
-      </div>
-    </div>
+  <div id="directory" class="well well-small">
+    <ul class="nav nav-list">
+      <li><a href=""><i class="icon-caret-right"></i> Image</a></li>
+    </ul>
   </div>
+</div>
 
-    <button id="button-create" class="btn"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
-    <button id="button-delete" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
-    <button id="button-upload" class="btn"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-    <button id="button-refresh" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
-    <div class="btn-group">
-    <button id="button-move" class="btn"><i class="icon-remove-sign"></i> <?php echo $button_move; ?></button>
-    <button id="button-copy" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
-    <button id="button-rename" class="btn"><i class="icon-edit"></i> <?php echo $button_rename; ?></button>
-   </div>
+  <div id="file">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+        <td></td>
+          <td>Name</td>
+          <td>Size</td>
+          <td>Type</td>
+          <td>Date Modified</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <td><input type="checkbox" name="" value="" /></td>
+          <td><i class="icon-folder-close"></i> Test</td>
+          <td>13kb</td>
+          <td>jPeg</td>
+          <td>1/2/1999</td>
+          <td><i title="<?php echo $button_rename; ?>" class="icon-edit"></i> <i title="<?php echo $button_move; ?>" class="icon-remove-sign"></i> <i title="<?php echo $button_delete; ?>" class="icon-trash"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
 </div>
-<div id="upload">
+<div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
     <input type="hidden" name="directory" />
   </form>
 </div>
 <script type="text/javascript"><!--
-$('#directory').delegate('a .icon-folder-close', 'click', function(e) {
-	event.preventDefault();
+$('#directory').delegate('a', 'click', function(e) {
+	e.preventDefault();
 
 	var node = this;
 
 	$('#directory li').removeClass('active');
 
-	$(node).parent().parent().addClass('active');
+	$(node).parent().addClass('active');
 
 	if ($(this).find('> .icon-folder-close').hasClass('icon-folder-close')) {
 		$.ajax({
@@ -100,7 +128,36 @@ $('#directory').delegate('a .icon-folder-close', 'click', function(e) {
 	}
 });
 
+function handleDragStart(e) {
+  this.style.opacity = '0.4';  // this / e.target is the source node.
+}
 
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault(); // Necessary. Allows us to drop.
+  }
+
+  e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+  return false;
+}
+
+function handleDragEnter(e) {
+  // this / e.target is the current hover target.
+  this.classList.add('over');
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('over');  // this / e.target is previous target element.
+}
+
+var cols = document.querySelectorAll('#columns .column');
+[].forEach.call(cols, function(col) {
+  col.addEventListener('dragstart', handleDragStart, false);
+  col.addEventListener('dragenter', handleDragEnter, false);
+  col.addEventListener('dragover', handleDragOver, false);
+  col.addEventListener('dragleave', handleDragLeave, false);
+});
 
 /*
 $.ajax({

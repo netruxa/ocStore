@@ -18,10 +18,13 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-product" formaction="<?php echo $copy; ?>" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
+        <button type="submit" form="form-product" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data">
-        <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <button type="submit" formaction="<?php echo $copy; ?>" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button> <button type="submit" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button></div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-product">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
@@ -118,11 +121,11 @@
 
               </td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
-                <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-important"><?php echo $product['quantity']; ?></span>
                 <?php } elseif ($product['quantity'] <= 5) { ?>
-                <span style="color: #FFA500;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-warning"><?php echo $product['quantity']; ?></span>
                 <?php } else { ?>
-                <span style="color: #008000;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-success"><?php echo $product['quantity']; ?></span>
                 <?php } ?></td>
               <td class="left"><?php echo $product['status']; ?></td>
               <td class="right"><?php foreach ($product['action'] as $action) { ?>
@@ -138,11 +141,17 @@
           </tbody>
         </table>
       </form>
-      <div class="pagination"><?php echo $pagination; ?></div>
-      <div class="results"><?php echo $results; ?></div>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="pagination"><?php echo $pagination; ?></div>
+        </div>
+        <div class="span6">
+          <div class="results"><?php echo $results; ?></div>
+        </div>
+      </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';

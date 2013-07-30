@@ -64,9 +64,11 @@ $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($number, $string, $file, $line) {
-	throw new ErrorException($string, $number, 0, $file, $line);
-});
+function error_handler($number, $string, $file, $line) {
+    throw new ErrorException($string, $number, 0, $file, $line);
+}
+
+set_error_handler('error_handler');
 
 // Request
 $request = new Request();
@@ -129,20 +131,20 @@ $controller->addPreAction(new Action('error/permission/check'));
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
 } else {
-	$action = new Action('common/home');
+	$action = new Action('common/dashboard');
 }
 
 try {
 	// Dispatch
 	$controller->dispatch($action, new Action('error/not_found'));
-} catch(Exception $e) {
+} catch(Exception $exception) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
-		echo sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+		echo sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write(sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+		$log->write(sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 	}
 }
 

@@ -222,11 +222,9 @@ class ControllerProductProduct extends Controller {
 
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
-
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
-			$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
+			$this->document->addScript('catalog/view/javascript/jquery/magnific.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/ui/themes/base/jquery.ui.datepicker.css');
 
 			$this->data['seo_h1'] = $product_info['seo_h1'];
 
@@ -690,7 +688,8 @@ class ControllerProductProduct extends Controller {
 			// Allowed file extension types
 			$allowed = array();
 
-			$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
+			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+			$filetypes = explode("\n", $extension_allowed);
 
 			foreach ($filetypes as $filetype) {
 				$allowed[] = trim($filetype);
@@ -703,7 +702,8 @@ class ControllerProductProduct extends Controller {
 			// Allowed file mime types
 		    $allowed = array();
 
-			$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+			$filetypes = explode("\n", $mime_allowed);
 
 			foreach ($filetypes as $filetype) {
 				$allowed[] = trim($filetype);

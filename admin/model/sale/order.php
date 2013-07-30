@@ -129,9 +129,9 @@ class ModelSaleOrder extends Model {
 		$commission = 0;
 
 		if (!empty($data['affiliate_id'])) {
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($data['affiliate_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($data['affiliate_id']);
 
 			if ($affiliate_info) {
 				$affiliate_id = $affiliate_info['affiliate_id'];
@@ -264,9 +264,9 @@ TODO: Добавить прибавление товара на склад пр�
 		$commission = 0;
 
 		if (!empty($data['affiliate_id'])) {
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($data['affiliate_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($data['affiliate_id']);
 
 			if ($affiliate_info) {
 				$affiliate_id = $affiliate_info['affiliate_id'];
@@ -360,9 +360,9 @@ TODO: Добавить прибавление товара на склад пр�
 				$affiliate_id = 0;
 			}
 
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($affiliate_id);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 			if ($affiliate_info) {
 				$affiliate_firstname = $affiliate_info['firstname'];
@@ -629,18 +629,6 @@ TODO: Добавить прибавление товара на склад пр�
 		return $query->row['total'];
 	}
 
-	public function getTotalSales() {
-      	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalSalesByYear($year) {
-      	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND YEAR(date_added) = '" . (int)$year . "'");
-
-		return $query->row['total'];
-	}
-
 	public function createInvoiceNo($order_id) {
 		$order_info = $this->getOrder($order_id);
 
@@ -753,10 +741,10 @@ TODO: Добавить прибавление товара на склад пр�
 		$implode = array();
 
 		foreach ($products as $product_id) {
-			$implode[] = "op.product_id = '" . $product_id . "'";
+			$implode[] = "op.product_id = '" . (int)$product_id . "'";
 		}
 
-		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
+		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . (int)$start . "," . (int)$end);
 
 		return $query->rows;
 	}
@@ -765,10 +753,10 @@ TODO: Добавить прибавление товара на склад пр�
 		$implode = array();
 
 		foreach ($products as $product_id) {
-			$implode[] = "op.product_id = '" . $product_id . "'";
+			$implode[] = "op.product_id = '" . (int)$product_id . "'";
 		}
 
-		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0' LIMIT " . $start . "," . $end);
+		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
 
 		return $query->row['total'];
 	}

@@ -6,17 +6,19 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-customer" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons">
-          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <?php if ($customer_id) { ?>
@@ -40,8 +42,8 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab-customer">
-                  <div class="control-group">
-                    <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
                     <div class="controls">
                       <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
                       <?php if ($error_firstname) { ?>
@@ -49,8 +51,8 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
                     <div class="controls">
                       <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                       <?php if ($error_lastname) { ?>
@@ -58,8 +60,8 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-email"><span class="required">*</span> <?php echo $entry_email; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
                     <div class="controls">
                       <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
                       <?php if ($error_email) { ?>
@@ -67,8 +69,8 @@
                       <?php  } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-telephone"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
                     <div class="controls">
                       <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                       <?php if ($error_telephone) { ?>
@@ -85,7 +87,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
                     <div class="controls">
-                      <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
+                      <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" />
                       <?php if ($error_password) { ?>
                       <span class="error"><?php echo $error_password; ?></span>
                       <?php  } ?>
@@ -94,7 +96,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
                     <div class="controls">
-                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
+                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
                       <?php if ($error_confirm) { ?>
                       <span class="error"><?php echo $error_confirm; ?></span>
                       <?php  } ?>
@@ -147,8 +149,8 @@
                 <?php foreach ($addresses as $address) { ?>
                 <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
                   <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
-                  <div class="control-group">
-                    <label class="control-label" for="input-firstname<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" />
                       <?php if (isset($error_address_firstname[$address_row])) { ?>
@@ -156,8 +158,8 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-lastname<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" />
                       <?php if (isset($error_address_lastname[$address_row])) { ?>
@@ -171,8 +173,8 @@
                       <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company<?php echo $address_row; ?>" />
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-address-1<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" />
                       <?php if (isset($error_address_address_1[$address_row])) { ?>
@@ -186,8 +188,8 @@
                       <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2<?php echo $address_row; ?>" />
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-city<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_city; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" />
                       <?php if (isset($error_address_city[$address_row])) { ?>
@@ -195,14 +197,14 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"> <span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-country<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_country; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
                     <div class="controls">
                       <select name="address[<?php echo $address_row; ?>][country_id]" id="input-country<?php echo $address_row; ?>" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
                         <option value=""><?php echo $text_select; ?></option>
@@ -219,8 +221,8 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-zone<?php echo $address_row; ?>"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
                     <div class="controls">
                       <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
                       </select>
@@ -253,7 +255,7 @@
             <div class="control-group">
               <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
               <div class="controls">
-                <textarea name="comment" cols="40" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
+                <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
               </div>
             </div>
             <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
@@ -272,7 +274,7 @@
                 <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
               </div>
             </div>
-            <button id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+            <button type="button" id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
           </div>
           <div class="tab-pane" id="tab-reward">
             <div id="reward"></div>
@@ -283,15 +285,12 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-points"><?php echo $entry_points; ?></label>
+              <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
               <div class="controls">
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
-
-                <a data-toggle="tooltip" title="<?php echo $help_points; ?>"><i class="icon-info-sign"></i></a>
-
-                </div>
+              </div>
             </div>
-            <button id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+            <button type="button" id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-ip">
@@ -312,9 +311,9 @@
                   <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                   <td class="left"><?php echo $ip['date_added']; ?></td>
                   <td class="right"><?php if ($ip['ban_ip']) { ?>
-                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                     <?php } else { ?>
-                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                     <?php } ?></td>
                 </tr>
                 <?php } ?>
@@ -336,7 +335,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 
 });
 
-$('select[name=\'customer_group_id\']').trigger('change');
+//$('select[name=\'customer_group_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
@@ -345,13 +344,13 @@ function addAddress() {
 	html  = '<div class="tab-pane" id="tab-address' + address_row + '">';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-firstname' + address_row + '"><span class="required">*</span> <?php echo $entry_firstname; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" /></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-lastname' + address_row + '"><span class="required">*</span> <?php echo $entry_lastname; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" /></div>';
 	html += '  </div>';
 
@@ -360,8 +359,8 @@ function addAddress() {
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" /></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-address-1' + address_row + '"><span class="required">*</span> <?php echo $entry_address_1; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" /></div>';
 	html += '  </div>';
 
@@ -370,18 +369,18 @@ function addAddress() {
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" /></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-city' + address_row + '"><span class="required">*</span> <?php echo $entry_city; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" /></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-postcode' + address_row + '"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" /></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-country' + address_row + '"><span class="required">*</span> <?php echo $entry_country; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
 	html += '    <div class="controls"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');">';
     html += '         <option value=""><?php echo $text_select; ?></option>';
     <?php foreach ($countries as $country) { ?>
@@ -390,8 +389,8 @@ function addAddress() {
     html += '      </select></div>';
 	html += '  </div>';
 
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-zone' + address_row + '"><span class="required">*</span> <?php echo $entry_zone; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
 	html += '    <div class="controls"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
 	html += '  </div>';
 
@@ -427,14 +426,14 @@ function country(element, index, zone_id) {
 			},
 			success: function(json) {
 				if (json['postcode_required'] == '1') {
-					$('#postcode-required' + index).show();
+					$('#input-postcode' + index).parent().parent().addClass('required');
 				} else {
-					$('#postcode-required' + index).hide();
+					$('#input-postcode' + index).parent().parent().removeClass('required');
 				}
 
 				html = '<option value=""><?php echo $text_select; ?></option>';
 
-				if (json['zone'] != '') {
+				if (json['zone']) {
 					for (i = 0; i < json['zone'].length; i++) {
 						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
@@ -475,8 +474,6 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-
 			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
@@ -485,6 +482,8 @@ $('#button-history').on('click', function() {
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+
 			$('#history').html(html);
 
 			$('#tab-history input[name=\'comment\']').val('');
@@ -508,8 +507,6 @@ $('#button-transaction').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-
 			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
@@ -518,6 +515,8 @@ $('#button-transaction').on('click', function() {
 			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+
 			$('#transaction').html(html);
 
 			$('#tab-transaction input[name=\'amount\']').val('');
@@ -542,17 +541,16 @@ $('#button-reward').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-
 			$('#button-reward i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-reward').prop('disabled', true);
-
 		},
 		complete: function() {
 			$('#button-reward i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-reward').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+
 			$('#reward').html(html);
 
 			$('#tab-reward input[name=\'points\']').val('');
@@ -561,73 +559,66 @@ $('#button-reward').on('click', function() {
 	});
 });
 
-$('.ban-ip').on('click', function() {
-
-function addBanIP(ip) {
-	var id = ip.replace(/\./g, '-');
+$('body').delegate('.button-ban-add', 'click', function() {
+	var element = this;
 
 	$.ajax({
 		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(ip),
+		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$('.success, .warning').remove();
-
-			$('#button-ban-id i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
-
+			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
 		},
 		success: function(json) {
-			$('.attention').remove();
+			$('.alert').remove();
 
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
+				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 
-				$('.warning').fadeIn('slow');
+				$('.alert').fadeIn('slow');
 			}
 
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 
-				$('.success').fadeIn('slow');
-
-				$('#' + id).replaceWith('<a id="' + id + '" onclick="removeBanIP(\'' + ip + '\');"><?php echo $text_remove_ban_ip; ?></a>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});
 });
 
-function removeBanIP(ip) {
-	var id = ip.replace(/\./g, '-');
+$('body').delegate('.button-ban-remove', 'click', function() {
+	var element = this;
 
 	$.ajax({
 		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(ip),
+		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$('.alert').remove();
+			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+		},
+		complete: function() {
+			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
 		},
 		success: function(json) {
-			$('.attention').remove();
+			$('.alert').remove();
 
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-
-				$('.warning').fadeIn('slow');
+				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				 $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+				 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 
-				$('.success').fadeIn('slow');
-
-				$('#' + id).replaceWith('<a id="' + id + '" onclick="addBanIP(\'' + ip + '\');"><?php echo $text_add_ban_ip; ?></a>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});
-};
+});
 //--></script>
 <?php echo $footer; ?>

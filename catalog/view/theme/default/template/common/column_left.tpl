@@ -1,5 +1,5 @@
 <?php if ($modules) { ?>
-<div id="column-left">
+<div id="column-left" class="span3">
   <?php foreach ($modules as $module) { ?>
   <?php echo $module; ?>
   <?php } ?>

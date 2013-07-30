@@ -147,7 +147,7 @@ class ControllerLocalisationReturnAction extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -295,7 +295,7 @@ class ControllerLocalisationReturnAction extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(
@@ -338,7 +338,7 @@ class ControllerLocalisationReturnAction extends Controller {
     	}
 
     	foreach ($this->request->post['return_action'] as $language_id => $value) {
-      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}

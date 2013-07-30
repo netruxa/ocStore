@@ -6,17 +6,21 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-custom-field" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-        <div class="control-group">
-          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
+        <div class="control-group required">
+          <div class="control-label"><?php echo $entry_name; ?></div>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
             <input type="text" name="custom_field_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
@@ -157,7 +161,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-position"><?php echo $entry_position; ?></label>
+          <label class="control-label" for="input-position"><?php echo $entry_position; ?> <span class="help-block"><?php echo $help_position; ?></span></label>
           <div class="controls">
             <select name="position" id="input-position">
               <?php if ($position == 'begining') { ?>
@@ -231,10 +235,7 @@
               <option value="zone_id"><?php echo $text_zone; ?></option>
               <?php } ?>
             </select>
-
-            <a data-toggle="tooltip" title="<?php echo $help_position; ?>"><i class="icon-info-sign"></i></a>
-
-            </div>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -259,7 +260,7 @@
         <table id="custom-field-value" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td class="left"><span class="required">*</span> <?php echo $entry_custom_value; ?></td>
+              <td class="left required"><?php echo $entry_custom_value; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>
             </tr>

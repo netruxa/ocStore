@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="box" style="width: 370px; min-height: 200px; margin-top: 40px; margin-bottom: 80px; margin-left: auto; margin-right: auto;">
+  <div class="box" style="width: 370px; min-height: 200px; margin: 40px auto;">
     <div class="box-heading">
       <h1><i class="icon-lock icon-large"></i><?php echo $text_login; ?></h1>
     </div>
@@ -31,7 +31,7 @@
             <?php } ?>
           </div>
         </div>
-        <button type="submit" class="btn"><i class="icon-key"></i> <?php echo $button_login; ?></button>
+        <button type="submit" class="btn btn-primary"><i class="icon-key"></i> <?php echo $button_login; ?></button>
         <?php if ($redirect) { ?>
         <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
         <?php } ?>
