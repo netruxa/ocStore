@@ -118,7 +118,7 @@ $listc = $this->connect_ems($urlc);
 
 	public function getQuote($address)
 	{
-		$this->load->language('shipping/ems');
+		$this->language->load('shipping/ems');
 
 		if ( $this->config->get('ems_status') && isset($address) && !empty($address) )
 		{

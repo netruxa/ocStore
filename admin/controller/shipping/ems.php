@@ -4,7 +4,7 @@ class ControllerShippingEms extends Controller {
 
 	public function index() {
 
-		$this->load->language('shipping/ems');
+		$this->language->load('shipping/ems');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->load->model('setting/setting');
 
