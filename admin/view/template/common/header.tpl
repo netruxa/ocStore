@@ -64,6 +64,7 @@
                 <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
                 <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
                 <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
+		<li><a href="<?php echo $exchange1c; ?>"><?php echo $text_exchange1c; ?></a></li>
               </ul>
             </li>
             <li class="dropdown" id="sale"><a data-toggle="dropdown"><?php echo $text_sale; ?> <i class="icon-caret-down"></i></a>
@@ -197,9 +198,9 @@
           <li class="dropdown"><a href="<?php echo $report_customer_online; ?>" title="<?php echo $text_report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
           <li class="dropdown"><a class="notification" title="<?php echo $text_help; ?>" data-toggle="dropdown"><i class="icon-question-sign"></i></a>
             <ul class="dropdown-menu">
-              <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
-              <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
-              <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
+              <li><a href="http://myopencart.ru" target="_blank"><?php echo $text_opencart; ?></a></li>
+              <li><a href="http://opencartforum.ru/index.php?app=ccs" target="_blank"><?php echo $text_documentation; ?></a></li>
+              <li><a href="http://opencartforum.ru" target="_blank"><?php echo $text_support; ?></a></li>
            </ul>
          </li>
           <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
