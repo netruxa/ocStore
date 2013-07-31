@@ -41,7 +41,7 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <?php echo $google_analytics; ?>
-<script type="text/javascript" src="catalog/view/javascript/jscroller-0.4.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/jscroller2-1.61.js.js"></script>
 <script type="text/javascript" src="catalog/view/javascript/running_line.js"></script>
 <link rel="stylesheet" type="text/css" href="catalog/view/additional/scroller_stylesheet.css" />
 </head>
