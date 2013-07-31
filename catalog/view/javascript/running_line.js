@@ -1,6 +1,6 @@
 $(document).ready(function(){
-$jScroller.add("#scroller_container","#scroller","left",8, true);
-$jScroller.start();
+ByRei_jScroller2.add("#scroller","left");
+ByRei_jScroller2.start();
 });
 
 /*
