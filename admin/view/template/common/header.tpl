@@ -199,7 +199,7 @@
           <li class="dropdown"><a class="notification" title="<?php echo $text_help; ?>" data-toggle="dropdown"><i class="icon-question-sign"></i></a>
             <ul class="dropdown-menu">
               <li><a href="http://myopencart.ru" target="_blank"><?php echo $text_opencart; ?></a></li>
-              <li><a href="http://opencartforum.ru/index.php?app=ccs" target="_blank"><?php echo $text_documentation; ?></a></li>
+              <li><a href="http://wiki.myopencart.ru" target="_blank"><?php echo $text_documentation; ?></a></li>
               <li><a href="http://opencartforum.ru" target="_blank"><?php echo $text_support; ?></a></li>
            </ul>
          </li>
