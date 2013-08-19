@@ -1,31 +1,63 @@
 <?php
 /**
+ * Yandex.YML data feed for OpenCart (ocStore) 1.5.5.x
+ *
+ * Model class to create YML
+ *
+ * @author Yesvik http://opencartforum.ru/user/6876-yesvik/
+ * @author Alexander Toporkov <toporchillo@gmail.com>
+ * @copyright (C) 2013- Alexander Toporkov
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Extended version of this module: http://opencartforum.ru/files/file/670-eksport-v-iandeksmarket/
+ */
+ 
+/**
  * Класс YML экспорта
  * YML (Yandex Market Language) - стандарт, разработанный "Яндексом"
  * для принятия и публикации информации в базе данных Яндекс.Маркет
  * YML основан на стандарте XML (Extensible Markup Language)
  * описание формата YML http://partner.market.yandex.ru/legal/tt/
  */
-class ControllerFeedYandexMarket extends Controller {
+class ControllerFeedYandexYml extends Controller {
 	private $shop = array();
 	private $currencies = array();
 	private $categories = array();
 	private $offers = array();
-	private $from_charset = 'utf-8';
+	//private $from_charset = 'utf-8';
 	private $eol = "\n";
+	private $yml = '';
+	
+	private $color_options;
+	private $size_options;
+	private $size_units;
+	private $optioned_name;
 
 	public function index() {
-		if ($this->config->get('yandex_market_status')) {
+		$this->generateYml();
+		$this->response->addHeader('Content-Type: application/xml');
+		$this->response->setOutput($this->getYml());
+	}
+	
+	public function saveToFile($filename) {
+		$this->generateYml();
+		$fp = fopen($filename, 'w');
+		$this->putYml($fp);
+		fclose($fp);
+	}
+	
+	private function generateYml() {
+		if ($this->config->get('yandex_yml_status')) {
 
-			if (!($allowed_categories = $this->config->get('yandex_market_categories'))) exit();
-
-			$this->load->model('export/yandex_market');
+			$this->load->model('export/yandex_yml');
 			$this->load->model('localisation/currency');
 			$this->load->model('tool/image');
 
 			// Магазин
-			$this->setShop('name', $this->config->get('yandex_market_shopname'));
-			$this->setShop('company', $this->config->get('yandex_market_company'));
+			$this->setShop('name', $this->config->get('config_name'));
+			//$this->setShop('name', $this->config->get('yandex_yml_shopname'));
+			$this->setShop('company', $this->config->get('config_owner'));
+			//$this->setShop('company', $this->config->get('yandex_yml_company'));
 			$this->setShop('url', HTTP_SERVER);
 			$this->setShop('phone', $this->config->get('config_telephone'));
 			$this->setShop('platform', 'ocStore');
@@ -33,7 +65,7 @@ class ControllerFeedYandexMarket extends Controller {
 
 			// Валюты
 			// TODO: Добавить возможность настраивать проценты в админке.
-			$offers_currency = $this->config->get('yandex_market_currency');
+			$offers_currency = $this->config->get('yandex_yml_currency');
 			if (!$this->currency->has($offers_currency)) exit();
 
 			$decimal_place = $this->currency->getDecimalPlace($offers_currency);
@@ -53,48 +85,110 @@ class ControllerFeedYandexMarket extends Controller {
 					$this->setCurrency($currency['code'], number_format(1/$this->currency->convert($currency['value'], $offers_currency, $shop_currency), 4, '.', ''));
 				}
 			}
-
+			//Тип данных vendor.model или default
+			$datamodel = $this->config->get('yandex_yml_datamodel');
+			
 			// Категории
-			$categories = $this->model_export_yandex_market->getCategory();
+			$categories = $this->model_export_yandex_yml->getCategory();
 
 			foreach ($categories as $category) {
 				$this->setCategory($category['name'], $category['category_id'], $category['parent_id']);
 			}
 
 			// Товарные предложения
-			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
-			$out_of_stock_id = $this->config->get('yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
-			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
-			$products = $this->model_export_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required);
+			$in_stock_id = $this->config->get('yandex_yml_in_stock'); // id статуса товара "В наличии"
+			$out_of_stock_id = $this->config->get('yandex_yml_out_of_stock'); // id статуса товара "Нет на складе"
+			$vendor_required = ($datamodel == 'vendor_model'); // true - только товары у которых задан производитель, необходимо для 'vendor.model' 
 
+			$pickup = ($this->config->get('yandex_yml_pickup') ? 'true' : false);
+			
+			if ($this->config->get('yandex_yml_delivery_cost') != '') {
+				$local_delivery_cost = intval($this->config->get('yandex_yml_delivery_cost'));
+				$export_delivery_cost = true;
+			}
+			else {
+				$export_delivery_cost = false;
+			}
+				
+			$store = ($this->config->get('yandex_yml_store') ? 'true' : false);
+			$unavailable = $this->config->get('yandex_yml_unavailable');
+
+			$allowed_categories = $this->config->get('yandex_yml_categories');
+			$blacklist = $this->config->get('yandex_yml_blacklist');
+			$products = $this->model_export_yandex_yml->getProduct($allowed_categories, $blacklist, $out_of_stock_id, $vendor_required);
+
+			$numpictures = $this->config->get('yandex_yml_numpictures');
+			if ($numpictures > 1) {
+				//++++ Дополнительные изображения товара ++++
+				$product_images = $this->model_export_yandex_yml->getProductImages($numpictures - 1);
+				//---- Дополнительные изображения товара ----
+			}
+			$all_attributes = $this->model_export_yandex_yml->getAttributes($this->config->get('yandex_yml_attributes'));
+			$this->optioned_name = $this->config->get('yandex_yml_optioned_name');
+			
+			$yandex_yml_categ_mapping = unserialize($this->config->get('yandex_yml_categ_mapping'));
+			
+			$this->color_options = explode(',', $this->config->get('yandex_yml_color_options'));
+			$this->size_options = explode(',', $this->config->get('yandex_yml_size_options'));
+			$this->size_units = $this->config->get('yandex_yml_size_units') ? unserialize($this->config->get('yandex_yml_size_units')) : array();
+			
 			foreach ($products as $product) {
 				$data = array();
 
 				// Атрибуты товарного предложения
 				$data['id'] = $product['product_id'];
-//				$data['type'] = 'vendor.model';
-				$data['available'] = ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id);
+				$data['type'] = $datamodel; //'vendor.model' или 'default';
+				$data['available'] = (!$unavailable && ($product['quantity'] > 0 || $product['stock_status_id'] == $in_stock_id) ? 'true' : false);
 //				$data['bid'] = 10;
 //				$data['cbid'] = 15;
 
 				// Параметры товарного предложения
 				$data['url'] = $this->url->link('product/product', 'path=' . $this->getPath($product['category_id']) . '&product_id=' . $product['product_id']);
-				$data['price'] = number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency), $decimal_place, '.', '');
+				$data['price'] = $product['price'];
+				if ($data['price'] == 0) continue;
 				$data['currencyId'] = $offers_currency;
 				$data['categoryId'] = $product['category_id'];
+				if (isset($yandex_yml_categ_mapping[$product['category_id']]) && $yandex_yml_categ_mapping[$product['category_id']]) {
+					$data['market_category'] = $yandex_yml_categ_mapping[$product['category_id']];
+				}
 				$data['delivery'] = 'true';
-//				$data['local_delivery_cost'] = 100;
+				if ($export_delivery_cost) {
+					$data['local_delivery_cost'] = $local_delivery_cost;
+				}
+				if ($pickup)
+					$data['pickup'] = $pickup;
+				if ($store)
+					$data['store'] = $store;
+
 				$data['name'] = $product['name'];
 				$data['vendor'] = $product['manufacturer'];
 				$data['vendorCode'] = $product['model'];
 				$data['model'] = $product['name'];
 				$data['description'] = $product['description'];
+				$sales_notes = $this->config->get('yandex_yml_sales_notes');
+				if ($sales_notes) {
+					$data['sales_notes'] = $sales_notes;
+				}
 //				$data['manufacturer_warranty'] = 'true';
 //				$data['barcode'] = $product['sku'];
-				if ($product['image']) {
-					$data['picture'] = $this->model_tool_image->resize($product['image'], 100, 100);
+				if ($numpictures > 0) {
+					if ($product['image'] && is_file(DIR_IMAGE . $product['image'])) {
+						$data['picture'] = array($this->model_tool_image->resize($product['image'], 600, 600));
+					}
+					//++++ Дополнительные изображения товара ++++
+					if (isset($product_images[$product['product_id']])) {
+						if (!isset($data['picture']) || !is_array($data['picture'])) {
+							$data['picture'] = array();
+						}
+						foreach ($product_images[$product['product_id']] as $image) {
+							if (!is_file(DIR_IMAGE . $image)) continue;
+							$data['picture'][] = $this->model_tool_image->resize($image, 600, 600);
+						}
+					}
+					//---- Дополнительные изображения товара ----
 				}
-/*
+
+				/*++++ Атрибуты товара ++++
 				// пример структуры массива для вывода параметров
 				$data['param'] = array(
 					array(
@@ -110,15 +204,111 @@ class ControllerFeedYandexMarket extends Controller {
 						'value'=>'4.6'
 					)
 				);
-*/
-				$this->setOffer($data);
+				*/
+				$data['param'] = array();
+				$attributes = $this->model_export_yandex_yml->getProductAttributes($product['product_id']);
+				if (count($attributes) > 0) {
+					foreach ($attributes as $attr) {
+						if ($attr['attribute_id'] == $this->config->get('yandex_yml_adult')) {
+							$data['adult'] = 'true';
+						}
+						elseif ($attr['attribute_id'] == $this->config->get('yandex_yml_manufacturer_warranty')) {
+							$data['manufacturer_warranty'] = 'true';
+						}
+						elseif ($attr['attribute_id'] == $this->config->get('yandex_yml_country_of_origin')) {
+							$data['country_of_origin'] = $attr['text'];
+						}
+						elseif (isset($all_attributes[$attr['attribute_id']])) {
+							$data['param'][] = $this->detectUnits(array(
+								'name' => $all_attributes[$attr['attribute_id']],
+								'value' => $attr['text']));
+						}
+					}
+				}
+				//---- Атрибуты товара ----
+
+				if (!$this->setOptionedOffer($data, $product, $shop_currency, $offers_currency, $decimal_place)) {
+					$data['price'] = number_format($this->currency->convert($this->tax->calculate($data['price'], $product['tax_class_id']), $shop_currency, $offers_currency), $decimal_place, '.', '');
+					if ($data['price'] > 0) {
+						$this->setOffer($data);
+					}
+				}
 			}
 
 			$this->categories = array_filter($this->categories, array($this, "filterCategory"));
 
-			$this->response->addHeader('Content-Type: application/xml');
-			$this->response->setOutput($this->getYml());
+			return true;
 		}
+		return false;
+	}
+
+	/**
+	 * Создает много элементов offer товарных предложений для разных опций цвет и размер товара
+	 */
+	protected function setOptionedOffer($data, $product, $shop_currency, $offers_currency, $decimal_place) {
+		if (!$this->color_options)
+			return false;
+		$offers_array = array();
+		$coptions = $this->model_export_yandex_yml->getProductOptions($this->color_options, $product['product_id']);
+		if (!count($coptions))
+			return false;
+		//++++ Цвета x Размеры для магазинов одежды ++++
+		foreach ($coptions as $option) {
+			$data_arr = $data;
+			if (($this->optioned_name == 'short') || ($this->optioned_name == 'long')) {
+				$data_arr['name'].= ', цвет '.$option['name'];
+			}
+			$data_arr['param'][] = array('name'=>'Цвет', 'value'=>$option['name']);
+			$data_arr['group_id'] = $product['product_id'];
+			$data_arr['available'] = $data_arr['available'] && ($option['quantity'] > 0);
+			if ($option['price_prefix'] == '+')
+				$data_arr['price']+= $option['price'];
+			elseif ($option['price_prefix'] == '-')
+				$data_arr['price']-= $option['price'];
+			$offers_array[] = $data_arr;
+		}
+		// Размеры
+		$soptions = array();
+		if ($this->size_options)
+			$soptions = $this->model_export_yandex_yml->getProductOptions($this->size_options, $product['product_id']);
+		$idx = 0;
+		foreach ($offers_array as $i=>$data) {
+			if (count($soptions)) {
+				foreach ($soptions as $option) {
+					$size_option_name = $option['option_name'];
+					$size_option_unit = $this->size_units[$option['option_id']];
+					$data_arr = $data;
+					if ($this->optioned_name == 'long') {
+						$data_arr['name'].= ', '.$size_option_name.' '.$option['name'];
+					}
+					$size_param = array('name'=>$size_option_name, 'value'=>$option['name']);
+					if ($size_option_unit) {
+						$size_param['unit'] = $size_option_unit;
+					} 
+					$data_arr['param'][] = $size_param;
+					$data_arr['available'] = $data_arr['available'] && ($option['quantity'] > 0);
+					if ($option['price_prefix'] == '+')
+						$data_arr['price'] = $data_arr['price'] + $option['price'];
+					elseif ($option['price_prefix'] == '-')
+						$data_arr['price']-= $option['price'];
+					$offers_array[] = $data_arr;
+
+					$data_arr['id'] = $data['group_id'].str_pad($idx, 4, '0', STR_PAD_LEFT);
+					$data_arr['price'] = number_format($this->currency->convert($this->tax->calculate($data_arr['price'], $product['tax_class_id']), $shop_currency, $offers_currency), $decimal_place, '.', '');
+					$this->setOffer($data_arr);
+					$idx++;
+				}
+			}
+			else {
+				$data['id'] = $data['group_id'].str_pad($i, 4, '0', STR_PAD_LEFT);
+				$data['price'] = number_format($this->currency->convert($this->tax->calculate($data['price'], $product['tax_class_id']), $shop_currency, $offers_currency), $decimal_place, '.', '');
+				if ($data['price'] > 0) {
+					$this->setOffer($data);
+				}
+			}
+		}
+		return true;
+		//---- Цвета x Размеры для магазинов одежды ----
 	}
 
 	/**
@@ -224,7 +414,7 @@ class ControllerFeedYandexMarket extends Controller {
 	private function setOffer($data) {
 		$offer = array();
 
-		$attributes = array('id', 'type', 'available', 'bid', 'cbid', 'param');
+		$attributes = array('id', 'type', 'available', 'bid', 'cbid', 'param', 'group_id');
 		$attributes = array_intersect_key($data, array_flip($attributes));
 
 		foreach ($attributes as $key => $value) {
@@ -233,6 +423,7 @@ class ControllerFeedYandexMarket extends Controller {
 				case 'id':
 				case 'bid':
 				case 'cbid':
+				case 'group_id':
 					$value = (int)$value;
 					if ($value > 0) {
 						$offer[$key] = $value;
@@ -262,7 +453,7 @@ class ControllerFeedYandexMarket extends Controller {
 
 		$type = isset($offer['type']) ? $offer['type'] : '';
 
-		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0);
+		$allowed_tags = array('url'=>0, 'buyurl'=>0, 'price'=>1, 'wprice'=>0, 'currencyId'=>1, 'xCategory'=>0, 'categoryId'=>1, 'market_category'=>0, 'picture'=>0, 'store'=>0, 'pickup'=>0, 'delivery'=>0, 'deliveryIncluded'=>0, 'local_delivery_cost'=>0, 'orderingTime'=>0);
 
 		switch ($type) {
 			case 'vendor.model':
@@ -313,7 +504,16 @@ class ControllerFeedYandexMarket extends Controller {
 		// поэтому важно соблюдать его в соответствии с порядком описанным в DTD
 		$offer['data'] = array();
 		foreach ($allowed_tags as $key => $value) {
-			$offer['data'][$key] = $this->prepareField($data[$key]);
+			if (!isset($data[$key]))
+				continue;
+			if (is_array($data[$key])) {
+				foreach ($data[$key] as $i => $val) {
+					$offer['data'][$key][$i] = $this->prepareField($val);
+				}
+			}
+			else {
+				$offer['data'][$key] = $this->prepareField($data[$key]);
+			}
 		}
 
 		$this->offers[] = $offer;
@@ -369,6 +569,51 @@ class ControllerFeedYandexMarket extends Controller {
 	}
 
 	/**
+	 * Вывод YML в файл
+	 * @param $fp дескриптор файла
+	 */
+	private function putYml($fp) {
+		fwrite($fp, '<?xml version="1.0" encoding="UTF-8"?>' . $this->eol
+			.'<!DOCTYPE yml_catalog SYSTEM "shops.dtd">' . $this->eol
+			.'<yml_catalog date="' . date('Y-m-d H:i') . '">' . $this->eol
+			.'<shop>' . $this->eol);
+
+		// информация о магазине
+		fwrite($fp, $this->array2Tag($this->shop));
+
+		// валюты
+		fwrite($fp, '<currencies>' . $this->eol);
+		foreach ($this->currencies as $currency) {
+			fwrite($fp, $this->getElement($currency, 'currency'));
+		}
+		fwrite($fp, '</currencies>' . $this->eol
+		// категории
+			.'<categories>' . $this->eol);
+		foreach ($this->categories as $category) {
+			$category_name = $category['name'];
+			unset($category['name'], $category['export']);
+			fwrite($fp, $this->getElement($category, 'category', $category_name));
+		}
+		fwrite($fp, '</categories>' . $this->eol
+		// товарные предложения
+			.'<offers>' . $this->eol);
+		foreach ($this->offers as $offer) {
+			$tags = $this->array2Tag($offer['data']);
+			unset($offer['data']);
+			if (isset($offer['param'])) {
+				$tags .= $this->array2Param($offer['param']);
+				unset($offer['param']);
+			}
+			fwrite($fp, $this->getElement($offer, 'offer', $tags));
+		}
+		fwrite($fp, '</offers>' . $this->eol
+			.'</shop>'
+			.'</yml_catalog>');
+		return true;
+	}
+
+
+	/**
 	 * Фрмирование элемента
 	 *
 	 * @param array $attributes
@@ -396,7 +641,14 @@ class ControllerFeedYandexMarket extends Controller {
 	private function array2Tag($tags) {
 		$retval = '';
 		foreach ($tags as $key => $value) {
-			$retval .= '<' . $key . '>' . $value . '</' . $key . '>' . $this->eol;
+			if (is_array($value)) {
+				foreach ($value as $val) {
+					$retval .= '<' . $key . '>' . $val . '</' . $key . '>' . $this->eol;
+				}
+			}
+			else {
+				$retval .= '<' . $key . '>' . $value . '</' . $key . '>' . $this->eol;
+			}
 		}
 
 		return $retval;
@@ -436,6 +688,11 @@ class ControllerFeedYandexMarket extends Controller {
 		$from = array('"', '&', '>', '<', '\'');
 		$to = array('&quot;', '&amp;', '&gt;', '&lt;', '&apos;');
 		$field = str_replace($from, $to, $field);
+		/**
+		if ($this->from_charset != 'windows-1251') {
+			$field = iconv($this->from_charset, 'windows-1251//IGNORE', $field);
+		}
+		**/
 		$field = preg_replace('#[\x00-\x08\x0B-\x0C\x0E-\x1F]+#is', ' ', $field);
 
 		return trim($field);
@@ -449,7 +706,7 @@ class ControllerFeedYandexMarket extends Controller {
 				$new_path = $this->categories[$category_id]['id'];
 			} else {
 				$new_path = $this->categories[$category_id]['id'] . '_' . $current_path;
-			}
+			}	
 
 			if (isset($this->categories[$category_id]['parentId'])) {
 				return $this->getPath($this->categories[$category_id]['parentId'], $new_path);
@@ -462,6 +719,23 @@ class ControllerFeedYandexMarket extends Controller {
 
 	function filterCategory($category) {
 		return isset($category['export']);
+	}
+	
+	/**
+	 * Определение единиц измерения по содержимому
+	 *
+	 * @param array $attr array('name'=>'Вес', 'value'=>'100кг')
+	 * @return array array('name'=>'Вес', 'unit'=>'кг', 'value'=>'100')
+	 */
+	protected function detectUnits($attr) {
+		//$matches = array();
+		$attr['name'] = trim(strip_tags($attr['name']));
+		$attr['value'] = trim(strip_tags($attr['value']));
+		if (preg_match('/\(([^\)]+)\)$/mi', $attr['name'], $matches)) {
+			$attr['name'] = trim(str_replace('('.$matches[1].')', '', $attr['name']));
+			$attr['unit'] = trim($matches[1]);
+		}
+		return $attr;
 	}
 }
 ?>
