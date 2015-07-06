@@ -42,6 +42,7 @@
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />
                 <?php } ?></td>
+              <td class="left"><?php echo $category['name']; ?></td>
               <td class="right"><?php echo $category['sort_order']; ?></td>
               <td class="right"><?php foreach ($category['action'] as $action) { ?>
                 <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>"><i class="icon-pencil icon-large"></i></a>
