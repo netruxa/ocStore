@@ -42,11 +42,6 @@
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />
                 <?php } ?></td>
-              <?php if ($category['href']) { ?>
-                <td class="left"><?php echo $category['indent']; ?><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></td>
-              <?php } else { ?>
-                <td class="left"><?php echo $category['indent']; ?><?php echo $category['name']; ?></td>
-              <?php } ?>
               <td class="right"><?php echo $category['sort_order']; ?></td>
               <td class="right"><?php foreach ($category['action'] as $action) { ?>
                 <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>"><i class="icon-pencil icon-large"></i></a>
