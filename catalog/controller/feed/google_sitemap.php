@@ -10,7 +10,13 @@ class ControllerFeedGoogleSitemap extends Controller {
 
 		 $products = $this->model_catalog_product->getProducts();
 
+		 //http://www.sitemaps.org/ru/protocol.html#escaping
+		 $no_escaped_characters=array('&','\'','"','>','<');
+		 $escaped_characters=array('&amp;','&apos;','&quot;','&gt;','&lt;');
+
 		 foreach ($products as $product) {
+		 $product['name']=str_replace($no_escaped_characters,$escaped_characters,$product['name']);
+
 		 if ($product['image']) {
 			$output .= '<url>';
 			$output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
